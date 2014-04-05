@@ -1,18 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A47D69DD-74D6-466F-9A4E-DD0D09BB1E93}</ProjectGuid>
+    <ProjectGuid>{3A971D79-0D5B-4F27-BD5E-FE9710A457C0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleTest</RootNamespace>
-    <AssemblyName>SimpleTest</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>StaticProxy.Interceptor.Tests</RootNamespace>
+    <AssemblyName>StaticProxy.Interceptor.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -34,13 +33,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentAssertions">
-      <HintPath>..\..\packages\FluentAssertions.2.2.0.0\lib\net40\FluentAssertions.dll</HintPath>
+      <HintPath>..\packages\FluentAssertions.2.2.0.0\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
     <Reference Include="Moq">
-      <HintPath>..\..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject">
-      <HintPath>..\..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
+      <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,30 +45,23 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="xunit">
+      <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.extensions">
+      <HintPath>..\packages\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\StaticProxy.Interceptor\ExceptionExtensions.cs">
-      <Link>ExceptionExtensions.cs</Link>
-    </Compile>
-    <Compile Include="ConstructorWithArguments.cs" />
-    <Compile Include="DefaultConstructor.cs" />
-    <Compile Include="ConstructorWithoutArguments.cs" />
-    <Compile Include="Integration\Dependency.cs" />
-    <Compile Include="Integration\IDependency.cs" />
-    <Compile Include="Integration\IntegrationTests.cs" />
-    <Compile Include="Integration\IntegrationThrowException.cs" />
-    <Compile Include="Integration\IntegrationWithConstructorArgument.cs" />
-    <Compile Include="Integration\IntegrationWithoutConstructorArgument.cs" />
-    <Compile Include="Integration\IntegrationWithReturnValue.cs" />
-    <Compile Include="Integration\NotProxiedType.cs" />
-    <Compile Include="Integration\OverrideToString.cs" />
-    <Compile Include="Methods.cs" />
-    <Compile Include="TestMessages.cs" />
-    <Compile Include="WeavingNoParametersTryOut.cs" />
+    <Compile Include="DynamicInterceptorManagerTest.cs" />
+    <Compile Include="ExceptionsTest.cs" />
+    <Compile Include="InvocationTest.cs" />
+    <Compile Include="InvocationTest_FaultyInterceptorImplementation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\StaticProxy.Interceptor\StaticProxy.Interceptor.csproj">
-      <Project>{05C0CE7C-2D5F-4DDC-9D0A-E16210AA28C8}</Project>
+    <ProjectReference Include="..\StaticProxy.Interceptor\StaticProxy.Interceptor.csproj">
+      <Project>{05c0ce7c-2d5f-4ddc-9d0a-e16210aa28c8}</Project>
       <Name>StaticProxy.Interceptor</Name>
     </ProjectReference>
   </ItemGroup>
@@ -87,4 +76,11 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

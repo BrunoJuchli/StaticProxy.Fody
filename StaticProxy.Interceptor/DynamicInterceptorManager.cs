@@ -44,7 +44,6 @@ public class DynamicInterceptorManager : IDynamicInterceptorManager
         IInvocation invocation = this.invocationFactory
             .Create(this.target, decoratedMethod, implementationMethod, arguments, this.interceptors);
 
-        
         invocation.Proceed();
 
         return invocation.ReturnValue;

@@ -1,12 +1,15 @@
-﻿namespace StaticProxy.Fody.Tests
+﻿namespace StaticProxy.Interceptor.Tests
 {
     using System;
     using System.Reflection;
     using System.Reflection.Emit;
 
     using FluentAssertions;
+
     using Moq;
+
     using StaticProxy.Interceptor;
+
     using Xunit;
 
     public class DynamicInterceptorManagerTest

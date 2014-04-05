@@ -4,7 +4,7 @@
 
     public static class Exceptions
     {
-        public static void EnsureDynamicInterceptorManagerNotNull(object manager)
+        public static void EnsureDynamicInterceptorManagerNotNull(IDynamicInterceptorManager manager)
         {
             if (manager == null)
             {

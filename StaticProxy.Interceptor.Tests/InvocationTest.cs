@@ -1,4 +1,4 @@
-﻿namespace StaticProxy.Fody.Tests
+﻿namespace StaticProxy.Interceptor.Tests
 {
     using System;
     using System.Collections.Generic;

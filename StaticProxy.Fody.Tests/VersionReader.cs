@@ -1,10 +1,10 @@
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Xml.Linq;
-
 namespace StaticProxy.Fody.Tests
 {
+    using System;
+    using System.Globalization;
+    using System.Linq;
+    using System.Xml.Linq;
+
     public class VersionReader
     {
         public decimal FrameworkVersionAsNumber;
@@ -29,7 +29,6 @@ namespace StaticProxy.Fody.Tests
             this.FrameworkVersionAsNumber = decimal.Parse(this.FrameworkVersionAsString.Remove(0, 1), CultureInfo.InvariantCulture);
         }
 
-
         void GetTargetFrameworkProfile(XDocument xDocument)
         {
             this.TargetFrameworkProfile = xDocument.Descendants("TargetFrameworkProfile")
@@ -46,8 +45,6 @@ namespace StaticProxy.Fody.Tests
             {
                 this.IsSilverlight = true;
             }
-
         }
-
     }
 }

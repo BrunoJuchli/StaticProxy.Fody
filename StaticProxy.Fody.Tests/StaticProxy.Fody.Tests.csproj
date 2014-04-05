@@ -75,10 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyExtensions.cs" />
-    <Compile Include="DynamicInterceptorManagerTest.cs" />
     <Compile Include="IntegrationTestsRunner.cs" />
-    <Compile Include="InvocationTest.cs" />
-    <Compile Include="InvocationTest_FaultyInterceptorImplementation.cs" />
     <Compile Include="MethodWeaving\DynamicInterceptorManagerMockExtensions.cs" />
     <Compile Include="MethodWeaving\MethodsTestBase.cs" />
     <Compile Include="MethodWeaving\When_proxying_method_with_local_variables.cs" />
@@ -89,7 +86,6 @@
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="SimpleTestBase.cs" />
     <Compile Include="StaticMembersDynamicWrapper.cs" />
-    <Compile Include="DecoratedSimpleTest.cs" />
     <Compile Include="VersionReader.cs" />
     <Compile Include="WeaverHelper.cs" />
     <Compile Include="TestAssemblyResolver.cs" />
