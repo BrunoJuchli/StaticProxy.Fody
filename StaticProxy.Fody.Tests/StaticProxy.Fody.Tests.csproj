@@ -59,6 +59,9 @@
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="StaticProxy.Interceptor">
+      <HintPath>..\packages\StaticProxy.Interceptor.1.0\lib\portable-win+net40+sl50+wp80\StaticProxy.Interceptor.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -103,10 +106,6 @@
     <ProjectReference Include="..\StaticProxy.Fody\StaticProxy.Fody.csproj">
       <Project>{3B17CFD4-10E7-42DB-88D6-A10680B0BFBE}</Project>
       <Name>StaticProxy.Fody</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StaticProxy.Interceptor\StaticProxy.Interceptor.csproj">
-      <Project>{05C0CE7C-2D5F-4DDC-9D0A-E16210AA28C8}</Project>
-      <Name>StaticProxy.Interceptor</Name>
     </ProjectReference>
     <ProjectReference Include="..\TestAssemblies\SimpleTest\SimpleTest.csproj">
       <Project>{A47D69DD-74D6-466F-9A4E-DD0D09BB1E93}</Project>
