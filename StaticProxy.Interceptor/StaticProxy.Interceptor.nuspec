@@ -17,5 +17,5 @@
   </metadata>
   <files>
     <file src="bin\$configuration$\$id$.pdb" target="lib\portable-win+net40+sl50+wp80\" />
-  </file>
+  </files>
 </package>
