@@ -15,4 +15,7 @@
     <tags>Proxy ILWeaving Fody AOP</tags>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
   </metadata>
+  <files>
+    <file src="bin\$configuration$\$id$.pdb" target="lib\portable-win+net40+sl50+wp80\" />
+  </file>
 </package>
