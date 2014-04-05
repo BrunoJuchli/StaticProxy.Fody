@@ -6,7 +6,7 @@
 
     using Moq;
 
-    using StaticProxyInterceptor.Fody;
+    using StaticProxy.Interceptor;
 
     using Xunit;
 

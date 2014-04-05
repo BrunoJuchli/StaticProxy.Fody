@@ -1,6 +1,6 @@
 ﻿// portions of this code have been taken from the Castle project (http://www.castleproject.org/), a big thanks to the authors.
 
-namespace StaticProxyInterceptor.Fody
+namespace StaticProxy.Interceptor
 {
     using System;
     using System.Globalization;

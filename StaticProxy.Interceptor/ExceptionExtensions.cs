@@ -1,4 +1,4 @@
-﻿namespace StaticProxyInterceptor.Fody
+﻿namespace StaticProxy.Interceptor
 {
     using System;
     using System.Reflection;

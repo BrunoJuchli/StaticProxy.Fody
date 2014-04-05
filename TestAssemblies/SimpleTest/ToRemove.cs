@@ -3,7 +3,7 @@
     using System;
     using System.Reflection;
 
-    using StaticProxyInterceptor.Fody;
+    using StaticProxy.Interceptor;
 
     public class ToRemove
     {

@@ -6,7 +6,7 @@
 
     using FluentAssertions;
     using Moq;
-    using StaticProxyInterceptor.Fody;
+    using StaticProxy.Interceptor;
     using Xunit;
 
     public class DynamicInterceptorManagerTest

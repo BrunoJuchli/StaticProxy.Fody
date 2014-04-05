@@ -43,9 +43,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\StaticProxyInterceptor.Fody\StaticProxyInterceptor.Fody.csproj">
+    <ProjectReference Include="..\..\StaticProxy.Interceptor\StaticProxy.Interceptor.csproj">
       <Project>{05C0CE7C-2D5F-4DDC-9D0A-E16210AA28C8}</Project>
-      <Name>StaticProxyInterceptor.Fody</Name>
+      <Name>StaticProxy.Interceptor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

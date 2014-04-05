@@ -12,7 +12,7 @@ namespace SimpleTest.Integration
 
     using Ninject;
 
-    using StaticProxyInterceptor.Fody;
+    using StaticProxy.Interceptor;
 
     public class IntegrationTests
     {

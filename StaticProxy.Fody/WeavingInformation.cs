@@ -25,7 +25,7 @@
             AssemblyResolver = assemblyResolver;
             ReferenceFinder = new ReferenceFinder(ModuleDefinition);
 
-            InterceptorModuleDefinition = AssemblyResolver.Resolve("StaticProxyInterceptor.Fody").MainModule;
+            InterceptorModuleDefinition = AssemblyResolver.Resolve("StaticProxy.Interceptor").MainModule;
 
             StaticProxyAttribute = ModuleDefinition.GetTypeReference<StaticProxyAttribute>();
 

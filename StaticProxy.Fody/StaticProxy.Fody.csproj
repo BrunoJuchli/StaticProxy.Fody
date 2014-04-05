@@ -75,9 +75,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StaticProxyInterceptor.Fody\StaticProxyInterceptor.Fody.csproj">
+    <ProjectReference Include="..\StaticProxy.Interceptor\StaticProxy.Interceptor.csproj">
       <Project>{05c0ce7c-2d5f-4ddc-9d0a-e16210aa28c8}</Project>
-      <Name>StaticProxyInterceptor.Fody</Name>
+      <Name>StaticProxy.Interceptor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

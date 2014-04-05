@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{972F91
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticProxyInterceptor.Fody", "StaticProxyInterceptor.Fody\StaticProxyInterceptor.Fody.csproj", "{05C0CE7C-2D5F-4DDC-9D0A-E16210AA28C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticProxy.Interceptor", "StaticProxy.Interceptor\StaticProxy.Interceptor.csproj", "{05C0CE7C-2D5F-4DDC-9D0A-E16210AA28C8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleConstructors", "TestAssemblies\MultipleConstructors\MultipleConstructors.csproj", "{082D7B97-EF4E-439D-A10A-BFB5072AA728}"
 EndProject

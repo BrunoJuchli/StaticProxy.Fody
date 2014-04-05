@@ -5,7 +5,7 @@
     using Mono.Cecil.Cil;
     using Mono.Cecil.Rocks;
 
-    using StaticProxyInterceptor.Fody;
+    using StaticProxy.Interceptor;
 
     public class ConstructorWeaver
     {
