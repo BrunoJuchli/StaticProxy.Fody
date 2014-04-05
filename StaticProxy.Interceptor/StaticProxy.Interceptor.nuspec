@@ -8,7 +8,7 @@
     <authors>Bruno Juchli</authors>
     <owners>Bruno Juchli</owners>
 	<developmentDependency>false</developmentDependency>
-	<iconUrl>https://github.com/BrunoJuchli/StaticProxy.Fody/master/Icons/package_icon.png</iconUrl> 
+	<iconUrl>https://github.com/BrunoJuchli/StaticProxy.Fody/tree/master/Icons/package_icon.png</iconUrl> 
     <projectUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</projectUrl>
 	<description>Fody add-in to compile-time weave (hence static) proxies with an interception mechanism similar to Castle Dynamic Proxy. Is intended to work with mobile platforms! :)</description>
     <copyright>Copyright Bruno Juchli 2014</copyright>
