@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/29hg7caftwtfb0jo)](https://ci.appveyor.com/project/BrunoJuchli/staticproxy)
+[![Build status](https://ci.appveyor.com/api/projects/status/j6tubf9q9deyngu4)](https://ci.appveyor.com/project/BrunoJuchli/staticproxy-fody)
 
 ## this is a work in progress which is not working - yet ##
 
