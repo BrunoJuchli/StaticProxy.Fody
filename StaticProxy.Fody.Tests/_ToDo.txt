@@ -1,0 +1,17 @@
+﻿- support non-void methods
+
+- Check whether proxied class implements IDisposable, if so, call dispose on IDynamicInterceptorManager
+--> handle cases where interceptor is IDispoable but proxied class is not! how? throw exception?
+
+-Interceptor ordering
+--> Add OrderIndex to IDynamicInterceptor (get; ) and order by this
+
+-Move integration tests to own test solution/project which uses the nuget feed to acquire the built product and integrate test it
+
+-Remove [StaticProxy] attribute from types after weaving.
+
+-Interface proxy (convert (weave) interface to class?!)
+
+-test that params[] parameters works
+
+-have one unit tests which fails when PEVerify was not run (PEVerify.exe cannot be found)
