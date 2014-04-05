@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata minClientVersion="2.8">
     <id>StaticProxy.Fody</id>
-    <version>0.8.1.1</version>
+    <version>0.0.0.1</version>
     <title>StaticProxy.Fody</title>
     <authors>Bruno Juchli</authors>
     <owners>Bruno Juchli</owners>
     <developmentDependency>true</developmentDependency>
-    <projectUrl>https://github.com/BrunoJuchli/StaticProxy</projectUrl>
-	<iconUrl>https://github.com/BrunoJuchli/StaticProxy/master/Icons/package_icon.png</iconUrl> 
+    <projectUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</projectUrl>
+	<iconUrl>https://github.com/BrunoJuchli/StaticProxy.Fody/master/Icons/package_icon.png</iconUrl> 
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Fody add-in to compile-time weave (hence static) proxies with an interception mechanism similar to Castle Dynamic Proxy. Is intended to work with mobile platforms! :)</description>
     <copyright>Copyright Bruno Juchli 2014</copyright>
