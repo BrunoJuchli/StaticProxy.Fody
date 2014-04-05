@@ -1,4 +1,5 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/j6tubf9q9deyngu4)](https://ci.appveyor.com/project/BrunoJuchli/staticproxy-fody)
+StaticProxy.Fody: [![Build status](https://ci.appveyor.com/api/projects/status/j6tubf9q9deyngu4)](https://ci.appveyor.com/project/BrunoJuchli/staticproxy-fody)
+StaticProxy.Interceptor: [![Build status](https://ci.appveyor.com/api/projects/status/bpji3ka4pmwd54wm)](https://ci.appveyor.com/project/BrunoJuchli/staticproxy-fody-951)
 
 ## this is a work in progress which is not working - yet ##
 
