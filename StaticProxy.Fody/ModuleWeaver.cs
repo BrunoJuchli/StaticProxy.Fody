@@ -5,9 +5,18 @@ using StaticProxy.Fody;
 
 public class ModuleWeaver
 {
+    public ModuleWeaver()
+    {
+        Instance = this;
+    }
+
+    public static ModuleWeaver Instance { get; private set; }
+
     public ModuleDefinition ModuleDefinition { get; set; }
 
     public IAssemblyResolver AssemblyResolver { get; set; }
+
+    public string AddinDirectoryPath { get; set; }
 
     public Action<string> LogInfo { get; set; }
 
@@ -23,7 +32,7 @@ public class ModuleWeaver
 
         try
         {
-            WeavingInformation.Initialize(this.ModuleDefinition, this.AssemblyResolver, this.LogInfo, this.LogWarning);
+            WeavingInformation.Initialize();
 
             ProxyWeaver.Execute();
         }

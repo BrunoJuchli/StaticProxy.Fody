@@ -142,6 +142,7 @@ namespace StaticProxy.Fody.Tests
             {
                 return file;
             }
+
             throw new FileNotFoundException();
         }
 

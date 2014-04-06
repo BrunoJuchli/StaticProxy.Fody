@@ -15,3 +15,5 @@
 -test that params[] parameters works
 
 -have one unit tests which fails when PEVerify was not run (PEVerify.exe cannot be found)
+
+-instead of throwing an exception when [StaticProxy] is not yet used in the solution, stop weaving and output a warning instead? Like: you are currently not use any static proxy, begin by putting [StaticProxy] on a class!
