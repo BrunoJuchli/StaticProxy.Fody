@@ -5,7 +5,6 @@
     using Mono.Cecil.Cil;
     using Mono.Cecil.Rocks;
 
-    using StaticProxy.Interceptor;
 
     public class ConstructorWeaver
     {
@@ -19,8 +18,12 @@
             this.interceptorManagerReference = WeavingInformation.DynamicInterceptorManagerReference;
             this.managerInitializeMethodReference = WeavingInformation.ModuleDefinition.Import(this.interceptorManagerReference.Resolve().GetMethods().Single(x => x.Name == "Initialize"));
 
-            TypeDefinition exceptions = WeavingInformation.ModuleDefinition.Import(typeof(Exceptions)).Resolve();
-            this.ensureDynamicInterceptorManagerNotNull = WeavingInformation.ModuleDefinition.Import(exceptions.GetMethods().Single(x => x.Name == "EnsureDynamicInterceptorManagerNotNull"));
+            TypeDefinition originalExceptionsTypeDefinition = 
+                WeavingInformation.InterceptorModuleDefinition.GetTypeDefinition("StaticProxy.Interceptor.Exceptions");
+            TypeDefinition importedExceptionsTypeDefinition = WeavingInformation.ModuleDefinition.Import(originalExceptionsTypeDefinition).Resolve();
+
+            this.ensureDynamicInterceptorManagerNotNull =
+                WeavingInformation.ModuleDefinition.Import(importedExceptionsTypeDefinition.GetMethods().Single(x => x.Name == "EnsureDynamicInterceptorManagerNotNull"));
         }
 
         public FieldDefinition ExtendConstructorWithDynamicInterceptorRetriever(TypeDefinition typeToProxy)

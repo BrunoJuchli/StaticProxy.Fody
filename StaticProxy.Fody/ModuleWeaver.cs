@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Mono.Cecil;
 using StaticProxy.Fody;
 
@@ -16,9 +17,22 @@ public class ModuleWeaver
     {
         LogInfo = s => { };
         LogWarning = s => { };
-        
-        WeavingInformation.Initialize(this.ModuleDefinition, this.AssemblyResolver, this.LogInfo, this.LogWarning);
 
-        ProxyWeaver.Execute();
+        // todo remove
+        // Debugger.Launch();
+
+        try
+        {
+            WeavingInformation.Initialize(this.ModuleDefinition, this.AssemblyResolver, this.LogInfo, this.LogWarning);
+
+            ProxyWeaver.Execute();
+        }
+        catch (Exception ex)
+        {
+            // todo remove
+            LogWarning(ex.StackTrace);
+
+            throw;
+        }
     }
 }

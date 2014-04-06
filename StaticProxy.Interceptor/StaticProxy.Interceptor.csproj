@@ -44,7 +44,6 @@
     <Compile Include="IDynamicInterceptorManager.cs" />
     <Compile Include="IInvocation.cs" />
     <Compile Include="IInvocationFactory.cs" />
-    <Compile Include="InterceptingValue.cs" />
     <Compile Include="Invocation.cs" />
     <Compile Include="InvocationFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

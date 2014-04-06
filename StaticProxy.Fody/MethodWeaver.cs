@@ -100,8 +100,7 @@
 
         private static MethodReference ImportInterceptMethod()
         {
-            TypeReference interceptorManager = WeavingInformation.ModuleDefinition.Import(typeof(IDynamicInterceptorManager));
-            var interceptorManagerDefinition = interceptorManager.Resolve();
+            TypeDefinition interceptorManagerDefinition = WeavingInformation.DynamicInterceptorManagerReference.Resolve();
             return WeavingInformation.ModuleDefinition.Import(
                 interceptorManagerDefinition.Methods.Single(x1 => x1.Name == "Intercept"));
         }

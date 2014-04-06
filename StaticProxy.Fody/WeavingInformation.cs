@@ -25,12 +25,14 @@
             AssemblyResolver = assemblyResolver;
             ReferenceFinder = new ReferenceFinder(ModuleDefinition);
 
+            StaticProxyAttribute = moduleDefinition.GetTypeReference("StaticProxyAttribute");
+
+            // todo determine how to find the "StaticProxy.Interceptor" module in case it's not referenced by the project!!
+            // maybe use the add in path - it points to the packages/StaticProxy.Fody path...
             InterceptorModuleDefinition = AssemblyResolver.Resolve("StaticProxy.Interceptor").MainModule;
 
-            StaticProxyAttribute = ModuleDefinition.GetTypeReference<StaticProxyAttribute>();
-
-            TypeDefinition interceptorManagerDefinition = InterceptorModuleDefinition.GetTypeDefinition<IDynamicInterceptorManager>();
-            DynamicInterceptorManagerReference = ModuleDefinition.Import(interceptorManagerDefinition);
+            TypeDefinition dynamicInterceptorManagerTypeDefinition = InterceptorModuleDefinition.GetTypeDefinition("IDynamicInterceptorManager");
+            DynamicInterceptorManagerReference = ModuleDefinition.Import(dynamicInterceptorManagerTypeDefinition);
 
             ObjectTypeReference = ReferenceFinder.GetTypeReference(typeof(object));
         }

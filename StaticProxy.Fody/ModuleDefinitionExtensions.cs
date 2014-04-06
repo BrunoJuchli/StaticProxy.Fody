@@ -6,11 +6,6 @@
 
     public static class ModuleDefinitionExtensions
     {
-        public static TypeReference GetTypeReference<T>(this ModuleDefinition module)
-        {
-            return module.GetTypeReference(typeof(T).FullName);
-        }
-
         public static TypeReference GetTypeReference(this ModuleDefinition module, string fullName)
         {
             TypeReference result;
@@ -22,9 +17,8 @@
             throw BuildNotSIngleTypeMatchingFullNameException(fullName, 0);
         }
 
-        public static TypeDefinition GetTypeDefinition<T>(this ModuleDefinition module)
+        public static TypeDefinition GetTypeDefinition(this ModuleDefinition module, string fullName)
         {
-            string fullName = typeof(T).FullName;
             TypeDefinition type = module.GetType(fullName);
             if (type == null)
             {
