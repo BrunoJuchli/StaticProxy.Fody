@@ -1,5 +1,6 @@
 ﻿namespace StaticProxy.Fody
 {
+    using System.IO;
 
     using Mono.Cecil;
 
@@ -37,14 +38,28 @@
             return attribute.AttributeType == StaticProxyAttribute;
         }
 
-        // todo determine how to find the "StaticProxy.Interceptor" module in case it's not referenced by the project!!
-        // maybe use the add in path - it points to the packages/StaticProxy.Fody path...
         private static ModuleDefinition ResolveInterceptorModuleDefinition()
         {
-            AssemblyDefinition definition = ModuleWeaver.Instance.AssemblyResolver.Resolve("StaticProxy.Interceptor");
+            const string InterceptorAssemblyName = "StaticProxy.Interceptor";
+
+            AssemblyDefinition definition = ModuleWeaver.Instance.AssemblyResolver.Resolve(InterceptorAssemblyName);
             if (definition == null)
             {
-                throw new WeavingException("can't find StaticProxy.Interceptor module. Make sure you've downloaded and installed the nuget package!");
+                // todo use an integration test to test this!
+                DirectoryInfo nugetPackagesDirectory = Directory.GetParent(ModuleWeaver.Instance.AddinDirectoryPath);
+                var assemblyResolver = new DefaultAssemblyResolver();
+
+                DirectoryInfo[] packageDirectores = nugetPackagesDirectory.GetDirectories();
+                foreach (DirectoryInfo packageDirectory in packageDirectores)
+                {
+                    assemblyResolver.AddSearchDirectory(packageDirectory.FullName);
+                }
+
+                definition = assemblyResolver.Resolve(InterceptorAssemblyName);
+                if (definition == null)
+                {
+                    throw new WeavingException("Can't find StaticProxy.Interceptor assembly. Make sure you've downloaded and installed the nuget package!");
+                }
             }
 
             return definition.MainModule;
