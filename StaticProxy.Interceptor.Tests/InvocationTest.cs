@@ -61,7 +61,7 @@
         [Fact]
         public void Method_MustReturnDecoratedMethod()
         {
-            this.testee.Method.Should().Be(this.decoratedMethod);
+            ((object)this.testee.Method).Should().Be(this.decoratedMethod);
         }
 
         [Fact]

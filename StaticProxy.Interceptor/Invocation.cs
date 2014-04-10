@@ -10,8 +10,8 @@ namespace StaticProxy.Interceptor
     public class Invocation : IInvocation
     {
         private readonly object target;
-        private readonly MethodBase decoratedMethod;
-        private readonly MethodBase implementationMethod;
+        private readonly MethodInfo decoratedMethod;
+        private readonly MethodInfo implementationMethod;
         private readonly object[] arguments;
         private readonly IDynamicInterceptor[] interceptors;
         private readonly Lazy<Type[]> parameterTypes;
@@ -19,7 +19,7 @@ namespace StaticProxy.Interceptor
 
         private int currentInterceptorIndex = -1;
 
-        public Invocation(object target, MethodBase decoratedMethod, MethodBase implementationMethod, object[] arguments, IDynamicInterceptor[] interceptors)
+        public Invocation(object target, MethodInfo decoratedMethod, MethodInfo implementationMethod, object[] arguments, IDynamicInterceptor[] interceptors)
         {
             this.target = target;
             this.decoratedMethod = decoratedMethod;
@@ -42,7 +42,7 @@ namespace StaticProxy.Interceptor
             get { return this.genericArguments.Value; }
         }
 
-        public MethodBase Method
+        public MethodInfo Method
         {
             get { return this.decoratedMethod; }
         }

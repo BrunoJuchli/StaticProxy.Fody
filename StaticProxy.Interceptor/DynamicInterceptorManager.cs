@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -34,6 +35,10 @@ public class DynamicInterceptorManager : IDynamicInterceptorManager
 
     public object Intercept(MethodBase decoratedMethod, MethodBase implementationMethod, object[] arguments)
     {
+        // since we only support methods, not constructors, these are actually MethodInfo's
+        var decoratedMethodInfo = (MethodInfo)decoratedMethod;
+        var implementationMethodInfo = (MethodInfo)implementationMethod;
+        
         if (this.target == null)
         {
             throw new InvalidOperationException("Something has gone seriously wrong with StaticProxy.Fody." + 
@@ -41,9 +46,20 @@ public class DynamicInterceptorManager : IDynamicInterceptorManager
         }
 
         IInvocation invocation = this.invocationFactory
-            .Create(this.target, decoratedMethod, implementationMethod, arguments, this.interceptors);
+            .Create(this.target, decoratedMethodInfo, implementationMethodInfo, arguments, this.interceptors);
 
         invocation.Proceed();
+
+        if (invocation.ReturnValue == null && decoratedMethodInfo.ReturnType.IsValueType)
+        {
+            string message = string.Format(
+                CultureInfo.InvariantCulture,
+                "Method {0}.{1} has return type {2} which is a value type. After the invocation the invocation the return value was null. Please ensure that your interceptors call IInvocation.Proceed() or sets a valid IInvocation.ReturnValue.",
+                this.target.GetType().FullName,
+                decoratedMethodInfo.ToString(),
+                decoratedMethodInfo.ReturnType.Name);
+            throw new InvalidOperationException(message);
+        }
 
         return invocation.ReturnValue;
     }

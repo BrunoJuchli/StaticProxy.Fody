@@ -19,10 +19,10 @@ public interface IInvocation
     Type[] GenericArguments { get; }
 
     /// <summary>
-    ///   Gets the <see cref = "MethodBase" /> representing the method being invoked on the proxy.
+    ///   Gets the <see cref = "MethodInfo" /> representing the method being invoked on the proxy.
     /// </summary>
-    /// <value>The <see cref = "MethodBase" /> representing the method being invoked.</value>
-    MethodBase Method { get; }
+    /// <value>The <see cref = "MethodInfo" /> representing the method being invoked.</value>
+    MethodInfo Method { get; }
 
     /// <summary>
     ///   Gets or sets the return value of the method.

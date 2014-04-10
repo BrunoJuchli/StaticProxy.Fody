@@ -4,6 +4,6 @@
 
     internal interface IInvocationFactory
     {
-        IInvocation Create(object target, MethodBase decoratedMethod, MethodBase implementationMethod, object[] arguments, IDynamicInterceptor[] interceptors);
+        IInvocation Create(object target, MethodInfo decoratedMethod, MethodInfo implementationMethod, object[] arguments, IDynamicInterceptor[] interceptors);
     }
 }

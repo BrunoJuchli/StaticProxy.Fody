@@ -74,10 +74,8 @@
         [Fact]
         public void Intercept_ShouldProceedCreatedInvocation()
         {
-            var invocation = new Mock<IInvocation>();
-            this.invocationFactory
-                .Setup(x => x.Create(It.IsAny<object>(), It.IsAny<MethodBase>(), It.IsAny<MethodBase>(), It.IsAny<object[]>(), It.IsAny<IDynamicInterceptor[]>()))
-                .Returns(invocation.Object);
+            var invocation = new Mock<IInvocation> { DefaultValue = DefaultValue.Mock };
+            this.SetupInvocationFactory(invocation.Object);
             this.testee.Initialize(new object());
 
             this.testee.Intercept(null, null, null);
@@ -90,9 +88,7 @@
         {
             var expectedReturnValue = new object();
             var invocation = new Mock<IInvocation>();
-            this.invocationFactory
-                .Setup(x => x.Create(It.IsAny<object>(), It.IsAny<MethodBase>(), It.IsAny<MethodBase>(), It.IsAny<object[]>(), It.IsAny<IDynamicInterceptor[]>()))
-                .Returns(invocation.Object);
+            this.SetupInvocationFactory(invocation.Object);
             this.testee.Initialize(new object());
 
             invocation.Setup(x => x.Proceed())
@@ -101,6 +97,35 @@
             object actualReturnValue = this.testee.Intercept(null, null, null);
 
             actualReturnValue.Should().Be(expectedReturnValue);
+        }
+
+        [Fact]
+        public void Intercept_WhenReturnTypeIsValueTypeAndReturnValueIsNull_MustThrow()
+        {
+            this.SetupInvocationFactory(Mock.Of<IInvocation>(x => x.ReturnValue == null));
+            this.testee.Initialize(new object());
+            var decoratedMethod = new DynamicMethod("anyName", typeof(int), new Type[0]);
+
+            this.testee.Invoking(x => x.Intercept(decoratedMethod, null, null))
+                .ShouldThrow<InvalidOperationException>();
+        }
+
+        [Fact]
+        public void Intercept_WhenReturnTypeIsReferenceTypeAndReturnValueIsNull_MustNotThrow()
+        {
+            this.SetupInvocationFactory(Mock.Of<IInvocation>(x => x.ReturnValue == null));
+            this.testee.Initialize(new object());
+            var decoratedMethod = new DynamicMethod("anyName", typeof(string), new Type[0]);
+
+            this.testee.Invoking(x => x.Intercept(decoratedMethod, null, null))
+                .ShouldNotThrow();
+        }
+
+        private void SetupInvocationFactory(IInvocation invocation)
+        {
+            this.invocationFactory
+                .Setup(x => x.Create(It.IsAny<object>(), It.IsAny<MethodInfo>(), It.IsAny<MethodInfo>(), It.IsAny<object[]>(), It.IsAny<IDynamicInterceptor[]>()))
+                .Returns(invocation);
         }
     }
 }
