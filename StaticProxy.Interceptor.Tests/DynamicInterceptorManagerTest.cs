@@ -14,8 +14,6 @@
 
     public class DynamicInterceptorManagerTest
     {
-        private static readonly MethodBase AnyMethodBase = new DynamicMethod("blub", typeof(object), new Type[0]);
-
         private readonly Mock<IDynamicInterceptor> interceptor1;
         private readonly Mock<IDynamicInterceptor> interceptor2;
 
@@ -31,7 +29,7 @@
             this.invocationFactory = new Mock<IInvocationFactory> { DefaultValue = DefaultValue.Mock };
 
             this.testee = new DynamicInterceptorManager(
-                new[] { this.interceptor1.Object, this.interceptor2.Object },
+                new FakeDynamicInterceptorCollection { this.interceptor1.Object, this.interceptor2.Object },
                 this.invocationFactory.Object);
         }
 

@@ -42,6 +42,7 @@
     <Compile Include="Exceptions.cs" />
     <Compile Include="IDynamicInterceptor.cs" />
     <Compile Include="IDynamicInterceptorManager.cs" />
+    <Compile Include="IDynamicInterceptorCollection.cs" />
     <Compile Include="IInvocation.cs" />
     <Compile Include="IInvocationFactory.cs" />
     <Compile Include="Invocation.cs" />

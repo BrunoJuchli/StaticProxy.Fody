@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -12,12 +11,12 @@ public class DynamicInterceptorManager : IDynamicInterceptorManager
 
     private object target;
 
-    public DynamicInterceptorManager(IEnumerable<IDynamicInterceptor> interceptors)
+    public DynamicInterceptorManager(IDynamicInterceptorCollection interceptors)
         : this(interceptors, new InvocationFactory())
     {
     }
 
-    internal DynamicInterceptorManager(IEnumerable<IDynamicInterceptor> interceptors, IInvocationFactory invocationFactory)
+    internal DynamicInterceptorManager(IDynamicInterceptorCollection interceptors, IInvocationFactory invocationFactory)
     {
         this.invocationFactory = invocationFactory;
         this.interceptors = interceptors.ToArray();
