@@ -12,8 +12,8 @@ Sadly enough, some platforms do not support dynamic code emitting. These include
 You are also most likely affected if you are creating a PCL.
 
 Here comes StaticProxy.Fody to the rescue!
-Instead of dynamically creating proxies code, it is weaving them in at compile time by means of IL rewritting.
-Also see: [Introduction to Fody](http://github.com/Fody/Fody/wiki/SampleUsage)
+Instead of dynamically creating proxies, it is weaving them at compile time by means of IL rewritting
+(see: [Introduction to Fody](http://github.com/Fody/Fody/wiki/SampleUsage)).
 
 It is meant to be used in conjunction with dependency injection (IoC), since it is adding arguments to the constructor - and thus breaks all `new Foo(...)` calls.
 
@@ -118,6 +118,3 @@ or roll your own:
 ## Icon
 
 Icon courtesy of [The Noun Project](http://thenounproject.com)
-
-
-
