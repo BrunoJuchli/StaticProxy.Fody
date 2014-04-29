@@ -12,6 +12,8 @@ namespace StaticProxy.Fody.Tests
         public string TargetFrameworkProfile;
         public bool IsSilverlight;
 
+        private const string Dot = ".";
+
         public VersionReader(string projectPath)
         {
             var xDocument = XDocument.Load(projectPath);
@@ -23,10 +25,21 @@ namespace StaticProxy.Fody.Tests
 
         void GetFrameworkVersion(XDocument xDocument)
         {
+            // todo improve version reading and merge it to Fody Test utilities!
             this.FrameworkVersionAsString = xDocument.Descendants("TargetFrameworkVersion")
                 .Select(c => c.Value)
                 .First();
-            this.FrameworkVersionAsNumber = decimal.Parse(this.FrameworkVersionAsString.Remove(0, 1), CultureInfo.InvariantCulture);
+
+            string majorMinor = this.FrameworkVersionAsString.TrimStart('v');
+
+            int firstDotIndex = majorMinor.IndexOf(Dot, StringComparison.InvariantCulture);
+            if (firstDotIndex != majorMinor.LastIndexOf(Dot, StringComparison.InvariantCulture))
+            {
+                int length = majorMinor.IndexOf(Dot, firstDotIndex + 1, StringComparison.InvariantCulture);
+                majorMinor = majorMinor.Substring(0, length);
+            }
+
+            this.FrameworkVersionAsNumber = decimal.Parse(majorMinor, CultureInfo.InvariantCulture);
         }
 
         void GetTargetFrameworkProfile(XDocument xDocument)
