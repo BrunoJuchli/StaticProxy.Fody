@@ -9,6 +9,7 @@
     using Moq;
 
     using StaticProxy.Interceptor;
+    using StaticProxy.Interceptor.TargetInvocation;
 
     using Xunit;
 
@@ -17,9 +18,8 @@
         private const int OriginalArgument1 = 482;
         private static readonly object OriginalArgument2 = new object();
 
-        private readonly Mock<IFakeTarget> target;
+        private readonly Mock<ITargetInvocation> targetInvocation;
         private readonly MethodInfo decoratedMethod;
-        private readonly MethodInfo implementationMethod;
         private readonly object[] arguments = new object[] { OriginalArgument1, OriginalArgument2 };
         private readonly Mock<IDynamicInterceptor> interceptor1;
         private readonly Mock<IDynamicInterceptor> interceptor2;
@@ -28,16 +28,14 @@
 
         public InvocationTest()
         {
-            this.target = new Mock<IFakeTarget>();
-            this.decoratedMethod = typeof(IFakeTarget).GetMethod("Decorated");
-            this.implementationMethod = typeof(IFakeTarget).GetMethod("Implementation");
+            this.targetInvocation = new Mock<ITargetInvocation>();
+            this.decoratedMethod = typeof(IFakeTarget).GetMethod("Foo");
             this.interceptor1 = new Mock<IDynamicInterceptor>();
             this.interceptor2 = new Mock<IDynamicInterceptor>();
 
             this.testee = new Invocation(
-                this.target.Object,
+                this.targetInvocation.Object,
                 this.decoratedMethod,
-                this.implementationMethod,
                 this.arguments, 
                 new[] { this.interceptor1.Object, this.interceptor2.Object });
         }
@@ -134,25 +132,25 @@
                         x.Proceed();
                     });
 
-            this.target.Setup(x => x.Implementation(It.IsAny<int>(), It.IsAny<object>()))
-                .Callback(() => sequence.Add(this.target));
+            this.targetInvocation.Setup(x => x.InvokeMethodOnTarget(It.IsAny<object[]>()))
+                .Callback(() => sequence.Add(this.targetInvocation));
 
             this.testee.Proceed();
 
             this.interceptor1.Verify(x => x.Intercept(this.testee));
             this.interceptor2.Verify(x => x.Intercept(this.testee));
-            this.target.Verify(x => x.Implementation(OriginalArgument1, OriginalArgument2));
+            this.targetInvocation.Verify(x => x.InvokeMethodOnTarget(new[] { OriginalArgument1, OriginalArgument2 }));
 
             sequence.Should()
                 .HaveCount(3)
-                .And.ContainInOrder(this.interceptor1, this.interceptor2, this.target);
+                .And.ContainInOrder(this.interceptor1, this.interceptor2, this.targetInvocation);
         }
 
         [Fact]
         public void Proceed_When_OriginalImplementationThrows_MustRethrowOriginalException()
         {
-            this.target
-                .Setup(x => x.Implementation(It.IsAny<int>(), It.IsAny<object>()))
+            this.targetInvocation
+                .Setup(x => x.InvokeMethodOnTarget(It.IsAny<object[]>()))
                 .Throws<ArgumentOutOfRangeException>();
 
             this.interceptor1.Setup(x => x.Intercept(It.IsAny<IInvocation>())).Callback<IInvocation>(x => x.Proceed());
@@ -166,8 +164,8 @@
         public void Proceed_MustStoreReturnValueOfOriginalMethod()
         {
             var expectedReturnValue = new object();
-            this.target
-                .Setup(x => x.Implementation(It.IsAny<int>(), It.IsAny<object>()))
+            this.targetInvocation
+                .Setup(x => x.InvokeMethodOnTarget(It.IsAny<object[]>()))
                 .Returns(expectedReturnValue);
 
             this.interceptor1.Setup(x => x.Intercept(It.IsAny<IInvocation>())).Callback<IInvocation>(x => x.Proceed());
@@ -180,9 +178,7 @@
 
         public interface IFakeTarget
         {
-            object Decorated(int i, object o);
-
-            object Implementation(int i, object o);
+            object Foo(int i, object o);
         }
     }
 }

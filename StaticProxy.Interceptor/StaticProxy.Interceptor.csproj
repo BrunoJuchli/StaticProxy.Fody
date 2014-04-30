@@ -48,8 +48,13 @@
     <Compile Include="IInvocationFactory.cs" />
     <Compile Include="Invocation.cs" />
     <Compile Include="InvocationFactory.cs" />
+    <Compile Include="TargetInvocation\ITargetInvocation.cs" />
+    <Compile Include="TargetInvocation\ITargetInvocationFactory.cs" />
+    <Compile Include="TargetInvocation\TargetInvocationFactory.cs" />
+    <Compile Include="TargetInvocation\WithoutTargetInvocation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticProxyAttribute.cs" />
+    <Compile Include="TargetInvocation\WithTargetInvocation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

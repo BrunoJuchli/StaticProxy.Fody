@@ -2,8 +2,10 @@
 {
     using System.Reflection;
 
+    using StaticProxy.Interceptor.TargetInvocation;
+
     internal interface IInvocationFactory
     {
-        IInvocation Create(object target, MethodInfo decoratedMethod, MethodInfo implementationMethod, object[] arguments, IDynamicInterceptor[] interceptors);
+        IInvocation Create(ITargetInvocation targetInvocation, MethodInfo decoratedMethod, object[] arguments, IDynamicInterceptor[] interceptors);
     }
 }

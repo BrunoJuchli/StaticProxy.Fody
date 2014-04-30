@@ -7,11 +7,12 @@ namespace StaticProxy.Interceptor
     using System.Linq;
     using System.Reflection;
 
-    public class Invocation : IInvocation
+    using StaticProxy.Interceptor.TargetInvocation;
+
+    internal class Invocation : IInvocation
     {
-        private readonly object target;
+        private readonly ITargetInvocation targetInvocation;
         private readonly MethodInfo decoratedMethod;
-        private readonly MethodInfo implementationMethod;
         private readonly object[] arguments;
         private readonly IDynamicInterceptor[] interceptors;
         private readonly Lazy<Type[]> parameterTypes;
@@ -19,11 +20,10 @@ namespace StaticProxy.Interceptor
 
         private int currentInterceptorIndex = -1;
 
-        public Invocation(object target, MethodInfo decoratedMethod, MethodInfo implementationMethod, object[] arguments, IDynamicInterceptor[] interceptors)
+        public Invocation(ITargetInvocation targetInvocation, MethodInfo decoratedMethod, object[] arguments, IDynamicInterceptor[] interceptors)
         {
-            this.target = target;
+            this.targetInvocation = targetInvocation;
             this.decoratedMethod = decoratedMethod;
-            this.implementationMethod = implementationMethod;
             this.arguments = arguments;
             this.interceptors = interceptors;
 
@@ -61,7 +61,7 @@ namespace StaticProxy.Interceptor
             {
                 if (this.currentInterceptorIndex == this.interceptors.Length)
                 {
-                    this.ReturnValue = this.InvokeMethodOnTarget();
+                    this.ReturnValue = this.targetInvocation.InvokeMethodOnTarget(this.arguments);
                 }
                 else if (this.currentInterceptorIndex > this.interceptors.Length)
                 {
@@ -120,23 +120,6 @@ namespace StaticProxy.Interceptor
                           + "This usually signifies a bug in the calling code. Make sure that" + interceptorsCount
                           + " selected for the method '" + this.Method + "'" + "calls invocation.Proceed() at most once.";
             return new InvalidOperationException(message);
-        }
-
-        private object InvokeMethodOnTarget()
-        {
-            try
-            {
-                return this.implementationMethod.Invoke(this.target, this.arguments);
-            }
-            catch (TargetInvocationException ex)
-            {
-                if (ex.InnerException != null)
-                {
-                    throw ex.InnerException.PreserveStackTrace();
-                }
-
-                throw;
-            }
         }
     }
 }

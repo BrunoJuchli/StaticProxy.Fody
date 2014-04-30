@@ -4,23 +4,31 @@ using System.Linq;
 using System.Reflection;
 
 using StaticProxy.Interceptor;
+using StaticProxy.Interceptor.TargetInvocation;
 
 public class DynamicInterceptorManager : IDynamicInterceptorManager
 {
     private readonly IDynamicInterceptor[] interceptors;
+    private readonly ITargetInvocationFactory targetInvocationFactory;
     private readonly IInvocationFactory invocationFactory;
 
     private object target;
 
     public DynamicInterceptorManager(IDynamicInterceptorCollection interceptors)
-        : this(interceptors, new InvocationFactory())
+        : this(interceptors, new TargetInvocationFactory(), new InvocationFactory())
     {
     }
 
-    internal DynamicInterceptorManager(IDynamicInterceptorCollection interceptors, IInvocationFactory invocationFactory)
+    internal DynamicInterceptorManager(
+        IDynamicInterceptorCollection interceptors, 
+        ITargetInvocationFactory targetInvocationFactory,
+        IInvocationFactory invocationFactory)
     {
+        this.targetInvocationFactory = targetInvocationFactory;
         this.invocationFactory = invocationFactory;
         this.interceptors = interceptors.ToArray();
+
+        this.target = null;
     }
 
     public void Initialize(object target)
@@ -35,18 +43,19 @@ public class DynamicInterceptorManager : IDynamicInterceptorManager
 
     public object Intercept(MethodBase decoratedMethod, MethodBase implementationMethod, object[] arguments)
     {
-        // since we only support methods, not constructors, these are actually MethodInfo's
-        var decoratedMethodInfo = (MethodInfo)decoratedMethod;
-        var implementationMethodInfo = (MethodInfo)implementationMethod;
-        
         if (this.target == null)
         {
-            throw new InvalidOperationException("Something has gone seriously wrong with StaticProxy.Fody." + 
+            throw new InvalidOperationException("Something has gone seriously wrong with StaticProxy.Fody." +
                 ".Initialize(target) must be called once before any .Intercept(..)");
         }
 
+        // since we only support methods, not constructors, this is actually a MethodInfo
+        var decoratedMethodInfo = (MethodInfo)decoratedMethod;
+        
+        ITargetInvocation targetInvocation = this.targetInvocationFactory.Create(this.target, implementationMethod);
+        
         IInvocation invocation = this.invocationFactory
-            .Create(this.target, decoratedMethodInfo, implementationMethodInfo, arguments, this.interceptors);
+            .Create(targetInvocation, decoratedMethodInfo, arguments, this.interceptors);
 
         invocation.Proceed();
 
@@ -56,7 +65,7 @@ public class DynamicInterceptorManager : IDynamicInterceptorManager
                 CultureInfo.InvariantCulture,
                 "Method {0}.{1} has return type {2} which is a value type. After the invocation the invocation the return value was null. Please ensure that your interceptors call IInvocation.Proceed() or sets a valid IInvocation.ReturnValue.",
                 this.target.GetType().FullName,
-                decoratedMethodInfo.ToString(),
+                decoratedMethodInfo,
                 decoratedMethodInfo.ReturnType.Name);
             throw new InvalidOperationException(message);
         }

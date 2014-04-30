@@ -9,6 +9,7 @@
     using Moq;
 
     using StaticProxy.Interceptor;
+    using StaticProxy.Interceptor.TargetInvocation;
 
     using Xunit;
 
@@ -17,6 +18,7 @@
         private readonly Mock<IDynamicInterceptor> interceptor1;
         private readonly Mock<IDynamicInterceptor> interceptor2;
 
+        private readonly Mock<ITargetInvocationFactory> targetInvocationFactory;
         private readonly Mock<IInvocationFactory> invocationFactory;
 
         private readonly DynamicInterceptorManager testee;
@@ -26,10 +28,12 @@
             this.interceptor1 = new Mock<IDynamicInterceptor>();
             this.interceptor2 = new Mock<IDynamicInterceptor>();
 
+            this.targetInvocationFactory = new Mock<ITargetInvocationFactory> { DefaultValue = DefaultValue.Mock };
             this.invocationFactory = new Mock<IInvocationFactory> { DefaultValue = DefaultValue.Mock };
 
             this.testee = new DynamicInterceptorManager(
                 new FakeDynamicInterceptorCollection { this.interceptor1.Object, this.interceptor2.Object },
+                this.targetInvocationFactory.Object, 
                 this.invocationFactory.Object);
         }
 
@@ -56,19 +60,36 @@
         }
 
         [Fact]
-        public void Intercept_ShouldCreateInvocation()
+        public void Intercept_ShouldCreateTargetInvocation()
         {
             var expectedTarget = new object();
             var expectedDecoratedMethod = new DynamicMethod("decorated", typeof(object), new Type[0]);
             var expectedImplementationMethod = new DynamicMethod("implementation", typeof(object), new Type[0]);
             var expectedArguments = new[] { new object(), new object() };
-            var expectedInterceptors = new[] { this.interceptor1.Object, this.interceptor2.Object };
             this.testee.Initialize(expectedTarget);
-            
+
             this.testee.Intercept(expectedDecoratedMethod, expectedImplementationMethod, expectedArguments);
 
+            this.targetInvocationFactory.Verify(x => x.Create(expectedTarget, expectedImplementationMethod));
+        }
+
+        [Fact]
+        public void Intercept_ShouldCreateInvocation()
+        {
+            var expectedTargetInvocation = Mock.Of<ITargetInvocation>();
+            this.targetInvocationFactory.Setup(x => x.Create(It.IsAny<object>(), It.IsAny<MethodBase>()))
+                .Returns(expectedTargetInvocation);
+
+            var expectedDecoratedMethod = new DynamicMethod("decorated", typeof(object), new Type[0]);
+            var expectedArguments = new[] { new object(), new object() };
+            var expectedInterceptors = new[] { this.interceptor1.Object, this.interceptor2.Object };
+
+            this.testee.Initialize(new object());
+            
+            this.testee.Intercept(expectedDecoratedMethod, null, expectedArguments);
+
             this.invocationFactory.Verify(x => 
-                x.Create(expectedTarget, expectedDecoratedMethod, expectedImplementationMethod, expectedArguments, expectedInterceptors));
+                x.Create(expectedTargetInvocation, expectedDecoratedMethod, expectedArguments, expectedInterceptors));
         }
 
         [Fact]
@@ -124,7 +145,7 @@
         private void SetupInvocationFactory(IInvocation invocation)
         {
             this.invocationFactory
-                .Setup(x => x.Create(It.IsAny<object>(), It.IsAny<MethodInfo>(), It.IsAny<MethodInfo>(), It.IsAny<object[]>(), It.IsAny<IDynamicInterceptor[]>()))
+                .Setup(x => x.Create(It.IsAny<ITargetInvocation>(), It.IsAny<MethodInfo>(), It.IsAny<object[]>(), It.IsAny<IDynamicInterceptor[]>()))
                 .Returns(invocation);
         }
     }

@@ -63,6 +63,9 @@
     <Compile Include="InvocationTest.cs" />
     <Compile Include="InvocationTest_FaultyInterceptorImplementation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TargetInvocation\TargetInvocationFactoryTest.cs" />
+    <Compile Include="TargetInvocation\WithoutTargetInvocationTest.cs" />
+    <Compile Include="TargetInvocation\WithTargetInvocationTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StaticProxy.Interceptor\StaticProxy.Interceptor.csproj">

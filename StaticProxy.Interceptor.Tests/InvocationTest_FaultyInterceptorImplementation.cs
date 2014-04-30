@@ -7,19 +7,23 @@
     using Moq;
 
     using StaticProxy.Interceptor;
+    using StaticProxy.Interceptor.TargetInvocation;
 
     using Xunit;
 
     public class InvocationTest_FaultyInterceptorImplementation
     {
+        private readonly Mock<ITargetInvocation> targetInvocation;
+
         private readonly Invocation testee;
 
         public InvocationTest_FaultyInterceptorImplementation()
         {
+            this.targetInvocation = new Mock<ITargetInvocation>();
+
             this.testee = new Invocation(
-                new Mock<IFakeTarget>().Object,
-                typeof(IFakeTarget).GetMethod("Decorated"),
-                typeof(IFakeTarget).GetMethod("Implementation"),
+                this.targetInvocation.Object,
+                typeof(IFakeTarget).GetMethod("Foo"),
                 new object[0], 
                 new IDynamicInterceptor[] { new FaultyInterceptor() });
         }
@@ -33,9 +37,7 @@
 
         public interface IFakeTarget
         {
-            void Decorated();
-
-            void Implementation();
+            void Foo();
         }
 
         public class FaultyInterceptor : IDynamicInterceptor
