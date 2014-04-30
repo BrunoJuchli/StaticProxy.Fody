@@ -49,6 +49,7 @@
     <Compile Include="ConstructorWithArguments.cs" />
     <Compile Include="DefaultConstructor.cs" />
     <Compile Include="ConstructorWithoutArguments.cs" />
+    <Compile Include="IProxiedInterface.cs" />
     <Compile Include="Methods.cs" />
     <Compile Include="TestMessages.cs" />
   </ItemGroup>

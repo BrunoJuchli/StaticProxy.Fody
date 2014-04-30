@@ -15,20 +15,30 @@
                 .Where(HasStaticProxyAttribute)
                 .ToList();
 
-            AssertDoNotHaveMultipleConstructors(typesToProxy);
-
             var constructorDecorator = new ConstructorWeaver();
             var methodDecorator = new MethodWeaver();
 
-            foreach (TypeDefinition typeToProxy in typesToProxy)
-            {
-                FieldDefinition interceptorRetriever = constructorDecorator.ExtendConstructorWithDynamicInterceptorRetriever(typeToProxy);
+            ICollection<TypeDefinition> classesToProxy = typesToProxy.Where(x => x.IsClass).ToList();
+            DecorateClass(classesToProxy, constructorDecorator, methodDecorator);
+        }
 
-                DecorateMethods(typeToProxy, methodDecorator, interceptorRetriever);
+        private static void DecorateClass(
+            ICollection<TypeDefinition> classesToProxy,
+            ConstructorWeaver constructorDecorator,
+            MethodWeaver methodDecorator)
+        {
+            AssertDoNotHaveMultipleConstructors(classesToProxy);
+
+            foreach (TypeDefinition classToProxy in classesToProxy)
+            {
+                FieldDefinition interceptorRetriever =
+                    constructorDecorator.ExtendConstructorWithDynamicInterceptorRetriever(classToProxy);
+
+                DecorateClassProxyMethods(classToProxy, methodDecorator, interceptorRetriever);
             }
         }
 
-        private static void DecorateMethods(
+        private static void DecorateClassProxyMethods(
             TypeDefinition typeToProxy,
             MethodWeaver methodWeaver,
             FieldDefinition interceptorRetriever)
