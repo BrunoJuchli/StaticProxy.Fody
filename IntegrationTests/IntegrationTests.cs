@@ -162,22 +162,6 @@ namespace IntegrationTests
         }
 
         [Fact]
-        public void ImplementationRethrowsException_MustThrow()
-        {
-            using (IKernel kernel = new StandardKernel())
-            {
-                kernel.Bind<IDynamicInterceptorManager>().To<DynamicInterceptorManager>();
-                kernel.Bind<IDynamicInterceptorCollection>().ToConstant(new FakeDynamicInterceptorCollection());
-
-                var instance = kernel.Get<IntegrationThrowException>();
-
-                instance.Invoking(x => x.RethrowException())
-                    .ShouldThrow<Exception>()
-                    .WithInnerException<NullReferenceException>();
-            }
-        }
-
-        [Fact]
         public void MethodWithReferenceTypeReturnValue_NoInterceptor_MustReturnOriginalMethodReturnValue()
         {
             const string ExpectedString = "HelloWorld";
@@ -197,7 +181,7 @@ namespace IntegrationTests
         }
 
         [Fact]
-        public void MethodWithReferenTypeReturnValue_InterceptorMustBeAbleToChangeReturnValue()
+        public void MethodWithReferenceTypeReturnValue_InterceptorMustBeAbleToChangeReturnValue()
         {
             const string ExpectedString = "HelloWorldIntercepted";
             const string InterceptorAppends = "Intercepted";
@@ -237,16 +221,6 @@ namespace IntegrationTests
                 var instance = kernel.Get<IntegrationWithReturnValue>();
 
                 instance.Multiply(3, 5).Should().Be(15);
-            }
-        }
-
-        [Fact]
-        public void NotProxiedType()
-        {
-            using (IKernel kernel = new StandardKernel())
-            {
-                // this would throw an ActivationException in case it would be proxied
-                kernel.Get<NotProxiedType>();
             }
         }
     }

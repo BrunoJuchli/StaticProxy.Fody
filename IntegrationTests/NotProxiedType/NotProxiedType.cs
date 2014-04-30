@@ -1,4 +1,4 @@
-﻿namespace IntegrationTests
+﻿namespace IntegrationTests.NotProxiedType
 {
     using System;
 

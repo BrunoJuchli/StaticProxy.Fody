@@ -70,9 +70,11 @@
     <Compile Include="IntegrationWithConstructorArgument.cs" />
     <Compile Include="IntegrationWithoutConstructorArgument.cs" />
     <Compile Include="IntegrationWithReturnValue.cs" />
-    <Compile Include="NotProxiedType.cs" />
+    <Compile Include="NotProxiedType\NotProxiedType.cs" />
+    <Compile Include="NotProxiedType\NotProxiedTypeTest.cs" />
     <Compile Include="OverrideToString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProxyWithTarget\When_implementation_rethrows_exception.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
