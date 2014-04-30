@@ -45,6 +45,7 @@ namespace SimpleTest.Integration
             using (IKernel kernel = new StandardKernel())
             {
                 kernel.Bind<IDynamicInterceptorManager>().To<DynamicInterceptorManager>();
+                kernel.Bind<IDynamicInterceptorCollection>().ToConstant(new FakeDynamicInterceptorCollection());
                 kernel.Bind<IDependency>().To<Dependency>()
                     .WithConstructorArgument("number", DependencyNumber);
 
@@ -70,7 +71,8 @@ namespace SimpleTest.Integration
             {
                 kernel.Bind<IDynamicInterceptorManager>().To<DynamicInterceptorManager>();
                 kernel.Bind<IDependency>().ToConstant(Mock.Of<IDependency>());
-                kernel.Bind<IDynamicInterceptor>().ToConstant(fakeInterceptor.Object);
+                kernel.Bind<IDynamicInterceptorCollection>()
+                    .ToConstant(new FakeDynamicInterceptorCollection(fakeInterceptor.Object));
 
                 var instance = kernel.Get<IntegrationWithConstructorArgument>();
 
@@ -105,7 +107,8 @@ namespace SimpleTest.Integration
                 kernel.Bind<IDynamicInterceptorManager>().To<DynamicInterceptorManager>();
                 kernel.Bind<IDependency>().To<Dependency>()
                     .WithConstructorArgument("number", DependencyNumber);
-                kernel.Bind<IDynamicInterceptor>().ToConstant(fakeInterceptor.Object);
+                kernel.Bind<IDynamicInterceptorCollection>()
+                    .ToConstant(new FakeDynamicInterceptorCollection(fakeInterceptor.Object));
 
                 var instance = kernel.Get<IntegrationWithConstructorArgument>();
 
@@ -141,7 +144,8 @@ namespace SimpleTest.Integration
             using (IKernel kernel = new StandardKernel())
             {
                 kernel.Bind<IDynamicInterceptorManager>().To<DynamicInterceptorManager>();
-                kernel.Bind<IDynamicInterceptor>().ToConstant(fakeInterceptor.Object);
+                kernel.Bind<IDynamicInterceptorCollection>()
+                    .ToConstant(new FakeDynamicInterceptorCollection(fakeInterceptor.Object));
 
                 var instance = kernel.Get<IntegrationWithoutConstructorArgument>();
 
@@ -171,7 +175,8 @@ namespace SimpleTest.Integration
             using (IKernel kernel = new StandardKernel())
             {
                 kernel.Bind<IDynamicInterceptorManager>().To<DynamicInterceptorManager>();
-                kernel.Bind<IDynamicInterceptor>().ToConstant(fakeInterceptor.Object);
+                kernel.Bind<IDynamicInterceptorCollection>()
+                    .ToConstant(new FakeDynamicInterceptorCollection(fakeInterceptor.Object));
 
                 var instance = kernel.Get<IntegrationThrowException>();
 
@@ -184,6 +189,7 @@ namespace SimpleTest.Integration
             using (IKernel kernel = new StandardKernel())
             {
                 kernel.Bind<IDynamicInterceptorManager>().To<DynamicInterceptorManager>();
+                kernel.Bind<IDynamicInterceptorCollection>().ToConstant(new FakeDynamicInterceptorCollection());
 
                 var instance = kernel.Get<IntegrationThrowException>();
 
@@ -202,6 +208,7 @@ namespace SimpleTest.Integration
             using (IKernel kernel = new StandardKernel())
             {
                 kernel.Bind<IDynamicInterceptorManager>().To<DynamicInterceptorManager>();
+                kernel.Bind<IDynamicInterceptorCollection>().ToConstant(new FakeDynamicInterceptorCollection());
 
                 var instance = kernel.Get<IntegrationWithReturnValue>();
 
@@ -230,7 +237,7 @@ namespace SimpleTest.Integration
             using (IKernel kernel = new StandardKernel())
             {
                 kernel.Bind<IDynamicInterceptorManager>().To<DynamicInterceptorManager>();
-                kernel.Bind<IDynamicInterceptor>().ToConstant(fakeInterceptor.Object);
+                kernel.Bind<IDynamicInterceptorCollection>().ToConstant(new FakeDynamicInterceptorCollection(fakeInterceptor.Object));
 
                 var instance = kernel.Get<IntegrationWithReturnValue>();
 
@@ -244,6 +251,7 @@ namespace SimpleTest.Integration
             using (IKernel kernel = new StandardKernel())
             {
                 kernel.Bind<IDynamicInterceptorManager>().To<DynamicInterceptorManager>();
+                kernel.Bind<IDynamicInterceptorCollection>().ToConstant(new FakeDynamicInterceptorCollection());
 
                 var instance = kernel.Get<IntegrationWithReturnValue>();
 

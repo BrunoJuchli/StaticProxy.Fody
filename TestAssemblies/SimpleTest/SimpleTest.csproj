@@ -66,6 +66,7 @@
     <Compile Include="DefaultConstructor.cs" />
     <Compile Include="ConstructorWithoutArguments.cs" />
     <Compile Include="Integration\Dependency.cs" />
+    <Compile Include="Integration\FakeDynamicInterceptorCollection.cs" />
     <Compile Include="Integration\IDependency.cs" />
     <Compile Include="Integration\IntegrationTests.cs" />
     <Compile Include="Integration\IntegrationThrowException.cs" />
