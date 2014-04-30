@@ -29,6 +29,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{972F91
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleConstructors", "TestAssemblies\MultipleConstructors\MultipleConstructors.csproj", "{082D7B97-EF4E-439D-A10A-BFB5072AA728}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{C70FE99A-2A69-40A6-8A7B-0DBE65554605}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3B17CFD4-10E7-42DB-88D6-A10680B0BFBE} = {3B17CFD4-10E7-42DB-88D6-A10680B0BFBE}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +56,10 @@ Global
 		{082D7B97-EF4E-439D-A10A-BFB5072AA728}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{082D7B97-EF4E-439D-A10A-BFB5072AA728}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{082D7B97-EF4E-439D-A10A-BFB5072AA728}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C70FE99A-2A69-40A6-8A7B-0DBE65554605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C70FE99A-2A69-40A6-8A7B-0DBE65554605}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C70FE99A-2A69-40A6-8A7B-0DBE65554605}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C70FE99A-2A69-40A6-8A7B-0DBE65554605}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,5 +67,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A47D69DD-74D6-466F-9A4E-DD0D09BB1E93} = {274A2E6A-5B50-4D24-862E-86C05F8D89C4}
 		{082D7B97-EF4E-439D-A10A-BFB5072AA728} = {274A2E6A-5B50-4D24-862E-86C05F8D89C4}
+		{C70FE99A-2A69-40A6-8A7B-0DBE65554605} = {274A2E6A-5B50-4D24-862E-86C05F8D89C4}
 	EndGlobalSection
 EndGlobal
