@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 
 using StaticProxy.Interceptor;
+using StaticProxy.Interceptor.Reflection;
 using StaticProxy.Interceptor.TargetInvocation;
 
 public class DynamicInterceptorManager : IDynamicInterceptorManager
@@ -11,21 +12,24 @@ public class DynamicInterceptorManager : IDynamicInterceptorManager
     private readonly IDynamicInterceptor[] interceptors;
     private readonly ITargetInvocationFactory targetInvocationFactory;
     private readonly IInvocationFactory invocationFactory;
+    private readonly ITypeInformation typeInformation;
 
     private object target;
 
     public DynamicInterceptorManager(IDynamicInterceptorCollection interceptors)
-        : this(interceptors, new TargetInvocationFactory(), new InvocationFactory())
+        : this(interceptors, new TargetInvocationFactory(), new InvocationFactory(), new TypeInformation())
     {
     }
 
     internal DynamicInterceptorManager(
         IDynamicInterceptorCollection interceptors, 
         ITargetInvocationFactory targetInvocationFactory,
-        IInvocationFactory invocationFactory)
+        IInvocationFactory invocationFactory,
+        ITypeInformation typeInformation)
     {
         this.targetInvocationFactory = targetInvocationFactory;
         this.invocationFactory = invocationFactory;
+        this.typeInformation = typeInformation;
         this.interceptors = interceptors.ToArray();
 
         this.target = null;
@@ -59,14 +63,14 @@ public class DynamicInterceptorManager : IDynamicInterceptorManager
 
         invocation.Proceed();
 
-        if (invocation.ReturnValue == null && decoratedMethodInfo.ReturnType.IsValueType)
+        if (invocation.ReturnValue == null && !this.typeInformation.IsNullable(decoratedMethodInfo.ReturnType))
         {
             string message = string.Format(
                 CultureInfo.InvariantCulture,
                 "Method {0}.{1} has return type {2} which is a value type. After the invocation the invocation the return value was null. Please ensure that your interceptors call IInvocation.Proceed() or sets a valid IInvocation.ReturnValue.",
                 this.target.GetType().FullName,
                 decoratedMethodInfo,
-                decoratedMethodInfo.ReturnType.Name);
+                decoratedMethodInfo.ReturnType.FullName);
             throw new InvalidOperationException(message);
         }
 
