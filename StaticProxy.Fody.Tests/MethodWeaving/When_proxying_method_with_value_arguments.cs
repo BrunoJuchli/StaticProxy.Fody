@@ -19,9 +19,12 @@
         [Fact]
         public void CallingMethod_MustExecuteOriginalMethod()
         {
-            this.Instance.ValueArguments(0, 9.8f);
+            const int Argument1 = 549348;
+            const float Argument2 = 234.9f;
 
-            this.VerifyMethodCalled("ValueArguments");
+            this.Instance.ValueArguments(Argument1, Argument2);
+
+            this.VerifyMethodCalled("ValueArguments", Argument1, Argument2);
         }
     }
 }

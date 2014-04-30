@@ -21,9 +21,13 @@
         [Fact]
         public void CallingMethod_MustExecuteOriginalMethod()
         {
-            this.Instance.MixedArguments(0, null, string.Empty);
+            const int Argument1 = 38203;
+            object argument2 = new ToStringObject("AnyToString");
+            const string Argument3 = "AnyString";
 
-            this.VerifyMethodCalled("MixedArguments");
+            this.Instance.MixedArguments(Argument1, argument2, Argument3);
+
+            this.VerifyMethodCalled("MixedArguments", Argument1, argument2, Argument3);
         }
     }
 }

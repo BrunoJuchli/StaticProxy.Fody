@@ -63,8 +63,9 @@
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="StaticProxy.Interceptor">
-      <HintPath>..\packages\StaticProxy.Interceptor.0.0.1-beta\lib\portable-win+net40+sl50+wp80\StaticProxy.Interceptor.dll</HintPath>
+    <Reference Include="StaticProxy.Interceptor, Version=0.0.0.26, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\StaticProxy.Interceptor.0.1.0-beta2\lib\portable-win+net40+sl50+wp80\StaticProxy.Interceptor.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -85,11 +86,15 @@
     <Compile Include="IntegrationTestsRunner.cs" />
     <Compile Include="MethodWeaving\DynamicInterceptorManagerMockExtensions.cs" />
     <Compile Include="MethodWeaving\MethodsTestBase.cs" />
+    <Compile Include="MethodWeaving\ToStringObject.cs" />
+    <Compile Include="MethodWeaving\When_proxying_method_returning_nullable_value_type.cs" />
     <Compile Include="MethodWeaving\When_proxying_method_with_local_variables.cs" />
     <Compile Include="MethodWeaving\When_proxying_method_with_mixed_arguments.cs" />
+    <Compile Include="MethodWeaving\When_proxying_method_returning_reference_type.cs" />
     <Compile Include="MethodWeaving\When_proxying_method_with_value_arguments.cs" />
     <Compile Include="MethodWeaving\When_proxying_method_with_reference_arguments.cs" />
     <Compile Include="MethodWeaving\When_proxying_method_without_arguments.cs" />
+    <Compile Include="MethodWeaving\When_proxying_method_returning_value_type.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="SimpleTestBase.cs" />
     <Compile Include="StaticMembersDynamicWrapper.cs" />

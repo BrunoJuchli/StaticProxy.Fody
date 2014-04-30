@@ -1,8 +1,8 @@
 ﻿namespace StaticProxy.Fody.Tests.MethodWeaving
 {
     using System;
-    using System.Globalization;
     using System.Reflection;
+    using System.Text;
 
     using FluentAssertions;
 
@@ -24,10 +24,17 @@
             this.Instance = Activator.CreateInstance(this.Clazz, this.InterceptorManager.Object);
         }
 
-        protected void VerifyMethodCalled(string originalMethodName)
+        protected void VerifyMethodCalled(string originalMethodName, params object[] arguments)
         {
-            string expectedMethodName = string.Format(CultureInfo.InvariantCulture, "{0}<SP>", originalMethodName);
-            this.TestMessages.Should().Contain(expectedMethodName);
+            string expectedMessage = new StringBuilder()
+                .Append(originalMethodName)
+                .Append("<SP>")
+                .Append("(")
+                    .Append(string.Join(", ", arguments))
+                .Append(")")
+                .ToString();
+
+            this.TestMessages.Should().Contain(expectedMessage);
         }
 
         private class FakeDynamicInterceptorManager : Mock<IDynamicInterceptorManager>

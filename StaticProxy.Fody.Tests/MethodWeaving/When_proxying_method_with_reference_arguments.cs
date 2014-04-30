@@ -19,9 +19,12 @@
         [Fact]
         public void CallingMethod_MustExecuteOriginalMethod()
         {
-            this.Instance.ReferenceArguments(null, null);
+            var expectedArgument1 = new ToStringObject("Argument1");
+            var expectedArgument2 = new ToStringObject("Argument2");
 
-            this.VerifyMethodCalled("ReferenceArguments");
+            this.Instance.ReferenceArguments(expectedArgument1, expectedArgument2);
+
+            this.VerifyMethodCalled("ReferenceArguments", expectedArgument1, expectedArgument2);
         }
     }
 }
