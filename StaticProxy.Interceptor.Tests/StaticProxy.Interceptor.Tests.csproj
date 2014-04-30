@@ -63,6 +63,7 @@
     <Compile Include="InvocationTest.cs" />
     <Compile Include="InvocationTest_FaultyInterceptorImplementation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\TypeInformationTest.cs" />
     <Compile Include="TargetInvocation\TargetInvocationFactoryTest.cs" />
     <Compile Include="TargetInvocation\WithoutTargetInvocationTest.cs" />
     <Compile Include="TargetInvocation\WithTargetInvocationTest.cs" />

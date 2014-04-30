@@ -9,6 +9,7 @@
     using Moq;
 
     using StaticProxy.Interceptor;
+    using StaticProxy.Interceptor.Reflection;
     using StaticProxy.Interceptor.TargetInvocation;
 
     using Xunit;
@@ -20,6 +21,7 @@
 
         private readonly Mock<ITargetInvocationFactory> targetInvocationFactory;
         private readonly Mock<IInvocationFactory> invocationFactory;
+        private readonly Mock<ITypeInformation> typeInformation;
 
         private readonly DynamicInterceptorManager testee;
 
@@ -30,11 +32,13 @@
 
             this.targetInvocationFactory = new Mock<ITargetInvocationFactory> { DefaultValue = DefaultValue.Mock };
             this.invocationFactory = new Mock<IInvocationFactory> { DefaultValue = DefaultValue.Mock };
+            this.typeInformation = new Mock<ITypeInformation>();
 
             this.testee = new DynamicInterceptorManager(
                 new FakeDynamicInterceptorCollection { this.interceptor1.Object, this.interceptor2.Object },
                 this.targetInvocationFactory.Object, 
-                this.invocationFactory.Object);
+                this.invocationFactory.Object,
+                this.typeInformation.Object);
         }
 
         [Fact]
@@ -121,22 +125,38 @@
         }
 
         [Fact]
-        public void Intercept_WhenReturnTypeIsValueTypeAndReturnValueIsNull_MustThrow()
+        public void Intercept_WhenReturnValueIsNull_MustDetermineWhetherReturnTypeIsNullable()
+        {
+            Type expectedReturnType = typeof(int);
+            this.SetupInvocationFactory(Mock.Of<IInvocation>(x => x.ReturnValue == null));
+            var decoratedMethod = new DynamicMethod("anyName", expectedReturnType, new Type[0]);
+            this.typeInformation.Setup(x => x.IsNullable(It.IsAny<Type>())).Returns(true);
+            this.testee.Initialize(new object());
+
+            this.testee.Intercept(decoratedMethod, null, null);
+
+            this.typeInformation.Verify(x => x.IsNullable(expectedReturnType));
+        }
+
+        [Fact]
+        public void Intercept_WhenReturnTypeIsNotNullableAndReturnValueIsNull_MustThrow()
         {
             this.SetupInvocationFactory(Mock.Of<IInvocation>(x => x.ReturnValue == null));
+            var decoratedMethod = new DynamicMethod("anyName", null, new Type[0]);
+            this.typeInformation.Setup(x => x.IsNullable(It.IsAny<Type>())).Returns(false);
             this.testee.Initialize(new object());
-            var decoratedMethod = new DynamicMethod("anyName", typeof(int), new Type[0]);
 
             this.testee.Invoking(x => x.Intercept(decoratedMethod, null, null))
                 .ShouldThrow<InvalidOperationException>();
         }
 
         [Fact]
-        public void Intercept_WhenReturnTypeIsReferenceTypeAndReturnValueIsNull_MustNotThrow()
+        public void Intercept_WhenReturnTypeIsNullableTypeAndReturnValueIsNull_MustNotThrow()
         {
             this.SetupInvocationFactory(Mock.Of<IInvocation>(x => x.ReturnValue == null));
             this.testee.Initialize(new object());
-            var decoratedMethod = new DynamicMethod("anyName", typeof(string), new Type[0]);
+            var decoratedMethod = new DynamicMethod("anyName", null, new Type[0]);
+            this.typeInformation.Setup(x => x.IsNullable(It.IsAny<Type>())).Returns(true);
 
             this.testee.Invoking(x => x.Intercept(decoratedMethod, null, null))
                 .ShouldNotThrow();
