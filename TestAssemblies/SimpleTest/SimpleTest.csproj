@@ -33,19 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentAssertions, Version=3.0.90.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\FluentAssertions.3.0.90\lib\net40\FluentAssertions.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentAssertions.Core">
-      <HintPath>..\..\packages\FluentAssertions.3.0.90\lib\net40\FluentAssertions.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Moq">
-      <HintPath>..\..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject">
-      <HintPath>..\..\packages\Ninject.3.2.2.0\lib\net40\Ninject.dll</HintPath>
-    </Reference>
     <Reference Include="StaticProxy.Interceptor, Version=0.0.0.26, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\StaticProxy.Interceptor.0.1.0-beta2\lib\portable-win+net40+sl50+wp80\StaticProxy.Interceptor.dll</HintPath>
@@ -59,22 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\StaticProxy.Interceptor\ExceptionExtensions.cs">
-      <Link>ExceptionExtensions.cs</Link>
-    </Compile>
     <Compile Include="ConstructorWithArguments.cs" />
     <Compile Include="DefaultConstructor.cs" />
     <Compile Include="ConstructorWithoutArguments.cs" />
-    <Compile Include="Integration\Dependency.cs" />
-    <Compile Include="Integration\FakeDynamicInterceptorCollection.cs" />
-    <Compile Include="Integration\IDependency.cs" />
-    <Compile Include="Integration\IntegrationTests.cs" />
-    <Compile Include="Integration\IntegrationThrowException.cs" />
-    <Compile Include="Integration\IntegrationWithConstructorArgument.cs" />
-    <Compile Include="Integration\IntegrationWithoutConstructorArgument.cs" />
-    <Compile Include="Integration\IntegrationWithReturnValue.cs" />
-    <Compile Include="Integration\NotProxiedType.cs" />
-    <Compile Include="Integration\OverrideToString.cs" />
     <Compile Include="Methods.cs" />
     <Compile Include="TestMessages.cs" />
   </ItemGroup>

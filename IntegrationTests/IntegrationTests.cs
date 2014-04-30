@@ -1,43 +1,16 @@
 ﻿// ReSharper disable InconsistentNaming
 
-namespace SimpleTest.Integration
+namespace IntegrationTests
 {
     using System;
-    using System.Linq;
-    using System.Reflection;
-
     using FluentAssertions;
-
     using Moq;
-
     using Ninject;
-
-    using StaticProxy.Interceptor;
+    using Xunit;
 
     public class IntegrationTests
     {
-        public IntegrationTests()
-        {
-            MethodInfo[] methods = this.GetType()
-                .GetMethods()
-                .Where(x => x.ReturnType == typeof(void))
-                .ToArray();
-            
-            methods.AsParallel()
-                .ForAll(
-                    x =>
-                        {
-                            try
-                            {
-                                x.Invoke(this, new object[0]);
-                            }
-                            catch (TargetInvocationException ex)
-                            {
-                                throw ex.InnerException.PreserveStackTrace();
-                            }
-                        });
-        }
-
+        [Fact]
         public void ConstructorArguments_Void_ValueTypeParameters_NoInterceptor()
         {
             const int DependencyNumber = 5;
@@ -64,6 +37,7 @@ namespace SimpleTest.Integration
             }
         }
 
+        [Fact]
         public void ConstructorArguments_Void_ValueTypeParameters_OneInterceptor()
         {
             var fakeInterceptor = new Mock<IDynamicInterceptor>();
@@ -85,6 +59,7 @@ namespace SimpleTest.Integration
             }
         }
 
+        [Fact]
         public void ConstructorArguments_Void_ValueTypeParameters_InterceptorReplacingArgument()
         {
             const int DependencyNumber = 5;
@@ -121,6 +96,7 @@ namespace SimpleTest.Integration
             }
         }
 
+        [Fact]
         public void NoConstructorArguments_Void_ReferenceParameters_InterceptorReplacingArgument()
         {
             const string ExpectedArg1 = "Hello world";
@@ -155,6 +131,7 @@ namespace SimpleTest.Integration
             }
         }
 
+        [Fact]
         public void ProceedThrowsException_InterceptorMustBeAbleToHandleException()
         {
             var fakeInterceptor = new Mock<IDynamicInterceptor>();
@@ -184,6 +161,7 @@ namespace SimpleTest.Integration
             }
         }
 
+        [Fact]
         public void ImplementationRethrowsException_MustThrow()
         {
             using (IKernel kernel = new StandardKernel())
@@ -199,6 +177,7 @@ namespace SimpleTest.Integration
             }
         }
 
+        [Fact]
         public void MethodWithReferenceTypeReturnValue_NoInterceptor_MustReturnOriginalMethodReturnValue()
         {
             const string ExpectedString = "HelloWorld";
@@ -217,6 +196,7 @@ namespace SimpleTest.Integration
             }
         }
 
+        [Fact]
         public void MethodWithReferenTypeReturnValue_InterceptorMustBeAbleToChangeReturnValue()
         {
             const string ExpectedString = "HelloWorldIntercepted";
@@ -246,6 +226,7 @@ namespace SimpleTest.Integration
             }
         }
 
+        [Fact]
         public void MethodWithValueTypeReturnValue_NoInterceptor_MustReturnOriginalMethodReturnValue()
         {
             using (IKernel kernel = new StandardKernel())
@@ -259,6 +240,7 @@ namespace SimpleTest.Integration
             }
         }
 
+        [Fact]
         public void NotProxiedType()
         {
             using (IKernel kernel = new StandardKernel())

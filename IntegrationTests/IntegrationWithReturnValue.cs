@@ -1,4 +1,4 @@
-﻿namespace SimpleTest.Integration
+﻿namespace IntegrationTests
 {
     [StaticProxy]
     public class IntegrationWithReturnValue

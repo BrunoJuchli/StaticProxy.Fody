@@ -83,7 +83,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyExtensions.cs" />
-    <Compile Include="IntegrationTestsRunner.cs" />
     <Compile Include="MethodWeaving\DynamicInterceptorManagerMockExtensions.cs" />
     <Compile Include="MethodWeaving\MethodsTestBase.cs" />
     <Compile Include="MethodWeaving\ToStringObject.cs" />

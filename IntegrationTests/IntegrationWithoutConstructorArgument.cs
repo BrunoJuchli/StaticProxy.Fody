@@ -1,4 +1,4 @@
-﻿namespace SimpleTest.Integration
+﻿namespace IntegrationTests
 {
     using FluentAssertions;
 

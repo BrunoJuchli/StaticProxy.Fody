@@ -32,6 +32,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentAssertions">
+      <HintPath>..\packages\FluentAssertions.3.0.90\lib\net45\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentAssertions.Core">
+      <HintPath>..\packages\FluentAssertions.3.0.90\lib\net45\FluentAssertions.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="StaticProxy.Interceptor">
+      <HintPath>..\packages\StaticProxy.Interceptor.0.1.0-beta2\lib\portable-win+net40+sl50+wp80\StaticProxy.Interceptor.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,9 +54,24 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="xunit">
+      <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="..\StaticProxy.Interceptor\ExceptionExtensions.cs">
+      <Link>ExceptionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="Dependency.cs" />
+    <Compile Include="FakeDynamicInterceptorCollection.cs" />
+    <Compile Include="IDependency.cs" />
+    <Compile Include="IntegrationTests.cs" />
+    <Compile Include="IntegrationThrowException.cs" />
+    <Compile Include="IntegrationWithConstructorArgument.cs" />
+    <Compile Include="IntegrationWithoutConstructorArgument.cs" />
+    <Compile Include="IntegrationWithReturnValue.cs" />
+    <Compile Include="NotProxiedType.cs" />
+    <Compile Include="OverrideToString.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,9 +92,26 @@
   <Import Project="..\packages\Fody.1.23.2\build\Fody.targets" Condition="Exists('..\packages\Fody.1.23.2\build\Fody.targets')" />
   <PropertyGroup>
     <PreBuildEvent>cd $(SolutionDir)
-.nuget\nuget.exe delete StaticProxy.Fody "0.0.0-IntegrationTest" -Source C:\development\StaticProxy.Fody\ -NonInteractive
+echo "creating nuget package StaticProxy.Fody"
 .nuget\nuget.exe pack StaticProxy.Fody.nuspec -version "0.0.0-IntegrationTest" -Prop Configuration=$(Configuration) 
-.nuget\nuget.exe install StaticProxy.Fody -Source $(SolutionDir) -version "0.0.0-IntegrationTest" 
+
+echo "deleting old zip file - if it exists"
+del StaticProxy.Fody.0.0.0-IntegrationTest.zip
+
+echo "renaming .nupkg to .zip"
+rename StaticProxy.Fody.0.0.0-IntegrationTest.nupkg StaticProxy.Fody.0.0.0-IntegrationTest.zip
+
+echo "recreating package directory"
+rmdir .\packages\StaticProxy.Fody.0.0.0-IntegrationTest /Q /S
+mkdir .\packages\StaticProxy.Fody.0.0.0-IntegrationTest
+
+echo "unpacking package"
+cd packages\StaticProxy.Fody.0.0.0-IntegrationTest
+cscript.exe ..\..\unzip.vbs $(SolutionDir)StaticProxy.Fody.0.0.0-IntegrationTest.zip
+
+cd $(SolutionDir)
+del StaticProxy.Fody.0.0.0-IntegrationTest.zip
+
 echo "done"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
