@@ -24,8 +24,8 @@
             this.clazz = this.WovenSimpleTestAssembly.GetType(InterfaceFullName + InterfaceImplementationWeaver.ClassNameSuffix + GenericParametersSuffix);
             this.clazz.Should().NotBeNull();
         }
-        
-        [Fact]
+
+        [Fact(Skip = "implement")]
         public void Must_Implement_Interface()
         {
             this.clazz.GetInterfaces().Should()
