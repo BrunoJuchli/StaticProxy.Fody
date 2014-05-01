@@ -111,8 +111,7 @@
                 // unbox
                 processor.Emit(OpCodes.Unbox_Any, method.ReturnType);
             }
-            // todo replace by check for WeavingInformation.ModuleDefinition.TypeSystem.Void ?
-            else if (method.ReturnType.FullName == "System.Void") 
+            else if (method.ReturnType == WeavingInformation.ModuleDefinition.TypeSystem.Void) 
             {
                 // remove return value of intercept method from stack
                 processor.Emit(OpCodes.Pop);
