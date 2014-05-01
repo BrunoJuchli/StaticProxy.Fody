@@ -1,6 +1,8 @@
-﻿-Move integration tests to own test solution/project which uses the nuget feed to acquire the built product and integrate test it
-
--Interface proxy (convert (weave) interface to class?!)
+﻿-Interface proxy (convert (weave) interface to class?!)
+--> Interface which inherits other interfaces
+--> Interface which inherits from generic interface and specifies the generic parameters
+--> Interface which inherits from generic interface and does not specify generic parameters
+--> Interface which inherits from generic interface and specifies some generic parameters
 
 -Remove [StaticProxy] attribute from types after weaving.
 
