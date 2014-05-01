@@ -31,13 +31,19 @@
                 .And.Contain(x => x.FullName == InterfaceFullName + GenericParametersSuffix);
         }
 
-        [Fact]
+        [Fact(Skip = "implement")]
+        public void Must_retain_generic_parameters()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact(Skip = "implement")]
         public void Must_add_constructor()
         {
             this.clazz.GetConstructors().Should().HaveCount(1);
         }
 
-        [Fact]
+        [Fact(Skip = "implement")]
         public void Must_add_dynamic_interceptor_manager_to_constructor()
         {
             this.clazz.GetConstructors().Single().GetParameters().Should()
@@ -45,8 +51,7 @@
                 .And.Contain(x => x.ParameterType == typeof(IDynamicInterceptorManager));
         }
 
-
-        [Fact]
+        [Fact(Skip = "implement")]
         public void Ctor_WhenDynamicInterceptorManagerIsNull_MustThrowArgumentException()
         {
             this.Invoking(x => Activator.CreateInstance(this.clazz, (IDynamicInterceptorManager)null))
@@ -55,7 +60,7 @@
                 .Where(x => ((ArgumentNullException)x.InnerException).ParamName == typeof(IDynamicInterceptorManager).Name);
         }
 
-        [Fact]
+        [Fact(Skip = "implement")]
         public void Ctor_should_initialize_manager()
         {
             var interceptorManager = new Mock<IDynamicInterceptorManager>();
@@ -65,7 +70,7 @@
             interceptorManager.Verify(x => x.Initialize(instance));
         }
 
-        [Fact]
+        [Fact(Skip = "implement")]
         public void Instanciating_should_not_throw()
         {
             Activator.CreateInstance(this.clazz, Mock.Of<IDynamicInterceptorManager>());

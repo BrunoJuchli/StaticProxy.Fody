@@ -43,8 +43,7 @@
                 .HaveCount(1)
                 .And.Contain(x => x.ParameterType == typeof(IDynamicInterceptorManager));
         }
-
-
+        
         [Fact]
         public void Ctor_WhenDynamicInterceptorManagerIsNull_MustThrowArgumentException()
         {

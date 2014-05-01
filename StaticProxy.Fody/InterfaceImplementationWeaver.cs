@@ -20,18 +20,26 @@
 
         public TypeDefinition CreateImplementationOf(TypeDefinition interfaceToImplement)
         {
+            if (interfaceToImplement.HasGenericParameters)
+            {
+                string message = string.Format(
+                    CultureInfo.InvariantCulture,
+                    "interface '{0}' has generic parameters which is currently not supported.",
+                    interfaceToImplement);
+                throw new WeavingException(message);
+            }
+
             var classType = new TypeDefinition(
                 interfaceToImplement.Namespace,
                 GenerateImplementationName(interfaceToImplement),
                 TypeAttributes.Class | TypeAttributes.Public | TypeAttributes.Sealed,
                 this.objectTypeReference);
-            // todo copy generic parameters
 
             AddEmptyConstructor(classType, this.objectConstructorReference);
-            
+
             // todo add methods and enable this
             // classType.Interfaces.Add(interfaceToImplement);
-            
+
             WeavingInformation.ModuleDefinition.Types.Add(classType);
 
             return classType;
@@ -39,14 +47,6 @@
 
         private static string GenerateImplementationName(TypeDefinition interfaceToImplement)
         {
-            if (interfaceToImplement.HasGenericParameters)
-            {
-                return string.Format(
-                    CultureInfo.InvariantCulture,
-                    interfaceToImplement.Name.Replace("`", "{0}`"),
-                    ClassNameSuffix);
-            }
-            
             return string.Concat(interfaceToImplement.Name, ClassNameSuffix);
         }
 
