@@ -19,8 +19,6 @@
 
         public When_proxying_interface_with_generic_parameters()
         {
-            var types = this.WovenSimpleTestAssembly.GetTypes();
-
             this.clazz = this.WovenSimpleTestAssembly.GetType(InterfaceFullName + InterfaceImplementationWeaver.ClassNameSuffix + GenericParametersSuffix);
             this.clazz.Should().NotBeNull();
         }
