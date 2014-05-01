@@ -27,7 +27,7 @@
         }
 
         [Fact]
-        public void It_should_add_interceptor_retriever_to_constructor()
+        public void It_should_add_dynamic_interceptor_manager_to_constructor()
         {
             var parameters = this.clazz
                 .GetConstructors().Single().GetParameters();

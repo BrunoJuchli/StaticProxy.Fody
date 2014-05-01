@@ -1,4 +1,4 @@
-﻿namespace StaticProxy.Fody.Tests.ConstructorWeaving
+﻿namespace StaticProxy.Fody.Tests.InterfaceProxy
 {
     using System;
     using System.Linq;
@@ -10,31 +10,43 @@
 
     using Xunit;
 
-    public class When_proxying_class_with_default_constructor : SimpleTestBase
+    public class When_proxying_interface_with_generic_parameters : SimpleTestBase
     {
+        private const string InterfaceFullName = "SimpleTest.IGenericProxy";
+        private const string GenericParametersSuffix = "`3";
+
         private readonly Type clazz;
 
-        public When_proxying_class_with_default_constructor()
+        public When_proxying_interface_with_generic_parameters()
         {
-            this.clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.DefaultConstructor");
+            var types = this.WovenSimpleTestAssembly.GetTypes();
+
+            this.clazz = this.WovenSimpleTestAssembly.GetType(InterfaceFullName + InterfaceImplementationWeaver.ClassNameSuffix + GenericParametersSuffix);
+            this.clazz.Should().NotBeNull();
+        }
+        
+        [Fact]
+        public void Must_Implement_Interface()
+        {
+            this.clazz.GetInterfaces().Should()
+                .HaveCount(1)
+                .And.Contain(x => x.FullName == InterfaceFullName + GenericParametersSuffix);
         }
 
         [Fact]
-        public void It_should_not_add_a_constructor()
+        public void Must_add_constructor()
         {
-            this.clazz
-                .GetConstructors().Should().HaveCount(1);
+            this.clazz.GetConstructors().Should().HaveCount(1);
         }
 
         [Fact]
-        public void It_should_add_dynamic_interceptor_manager_to_constructor()
+        public void Must_add_dynamic_interceptor_manager_to_constructor()
         {
-            var parameters = this.clazz
-                .GetConstructors().Single().GetParameters();
-
-            parameters.Should().HaveCount(1);
-            parameters.Single().ParameterType.Should().Be(typeof(IDynamicInterceptorManager));
+            this.clazz.GetConstructors().Single().GetParameters().Should()
+                .HaveCount(1)
+                .And.Contain(x => x.ParameterType == typeof(IDynamicInterceptorManager));
         }
+
 
         [Fact]
         public void Ctor_WhenDynamicInterceptorManagerIsNull_MustThrowArgumentException()

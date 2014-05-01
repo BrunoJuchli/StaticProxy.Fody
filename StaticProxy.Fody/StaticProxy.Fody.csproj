@@ -61,6 +61,7 @@
     <Compile Include="ExceptionMessages.cs" />
     <Compile Include="ILProcessorExtensions.cs" />
     <Compile Include="InstructionHelper.cs" />
+    <Compile Include="InterfaceImplementationWeaver.cs" />
     <Compile Include="MethodWeaver.cs" />
     <Compile Include="MethodDecoratorDefinitions.cs" />
     <Compile Include="MethodDefinitionExtensions.cs" />

@@ -1,4 +1,4 @@
-﻿namespace StaticProxy.Fody.Tests.ConstructorWeaving
+﻿namespace StaticProxy.Fody.Tests.InterfaceProxy
 {
     using System;
     using System.Linq;
@@ -10,32 +10,40 @@
 
     using Xunit;
 
-    public class When_proxying_class_without_constructor_arguments : SimpleTestBase
+    public class When_proxying_interface : SimpleTestBase
     {
+        private const string InterfaceFullName = "SimpleTest.IProxy";
+
         private readonly Type clazz;
 
-        public When_proxying_class_without_constructor_arguments()
+        public When_proxying_interface()
         {
-            this.clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.ConstructorWithoutArguments");
+            this.clazz = this.WovenSimpleTestAssembly.GetType(InterfaceFullName + InterfaceImplementationWeaver.ClassNameSuffix);
+            this.clazz.Should().NotBeNull();
+        }
+        
+        [Fact]
+        public void Must_Implement_Interface()
+        {
+            this.clazz.GetInterfaces().Should()
+                .HaveCount(1)
+                .And.Contain(x => x.FullName == InterfaceFullName);
         }
 
         [Fact]
-        public void It_should_not_add_a_constructor()
+        public void Must_add_constructor()
         {
-            this.clazz
-                .GetConstructors().Should().HaveCount(1);
+            this.clazz.GetConstructors().Should().HaveCount(1);
         }
 
         [Fact]
-        public void It_should_add_dynamic_interceptor_manager_to_constructor()
+        public void Must_add_dynamic_interceptor_manager_to_constructor()
         {
-            var parameters = this.clazz
-                .GetConstructors().Single().GetParameters();
-
-            parameters.Should()
+            this.clazz.GetConstructors().Single().GetParameters().Should()
                 .HaveCount(1)
                 .And.Contain(x => x.ParameterType == typeof(IDynamicInterceptorManager));
         }
+
 
         [Fact]
         public void Ctor_WhenDynamicInterceptorManagerIsNull_MustThrowArgumentException()
@@ -54,6 +62,12 @@
             object instance = Activator.CreateInstance(this.clazz, interceptorManager.Object);
 
             interceptorManager.Verify(x => x.Initialize(instance));
+        }
+
+        [Fact]
+        public void Instanciating_should_not_throw()
+        {
+            Activator.CreateInstance(this.clazz, Mock.Of<IDynamicInterceptorManager>());
         }
     }
 }

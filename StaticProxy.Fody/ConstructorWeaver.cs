@@ -25,7 +25,7 @@
             this.ensureDynamicInterceptorManagerNotNull =
                 WeavingInformation.ModuleDefinition.Import(importedExceptionsTypeDefinition.GetMethods().Single(x => x.Name == "EnsureDynamicInterceptorManagerNotNull"));
         }
-
+        
         public FieldDefinition ExtendConstructorWithDynamicInterceptorRetriever(TypeDefinition typeToProxy)
         {
             FieldDefinition field = AddPrivateReadonlyField(typeToProxy, this.interceptorManagerReference);

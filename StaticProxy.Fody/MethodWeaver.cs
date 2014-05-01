@@ -80,7 +80,6 @@
                 newMethod.Body.Variables.Add(variableDefinition);
             }
 
-            // todo copy exception handlers?!
             foreach (ExceptionHandler exceptionHandler in templateMethod.Body.ExceptionHandlers)
             {
                 newMethod.Body.ExceptionHandlers.Add(exceptionHandler);
@@ -112,7 +111,8 @@
                 // unbox
                 processor.Emit(OpCodes.Unbox_Any, method.ReturnType);
             }
-            else if (method.ReturnType.FullName == "System.Void")
+            // todo replace by check for WeavingInformation.ModuleDefinition.TypeSystem.Void ?
+            else if (method.ReturnType.FullName == "System.Void") 
             {
                 // remove return value of intercept method from stack
                 processor.Emit(OpCodes.Pop);

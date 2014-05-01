@@ -15,9 +15,20 @@
                 .Where(HasStaticProxyAttribute)
                 .ToList();
 
+            var interfaceImplementationWeaver = new InterfaceImplementationWeaver();
             var constructorDecorator = new ConstructorWeaver();
             var methodDecorator = new MethodWeaver();
 
+            ICollection<TypeDefinition> implementedClasses = typesToProxy.Where(x => x.IsInterface)
+                .Select(interfaceImplementationWeaver.CreateImplementationOf)
+                .ToList();
+
+            foreach (TypeDefinition implementedClass in implementedClasses)
+            {
+                FieldDefinition interceptorRetriever =
+                    constructorDecorator.ExtendConstructorWithDynamicInterceptorRetriever(implementedClass);
+            }
+            
             ICollection<TypeDefinition> classesToProxy = typesToProxy.Where(x => x.IsClass).ToList();
             DecorateClass(classesToProxy, constructorDecorator, methodDecorator);
         }
