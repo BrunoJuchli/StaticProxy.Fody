@@ -49,7 +49,6 @@
         {
             this.SetupReturnValue(null);
 
-            // todo concrete message or concrete exception?
             this.testee.Invoking(x => x.ReturnsInteger())
                 .ShouldThrow<InvalidOperationException>();
         }

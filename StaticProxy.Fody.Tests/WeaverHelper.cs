@@ -50,7 +50,9 @@ namespace StaticProxy.Fody.Tests
             var weavingTask = new ModuleWeaver
             {
                 ModuleDefinition = moduleDefinition,
-                AssemblyResolver = assemblyResolver
+                AssemblyResolver = assemblyResolver,
+                LogInfo = Console.WriteLine,
+                LogWarning = Console.WriteLine,
             };
 
             weavingTask.Execute();

@@ -5,11 +5,8 @@ namespace IntegrationTests.ProxyWithTarget
     using System;
 
     using FluentAssertions;
-
     using Moq;
-
     using Ninject;
-
     using Xunit;
 
     public class IntegrationTests

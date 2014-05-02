@@ -25,9 +25,6 @@ namespace StaticProxy.Fody
 
         public void Execute()
         {
-            this.LogInfo = s => { };
-            this.LogWarning = s => { };
-
             // todo remove
             // Debugger.Launch();
 
@@ -39,7 +36,6 @@ namespace StaticProxy.Fody
             }
             catch (Exception ex)
             {
-                // todo remove
                 this.LogWarning(ex.StackTrace);
 
                 throw;
