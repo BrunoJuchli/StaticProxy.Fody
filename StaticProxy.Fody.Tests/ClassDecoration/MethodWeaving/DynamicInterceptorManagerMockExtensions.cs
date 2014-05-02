@@ -1,4 +1,4 @@
-﻿namespace StaticProxy.Fody.Tests
+﻿namespace StaticProxy.Fody.Tests.ClassDecoration.MethodWeaving
 {
     using System.Globalization;
     using System.Reflection;
@@ -7,7 +7,7 @@
 
     public static class DynamicInterceptorManagerMockExtensions
     {
-        public static void VerifyMethodCallIntercepted(this Mock<IDynamicInterceptorManager> interceptorManager, string originalMethodName, object[] expectedArguments)
+        public static void VerifyDecoratedMethodCallIntercepted(this Mock<IDynamicInterceptorManager> interceptorManager, string originalMethodName, params object[] expectedArguments)
         {
             string implementationMethodName = string.Format(CultureInfo.InvariantCulture, "{0}<SP>", originalMethodName);
 

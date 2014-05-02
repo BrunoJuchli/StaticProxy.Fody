@@ -9,11 +9,10 @@
         {
             var arg1 = new object();
             var arg2 = new object();
-            var expectedArguments = new[] { arg1, arg2 };
 
             this.Instance.ReferenceArguments(arg1, arg2);
 
-            this.InterceptorManager.VerifyMethodCallIntercepted("ReferenceArguments", expectedArguments);
+            this.InterceptorManager.VerifyDecoratedMethodCallIntercepted("ReferenceArguments", arg1, arg2);
         }
 
         [Fact]

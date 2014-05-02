@@ -9,11 +9,10 @@
         {
             const int Arg1 = 48;
             const float Arg2 = (float)3.4;
-            var expectedArguments = new object[] { Arg1, Arg2 };
 
             this.Instance.ValueArguments(Arg1, Arg2);
 
-            this.InterceptorManager.VerifyMethodCallIntercepted("ValueArguments", expectedArguments);
+            this.InterceptorManager.VerifyDecoratedMethodCallIntercepted("ValueArguments", Arg1, Arg2);
         }
 
         [Fact]

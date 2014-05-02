@@ -49,6 +49,7 @@
     <Compile Include="ClassDecoration\ConstructorWithArguments.cs" />
     <Compile Include="ClassDecoration\DefaultConstructor.cs" />
     <Compile Include="ClassDecoration\ConstructorWithoutArguments.cs" />
+    <Compile Include="InterfaceImplementation\IWithMethods.cs" />
     <Compile Include="InterfaceImplementation\IGenericProxy.cs" />
     <Compile Include="InterfaceImplementation\IProxy.cs" />
     <Compile Include="ClassDecoration\ClassWithMethods.cs" />

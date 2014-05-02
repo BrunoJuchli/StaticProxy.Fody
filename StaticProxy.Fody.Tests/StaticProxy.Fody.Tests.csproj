@@ -86,8 +86,17 @@
     <Compile Include="InterfaceImplementation\ClassWeaving\When_proxying_interface.cs" />
     <Compile Include="InterfaceImplementation\ClassWeaving\When_proxying_interface_with_generic_parameters.cs" />
     <Compile Include="InterfaceImplementation\ConstructorWeaving\When_proxying_interface.cs" />
-    <Compile Include="DynamicInterceptorManagerMockExtensions.cs" />
+    <Compile Include="ClassDecoration\MethodWeaving\DynamicInterceptorManagerMockExtensions.cs" />
     <Compile Include="ClassDecoration\MethodWeaving\ClassWithMethodsTestBase.cs" />
+    <Compile Include="InterfaceImplementation\MethodWeaving\DynamicInterceptorManagerMockExtensions.cs" />
+    <Compile Include="InterfaceImplementation\MethodWeaving\InterfaceWithMethodsTestBase.cs" />
+    <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_returning_nullable_value_type.cs" />
+    <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_returning_reference_type.cs" />
+    <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_returning_value_type.cs" />
+    <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_without_arguments.cs" />
+    <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_with_mixed_arguments.cs" />
+    <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_with_reference_arguments.cs" />
+    <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_with_value_arguments.cs" />
     <Compile Include="ToStringObject.cs" />
     <Compile Include="ClassDecoration\MethodWeaving\When_proxying_method_returning_nullable_value_type.cs" />
     <Compile Include="ClassDecoration\MethodWeaving\When_proxying_method_with_local_variables.cs" />
@@ -126,9 +135,7 @@
   <ItemGroup>
     <Content Include="_ToDo.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="InterfaceImplementation\MethodWeaving\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)Tools\Pepita\PepitaGet.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

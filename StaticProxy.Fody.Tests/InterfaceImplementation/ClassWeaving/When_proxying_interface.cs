@@ -24,7 +24,7 @@
             this.clazz.Should().NotBeNull();
         }
 
-        [Fact(Skip = "implement")]
+        [Fact]
         public void Must_Implement_Interface()
         {
             this.clazz.GetInterfaces().Should()

@@ -9,7 +9,7 @@
         {
             this.Instance.NoArguments();
 
-            this.InterceptorManager.VerifyMethodCallIntercepted("NoArguments", new object[0]);
+            this.InterceptorManager.VerifyDecoratedMethodCallIntercepted("NoArguments");
         }
 
         [Fact]

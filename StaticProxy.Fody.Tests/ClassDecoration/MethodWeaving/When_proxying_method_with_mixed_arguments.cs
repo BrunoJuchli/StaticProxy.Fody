@@ -10,12 +10,10 @@
             const int Arg1 = 5;
             var arg2 = new object();
             const string Arg3 = "blub";
-
-            var expectedArguments = new object[] { Arg1, arg2, Arg3 };
-
+            
             this.Instance.MixedArguments(Arg1, arg2, Arg3);
 
-            this.InterceptorManager.VerifyMethodCallIntercepted("MixedArguments", expectedArguments);
+            this.InterceptorManager.VerifyDecoratedMethodCallIntercepted("MixedArguments", Arg1, arg2, Arg3);
         }
 
         [Fact]
