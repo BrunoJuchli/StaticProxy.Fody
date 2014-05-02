@@ -41,12 +41,7 @@
         {
             MethodDefinition interceptingMethod = interfaceMethod.CreateImplementation();
 
-            interceptingMethod.Body.InitLocals = true;
-            ILProcessor processor = interceptingMethod.Body.GetILProcessor();
-            processor.Emit(OpCodes.Nop);
-            processor.Emit(OpCodes.Ret);
-
-            // this.WeaveInterceptionCall(interceptingMethod, interfaceMethod, null, interceptorManager);
+            this.WeaveInterceptionCall(interceptingMethod, interfaceMethod, null, interceptorManager);
 
             interceptorManager.DeclaringType.Methods.Add(interceptingMethod);
         }

@@ -11,10 +11,10 @@
 
         void MixedArguments(int arg1, object arg2, string arg3);
 
-        //int ReturnsInteger();
+        int ReturnsInteger();
 
-        //object ReturnsObject();
+        object ReturnsObject();
 
-        //float? ReturnsNullableFloat();
+        float? ReturnsNullableFloat();
     }
 }
