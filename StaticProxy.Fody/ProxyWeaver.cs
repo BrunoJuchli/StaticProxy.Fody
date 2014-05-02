@@ -9,6 +9,7 @@
 
     using StaticProxy.Fody.ClassDecoration;
     using StaticProxy.Fody.InterfaceImplementation;
+    using StaticProxy.Fody.MethodWeaving;
 
     public static class ProxyWeaver
     {
@@ -19,9 +20,10 @@
                 .ToList();
 
             var constructorWeaver = new ConstructorWeaver();
+            var methodWeaver = new MethodWeaver();
 
-            var interfaceImplementationWeaver = new InterfaceImplementationWeaver(constructorWeaver);
-            var classDecorationWeaver = new ClassDecorationWeaver(constructorWeaver);
+            var interfaceImplementationWeaver = new InterfaceImplementationWeaver(constructorWeaver, methodWeaver);
+            var classDecorationWeaver = new ClassDecorationWeaver(constructorWeaver, methodWeaver);
 
             ImplementInterfaces(
                 typesToProxy.Where(x => x.IsInterface),

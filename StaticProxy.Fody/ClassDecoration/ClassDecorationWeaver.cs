@@ -4,21 +4,23 @@
 
     using Mono.Cecil;
 
+    using StaticProxy.Fody.MethodWeaving;
+
     public class ClassDecorationWeaver
     {
         private readonly ConstructorWeaver constructorWeaver;
         private readonly MethodWeaver methodWeaver;
 
-        public ClassDecorationWeaver(ConstructorWeaver constructorWeaver)
+        public ClassDecorationWeaver(ConstructorWeaver constructorWeaver, MethodWeaver methodWeaver)
         {
             this.constructorWeaver = constructorWeaver;
-            this.methodWeaver = new MethodWeaver();
+            this.methodWeaver = methodWeaver;
         }
 
         public void DecorateClass(TypeDefinition classToDecorate)
         {
             FieldDefinition interceptorRetriever =
-                this.constructorWeaver.ExtendConstructorWithDynamicInterceptorRetriever(classToDecorate);
+                this.constructorWeaver.ExtendConstructorWithDynamicInterceptorManager(classToDecorate);
 
             this.DecorateClassProxyMethods(classToDecorate, interceptorRetriever);
         }

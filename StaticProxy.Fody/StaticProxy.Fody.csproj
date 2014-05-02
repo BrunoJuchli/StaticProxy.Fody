@@ -63,8 +63,8 @@
     <Compile Include="ILProcessorExtensions.cs" />
     <Compile Include="InstructionHelper.cs" />
     <Compile Include="InterfaceImplementation\InterfaceImplementationWeaver.cs" />
-    <Compile Include="MethodWeaver.cs" />
-    <Compile Include="MethodDefinitionExtensions.cs" />
+    <Compile Include="MethodWeaving\MethodWeaver.cs" />
+    <Compile Include="MethodWeaving\MethodDefinitionExtensions.cs" />
     <Compile Include="ModuleDefinitionExtensions.cs" />
     <Compile Include="ModuleWeaver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

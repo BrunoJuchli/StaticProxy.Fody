@@ -5,17 +5,22 @@
     using Mono.Cecil;
     using Mono.Cecil.Cil;
 
+    using StaticProxy.Fody.MethodWeaving;
+
     public class InterfaceImplementationWeaver
     {
         public const string ClassNameSuffix = "Implementation";
 
         private readonly ConstructorWeaver constructorWeaver;
+        private readonly MethodWeaver methodWeaver;
+
         private readonly TypeReference objectTypeReference;
         private readonly MethodReference objectConstructorReference;
 
-        public InterfaceImplementationWeaver(ConstructorWeaver constructorWeaver)
+        public InterfaceImplementationWeaver(ConstructorWeaver constructorWeaver, MethodWeaver methodWeaver)
         {
             this.constructorWeaver = constructorWeaver;
+            this.methodWeaver = methodWeaver;
             this.objectTypeReference = WeavingInformation.ReferenceFinder.GetTypeReference(typeof(object));
             this.objectConstructorReference = WeavingInformation.ReferenceFinder.GetMethodReference(this.objectTypeReference, x => x.IsConstructor);
         }
@@ -39,10 +44,14 @@
 
             AddEmptyConstructor(classType, this.objectConstructorReference);
 
-            this.constructorWeaver.ExtendConstructorWithDynamicInterceptorRetriever(classType);
+            FieldDefinition dynamicInterceptorManager = this.constructorWeaver.ExtendConstructorWithDynamicInterceptorManager(classType);
 
-            // todo add methods and enable this
-            // classType.Interfaces.Add(interfaceToImplement);
+            foreach (MethodDefinition interfaceMethod in interfaceToImplement.Methods)
+            {
+                this.methodWeaver.ImplementMethod(interfaceMethod, dynamicInterceptorManager);
+            }
+
+            //classType.Interfaces.Add(interfaceToImplement);
 
             WeavingInformation.ModuleDefinition.Types.Add(classType);
 

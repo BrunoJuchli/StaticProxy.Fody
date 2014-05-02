@@ -1,4 +1,4 @@
-﻿namespace StaticProxy.Fody
+﻿namespace StaticProxy.Fody.MethodWeaving
 {
     using System.Globalization;
     using System.Linq;
@@ -28,7 +28,9 @@
         public void DecorateMethod(MethodDefinition method, FieldDefinition interceptorManager)
         {
             string newMethodName = string.Format(CultureInfo.InvariantCulture, "{0}<SP>", method.Name);
-            MethodDefinition implementationMethod = CopyMethod(method, newMethodName, method.DeclaringType);
+            MethodDefinition implementationMethod = method.CreateCopy(newMethodName);
+
+            method.DeclaringType.Methods.Add(implementationMethod);
             
             DeleteMethodImplementation(method);
 
@@ -37,9 +39,16 @@
 
         public void ImplementMethod(MethodDefinition interfaceMethod, FieldDefinition interceptorManager)
         {
-            MethodDefinition interceptingMethod = CopyMethod(interfaceMethod, interfaceMethod.Name, interceptorManager.DeclaringType);
-            
-            this.WeaveInterceptionCall(interceptingMethod, interfaceMethod, null, interceptorManager);
+            MethodDefinition interceptingMethod = interfaceMethod.CreateImplementation();
+
+            interceptingMethod.Body.InitLocals = true;
+            ILProcessor processor = interceptingMethod.Body.GetILProcessor();
+            processor.Emit(OpCodes.Nop);
+            processor.Emit(OpCodes.Ret);
+
+            // this.WeaveInterceptionCall(interceptingMethod, interfaceMethod, null, interceptorManager);
+
+            interceptorManager.DeclaringType.Methods.Add(interceptingMethod);
         }
 
         private static void DeleteMethodImplementation(MethodDefinition method)
@@ -47,42 +56,6 @@
             method.Body.Instructions.Clear();
             method.Body.ExceptionHandlers.Clear();
             method.Body.Variables.Clear();
-        }
-
-        private static MethodDefinition CopyMethod(MethodDefinition templateMethod, string newMethodName, TypeDefinition targetType)
-        {
-            var newMethod = new MethodDefinition(
-                newMethodName, 
-                templateMethod.Attributes, 
-                templateMethod.ReturnType);
-
-            newMethod.Body.InitLocals = true;
-
-            foreach (var parameterDefinition in templateMethod.Parameters)
-            {
-                newMethod.Parameters.Add(parameterDefinition);
-            }
-
-            foreach (var variableDefinition in templateMethod.Body.Variables)
-            {
-                newMethod.Body.Variables.Add(variableDefinition);
-            }
-
-            foreach (ExceptionHandler exceptionHandler in templateMethod.Body.ExceptionHandlers)
-            {
-                newMethod.Body.ExceptionHandlers.Add(exceptionHandler);
-            }
-
-            foreach (var instruction in templateMethod.Body.Instructions)
-            {
-                newMethod.Body.Instructions.Add(instruction);
-            }
-
-            newMethod.Body.OptimizeMacros();
-
-            targetType.Methods.Add(newMethod);
-
-            return newMethod;
         }
 
         private static MethodReference ImportInterceptMethod()
