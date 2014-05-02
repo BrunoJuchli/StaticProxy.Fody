@@ -9,11 +9,13 @@
     {
         public const string ClassNameSuffix = "Implementation";
 
+        private readonly ConstructorWeaver constructorWeaver;
         private readonly TypeReference objectTypeReference;
         private readonly MethodReference objectConstructorReference;
 
-        public InterfaceImplementationWeaver()
+        public InterfaceImplementationWeaver(ConstructorWeaver constructorWeaver)
         {
+            this.constructorWeaver = constructorWeaver;
             this.objectTypeReference = WeavingInformation.ReferenceFinder.GetTypeReference(typeof(object));
             this.objectConstructorReference = WeavingInformation.ReferenceFinder.GetMethodReference(this.objectTypeReference, x => x.IsConstructor);
         }
@@ -25,7 +27,7 @@
                 string message = string.Format(
                     CultureInfo.InvariantCulture,
                     "interface '{0}' has generic parameters which is currently not supported.",
-                    interfaceToImplement);
+                    interfaceToImplement.FullName);
                 throw new WeavingException(message);
             }
 
@@ -36,6 +38,8 @@
                 this.objectTypeReference);
 
             AddEmptyConstructor(classType, this.objectConstructorReference);
+
+            this.constructorWeaver.ExtendConstructorWithDynamicInterceptorRetriever(classType);
 
             // todo add methods and enable this
             // classType.Interfaces.Add(interfaceToImplement);

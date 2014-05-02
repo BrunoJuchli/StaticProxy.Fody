@@ -15,25 +15,31 @@
                 .Where(HasStaticProxyAttribute)
                 .ToList();
 
-            var interfaceImplementationWeaver = new InterfaceImplementationWeaver();
             var constructorDecorator = new ConstructorWeaver();
             var methodDecorator = new MethodWeaver();
+            var interfaceImplementationWeaver = new InterfaceImplementationWeaver(constructorDecorator);
 
-            ICollection<TypeDefinition> implementedClasses = typesToProxy.Where(x => x.IsInterface)
-                .Select(interfaceImplementationWeaver.CreateImplementationOf)
-                .ToList();
+            ImplementInterfaces(
+                typesToProxy.Where(x => x.IsInterface),
+                interfaceImplementationWeaver);
 
-            foreach (TypeDefinition implementedClass in implementedClasses)
-            {
-                FieldDefinition interceptorRetriever =
-                    constructorDecorator.ExtendConstructorWithDynamicInterceptorRetriever(implementedClass);
-            }
-            
-            ICollection<TypeDefinition> classesToProxy = typesToProxy.Where(x => x.IsClass).ToList();
-            DecorateClass(classesToProxy, constructorDecorator, methodDecorator);
+            DecorateClasses(
+                typesToProxy.Where(x => x.IsClass).ToList(), 
+                constructorDecorator, 
+                methodDecorator);
         }
 
-        private static void DecorateClass(
+        private static void ImplementInterfaces(
+            IEnumerable<TypeDefinition> interfacesToProxy,
+            InterfaceImplementationWeaver interfaceImplementationWeaver)
+        {
+            foreach (TypeDefinition interfaceToProxy in interfacesToProxy)
+            {
+                interfaceImplementationWeaver.CreateImplementationOf(interfaceToProxy);
+            }
+        }
+
+        private static void DecorateClasses(
             ICollection<TypeDefinition> classesToProxy,
             ConstructorWeaver constructorDecorator,
             MethodWeaver methodDecorator)
