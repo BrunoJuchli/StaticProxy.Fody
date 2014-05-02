@@ -1,7 +1,7 @@
-﻿namespace SimpleTest.InterfaceImplementation
+﻿namespace IntegrationTests.ProxyWithoutTarget
 {
     [StaticProxy]
-    public interface IWithMethods
+    internal interface IProxy
     {
         void NoArguments();
 
