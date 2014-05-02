@@ -22,20 +22,6 @@
             this.clazz.Should().NotBeNull();
         }
 
-        [Fact(Skip = "implement")]
-        public void Must_Implement_Interface()
-        {
-            this.clazz.GetInterfaces().Should()
-                .HaveCount(1)
-                .And.Contain(x => x.FullName == InterfaceFullName);
-        }
-
-        [Fact]
-        public void Must_add_constructor()
-        {
-            this.clazz.GetConstructors().Should().HaveCount(1);
-        }
-
         [Fact]
         public void Must_add_dynamic_interceptor_manager_to_constructor()
         {
