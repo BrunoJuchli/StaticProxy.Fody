@@ -12,7 +12,7 @@
 
     public class InstanciationTests : ProxyWithoutTargetIntegrationTestBase
     {
-        [Fact]
+        [Fact(Skip = "implement")]
         public void WhenThereIsNoInterceptor_InstanciationMustThrow()
         {
             this.BindInterceptorCollection();
@@ -21,7 +21,7 @@
                 .ShouldThrow<InvalidOperationException>();
         }
 
-        [Fact(Skip = "implement")]
+        [Fact]
         public void WhenThereIsAnInterceptor_InstanciationMustNotThrow()
         {
             this.BindInterceptorCollection(Mock.Of<IDynamicInterceptor>());
