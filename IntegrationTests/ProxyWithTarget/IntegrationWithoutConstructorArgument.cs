@@ -1,4 +1,4 @@
-﻿namespace IntegrationTests
+﻿namespace IntegrationTests.ProxyWithTarget
 {
     using FluentAssertions;
 

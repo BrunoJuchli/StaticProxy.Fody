@@ -62,14 +62,14 @@
     <Compile Include="..\StaticProxy.Interceptor\ExceptionExtensions.cs">
       <Link>ExceptionExtensions.cs</Link>
     </Compile>
-    <Compile Include="Dependency.cs" />
+    <Compile Include="ProxyWithTarget\Dependency.cs" />
     <Compile Include="FakeDynamicInterceptorCollection.cs" />
     <Compile Include="IDependency.cs" />
-    <Compile Include="IntegrationTests.cs" />
-    <Compile Include="IntegrationThrowException.cs" />
-    <Compile Include="IntegrationWithConstructorArgument.cs" />
-    <Compile Include="IntegrationWithoutConstructorArgument.cs" />
-    <Compile Include="IntegrationWithReturnValue.cs" />
+    <Compile Include="ProxyWithTarget\IntegrationTests.cs" />
+    <Compile Include="ProxyWithTarget\IntegrationThrowException.cs" />
+    <Compile Include="ProxyWithTarget\IntegrationWithConstructorArgument.cs" />
+    <Compile Include="ProxyWithTarget\IntegrationWithoutConstructorArgument.cs" />
+    <Compile Include="ProxyWithTarget\IntegrationWithReturnValue.cs" />
     <Compile Include="NotProxiedType\NotProxiedType.cs" />
     <Compile Include="NotProxiedType\NotProxiedTypeTest.cs" />
     <Compile Include="OverrideToString.cs" />

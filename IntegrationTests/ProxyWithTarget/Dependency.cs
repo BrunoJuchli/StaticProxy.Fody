@@ -1,4 +1,4 @@
-﻿namespace IntegrationTests
+﻿namespace IntegrationTests.ProxyWithTarget
 {
     internal class Dependency : IDependency
     {

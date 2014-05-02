@@ -1,4 +1,4 @@
-﻿namespace IntegrationTests
+﻿namespace IntegrationTests.ProxyWithTarget
 {
     [StaticProxy]
     public class IntegrationWithReturnValue
