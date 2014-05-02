@@ -4,7 +4,7 @@
 
     using Xunit;
 
-    public class When_proxying_method_with_local_variables : MethodsTestBase
+    public class When_proxying_method_with_local_variables : ClassWithMethodsTestBase
     {
         [Fact]
         public void Calling_method_must_not_throw()

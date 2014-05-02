@@ -8,7 +8,7 @@
 
     using Xunit;
 
-    public class When_proxying_method_returning_reference_type : MethodsTestBase
+    public class When_proxying_method_returning_reference_type : ClassWithMethodsTestBase
     {
         [Fact]
         public void MustReturnValueReturnedByDynamicInterceptorManager()

@@ -1,4 +1,4 @@
-﻿namespace StaticProxy.Fody.Tests.ClassDecoration.MethodWeaving
+﻿namespace StaticProxy.Fody.Tests
 {
     public class ToStringObject
     {

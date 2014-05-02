@@ -2,7 +2,7 @@
 {
     using Xunit;
 
-    public class When_proxying_method_with_reference_arguments : MethodsTestBase
+    public class When_proxying_method_with_reference_arguments : ClassWithMethodsTestBase
     {
         [Fact]
         public void Calling_method_must_use_interceptor_manager()

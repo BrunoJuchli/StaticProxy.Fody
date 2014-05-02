@@ -86,9 +86,9 @@
     <Compile Include="InterfaceImplementation\ClassWeaving\When_proxying_interface.cs" />
     <Compile Include="InterfaceImplementation\ClassWeaving\When_proxying_interface_with_generic_parameters.cs" />
     <Compile Include="InterfaceImplementation\ConstructorWeaving\When_proxying_interface.cs" />
-    <Compile Include="ClassDecoration\MethodWeaving\DynamicInterceptorManagerMockExtensions.cs" />
-    <Compile Include="ClassDecoration\MethodWeaving\MethodsTestBase.cs" />
-    <Compile Include="ClassDecoration\MethodWeaving\ToStringObject.cs" />
+    <Compile Include="DynamicInterceptorManagerMockExtensions.cs" />
+    <Compile Include="ClassDecoration\MethodWeaving\ClassWithMethodsTestBase.cs" />
+    <Compile Include="ToStringObject.cs" />
     <Compile Include="ClassDecoration\MethodWeaving\When_proxying_method_returning_nullable_value_type.cs" />
     <Compile Include="ClassDecoration\MethodWeaving\When_proxying_method_with_local_variables.cs" />
     <Compile Include="ClassDecoration\MethodWeaving\When_proxying_method_with_mixed_arguments.cs" />

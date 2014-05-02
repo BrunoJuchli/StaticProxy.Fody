@@ -8,14 +8,14 @@
 
     using Moq;
 
-    public class MethodsTestBase : SimpleTestBase
+    public class ClassWithMethodsTestBase : SimpleTestBase
     {
         protected readonly Type Clazz;
         protected readonly Mock<IDynamicInterceptorManager> InterceptorManager;
 
         protected readonly dynamic Instance;
 
-        public MethodsTestBase()
+        public ClassWithMethodsTestBase()
         {
             this.Clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.ClassDecoration.ClassWithMethods");
 
