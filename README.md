@@ -1,15 +1,13 @@
 StaticProxy.Fody: [![Build status](https://ci.appveyor.com/api/projects/status/j6tubf9q9deyngu4)](https://ci.appveyor.com/project/BrunoJuchli/staticproxy-fody)
 StaticProxy.Interceptor: [![Build status](https://ci.appveyor.com/api/projects/status/bpji3ka4pmwd54wm)](https://ci.appveyor.com/project/BrunoJuchli/staticproxy-fody-951)
 
-## This is an add-in for [Fody](https://github.com/Fody/Fody/) 
+## ![Icon](https://raw.githubusercontent.com/BrunoJuchli/StaticProxy.Fody/master/Icons/package_icon.png) This is an add-in for [Fody](https://github.com/Fody/Fody/) 
 
-![Icon](https://raw.github.com/BrunoJuchli/StaticProxy/master/Icons/package_icon.png)
 
 Very cool utilities have been created by the help of proxying by dynamic code emitting:
 Moq, FakeItEasy, Castle Dynamic Proxy, LinFu Proxy,.. and many more.
 
-Sadly enough, some platforms do not support dynamic code emitting. These include WinRT, Windows Phone and IPhone.
-You are also most likely affected if you are creating a PCL.
+Sadly enough, some platforms do not support dynamic code emitting. These include Windows Store Applications and Xamarin.iOS.
 
 Here comes StaticProxy.Fody to the rescue!
 Instead of dynamically creating proxies, it is weaving them at compile time by means of IL rewritting
