@@ -1,47 +1,49 @@
 ﻿using System;
 
 using Mono.Cecil;
-using StaticProxy.Fody;
 
-public class ModuleWeaver
+namespace StaticProxy.Fody
 {
-    public ModuleWeaver()
+    public class ModuleWeaver
     {
-        Instance = this;
-    }
-
-    public static ModuleWeaver Instance { get; private set; }
-
-    public ModuleDefinition ModuleDefinition { get; set; }
-
-    public IAssemblyResolver AssemblyResolver { get; set; }
-
-    public string AddinDirectoryPath { get; set; }
-
-    public Action<string> LogInfo { get; set; }
-
-    public Action<string> LogWarning { get; set; }
-
-    public void Execute()
-    {
-        LogInfo = s => { };
-        LogWarning = s => { };
-
-        // todo remove
-        // Debugger.Launch();
-
-        try
+        public ModuleWeaver()
         {
-            WeavingInformation.Initialize();
-
-            ProxyWeaver.Execute();
+            Instance = this;
         }
-        catch (Exception ex)
-        {
-            // todo remove
-            LogWarning(ex.StackTrace);
 
-            throw;
+        public static ModuleWeaver Instance { get; private set; }
+
+        public ModuleDefinition ModuleDefinition { get; set; }
+
+        public IAssemblyResolver AssemblyResolver { get; set; }
+
+        public string AddinDirectoryPath { get; set; }
+
+        public Action<string> LogInfo { get; set; }
+
+        public Action<string> LogWarning { get; set; }
+
+        public void Execute()
+        {
+            this.LogInfo = s => { };
+            this.LogWarning = s => { };
+
+            // todo remove
+            // Debugger.Launch();
+
+            try
+            {
+                WeavingInformation.Initialize();
+
+                ProxyWeaver.Execute();
+            }
+            catch (Exception ex)
+            {
+                // todo remove
+                this.LogWarning(ex.StackTrace);
+
+                throw;
+            }
         }
     }
 }

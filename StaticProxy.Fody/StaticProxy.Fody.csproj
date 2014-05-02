@@ -57,26 +57,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassDecoration\ClassDecorationWeaver.cs" />
     <Compile Include="ConstructorWeaver.cs" />
     <Compile Include="ExceptionMessages.cs" />
     <Compile Include="ILProcessorExtensions.cs" />
     <Compile Include="InstructionHelper.cs" />
-    <Compile Include="InterfaceImplementationWeaver.cs" />
+    <Compile Include="InterfaceImplementation\InterfaceImplementationWeaver.cs" />
     <Compile Include="MethodWeaver.cs" />
-    <Compile Include="MethodDecoratorDefinitions.cs" />
     <Compile Include="MethodDefinitionExtensions.cs" />
     <Compile Include="ModuleDefinitionExtensions.cs" />
     <Compile Include="ModuleWeaver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxyWeaver.cs" />
     <Compile Include="ReferenceFinder.cs" />
-    <Compile Include="TypeReferenceExtensions.cs" />
     <Compile Include="WeavingException.cs" />
     <Compile Include="WeavingInformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

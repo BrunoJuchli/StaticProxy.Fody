@@ -8,6 +8,8 @@
 
     using Moq;
 
+    using StaticProxy.Fody.InterfaceImplementation;
+
     using Xunit;
 
     public class When_proxying_interface : SimpleTestBase

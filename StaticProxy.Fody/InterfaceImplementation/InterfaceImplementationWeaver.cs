@@ -1,4 +1,4 @@
-﻿namespace StaticProxy.Fody
+﻿namespace StaticProxy.Fody.InterfaceImplementation
 {
     using System.Globalization;
 

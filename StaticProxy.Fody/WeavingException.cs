@@ -1,16 +1,19 @@
 using System;
 using System.Runtime.Serialization;
 
-[Serializable]
-public class WeavingException : Exception
+namespace StaticProxy.Fody
 {
-    public WeavingException(string message)
-        : base(message)
+    [Serializable]
+    public class WeavingException : Exception
     {
-    }
+        public WeavingException(string message)
+            : base(message)
+        {
+        }
 
-    protected WeavingException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
-    {
+        protected WeavingException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
     }
 }

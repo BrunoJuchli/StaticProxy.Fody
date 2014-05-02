@@ -7,6 +7,9 @@
     using Mono.Cecil;
     using Mono.Cecil.Rocks;
 
+    using StaticProxy.Fody.ClassDecoration;
+    using StaticProxy.Fody.InterfaceImplementation;
+
     public static class ProxyWeaver
     {
         public static void Execute()
@@ -15,61 +18,35 @@
                 .Where(HasStaticProxyAttribute)
                 .ToList();
 
-            var constructorDecorator = new ConstructorWeaver();
-            var methodDecorator = new MethodWeaver();
-            var interfaceImplementationWeaver = new InterfaceImplementationWeaver(constructorDecorator);
+            var constructorWeaver = new ConstructorWeaver();
+
+            var interfaceImplementationWeaver = new InterfaceImplementationWeaver(constructorWeaver);
+            var classDecorationWeaver = new ClassDecorationWeaver(constructorWeaver);
 
             ImplementInterfaces(
                 typesToProxy.Where(x => x.IsInterface),
                 interfaceImplementationWeaver);
 
-            DecorateClasses(
-                typesToProxy.Where(x => x.IsClass).ToList(), 
-                constructorDecorator, 
-                methodDecorator);
+            DecorateClasses(classDecorationWeaver, typesToProxy.Where(x => x.IsClass).ToList());
         }
 
         private static void ImplementInterfaces(
-            IEnumerable<TypeDefinition> interfacesToProxy,
+            IEnumerable<TypeDefinition> interfacesToImplement,
             InterfaceImplementationWeaver interfaceImplementationWeaver)
         {
-            foreach (TypeDefinition interfaceToProxy in interfacesToProxy)
+            foreach (TypeDefinition interfaceToProxy in interfacesToImplement)
             {
                 interfaceImplementationWeaver.CreateImplementationOf(interfaceToProxy);
             }
         }
 
-        private static void DecorateClasses(
-            ICollection<TypeDefinition> classesToProxy,
-            ConstructorWeaver constructorDecorator,
-            MethodWeaver methodDecorator)
+        private static void DecorateClasses(ClassDecorationWeaver classDecorationWeaver, ICollection<TypeDefinition> classesToDecorate)
         {
-            AssertDoNotHaveMultipleConstructors(classesToProxy);
+            AssertDoNotHaveMultipleConstructors(classesToDecorate);
 
-            foreach (TypeDefinition classToProxy in classesToProxy)
+            foreach (TypeDefinition classToDecorate in classesToDecorate)
             {
-                FieldDefinition interceptorRetriever =
-                    constructorDecorator.ExtendConstructorWithDynamicInterceptorRetriever(classToProxy);
-
-                DecorateClassProxyMethods(classToProxy, methodDecorator, interceptorRetriever);
-            }
-        }
-
-        private static void DecorateClassProxyMethods(
-            TypeDefinition typeToProxy,
-            MethodWeaver methodWeaver,
-            FieldDefinition interceptorRetriever)
-        {
-            var methodsToDecorate =
-                typeToProxy.Methods
-                    .Where(x => !x.IsConstructor)
-                    .Where(x => !x.IsAbstract)
-                    .Where(x => !x.IsPrivate)
-                    .ToList();
-
-            foreach (MethodDefinition method in methodsToDecorate)
-            {
-                methodWeaver.DecorateMethod(method, interceptorRetriever);
+                classDecorationWeaver.DecorateClass(classToDecorate);
             }
         }
 
@@ -78,9 +55,9 @@
             return typeDefinition.CustomAttributes.Any(WeavingInformation.IsStaticProxyAttribute);
         }
         
-        private static void AssertDoNotHaveMultipleConstructors(IEnumerable<TypeDefinition> typesToProxy)
+        private static void AssertDoNotHaveMultipleConstructors(IEnumerable<TypeDefinition> classesToDecorate)
         {
-            IEnumerable<string> violationMessages = typesToProxy
+            IEnumerable<string> violationMessages = classesToDecorate
                 .Where(HasMultipleConstructors)
                 .Select(BuildMultipleConstructorsExceptionMessage)
                 .ToList();
