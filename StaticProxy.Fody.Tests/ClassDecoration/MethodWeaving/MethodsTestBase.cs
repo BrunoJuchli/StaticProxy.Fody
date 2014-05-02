@@ -17,7 +17,7 @@
 
         public MethodsTestBase()
         {
-            this.Clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.ClassWithMethods");
+            this.Clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.ClassDecoration.ClassWithMethods");
 
             this.InterceptorManager = new FakeDynamicInterceptorManager();
             

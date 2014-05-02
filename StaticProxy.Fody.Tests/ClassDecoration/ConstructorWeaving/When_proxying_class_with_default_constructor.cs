@@ -16,7 +16,7 @@
 
         public When_proxying_class_with_default_constructor()
         {
-            this.clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.DefaultConstructor");
+            this.clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.ClassDecoration.DefaultConstructor");
         }
 
         [Fact]

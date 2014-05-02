@@ -1,4 +1,4 @@
-﻿namespace SimpleTest
+﻿namespace SimpleTest.InterfaceImplementation
 {
     // todo add type constraints
     // [StaticProxy]

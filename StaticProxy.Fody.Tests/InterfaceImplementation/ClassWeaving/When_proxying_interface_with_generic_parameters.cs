@@ -1,4 +1,4 @@
-﻿namespace StaticProxy.Fody.Tests.InterfaceProxy.ConstructorWeaving
+﻿namespace StaticProxy.Fody.Tests.InterfaceImplementation.ClassWeaving
 {
     using System;
     using System.Linq;
@@ -10,15 +10,16 @@
 
     using Xunit;
 
-    public class When_proxying_interface : SimpleTestBase
+    public class When_proxying_interface_with_generic_parameters : SimpleTestBase
     {
-        private const string InterfaceFullName = "SimpleTest.IProxy";
+        private const string InterfaceFullName = "SimpleTest.InterfaceImplementation.IGenericProxy";
+        private const string GenericParametersSuffix = "`3";
 
         private readonly Type clazz;
 
-        public When_proxying_interface()
+        public When_proxying_interface_with_generic_parameters()
         {
-            this.clazz = this.WovenSimpleTestAssembly.GetType(InterfaceFullName + InterfaceImplementationWeaver.ClassNameSuffix);
+            this.clazz = this.WovenSimpleTestAssembly.GetType(InterfaceFullName + InterfaceImplementationWeaver.ClassNameSuffix + GenericParametersSuffix);
             this.clazz.Should().NotBeNull();
         }
 
@@ -27,24 +28,30 @@
         {
             this.clazz.GetInterfaces().Should()
                 .HaveCount(1)
-                .And.Contain(x => x.FullName == InterfaceFullName);
+                .And.Contain(x => x.FullName == InterfaceFullName + GenericParametersSuffix);
         }
 
-        [Fact]
+        [Fact(Skip = "implement")]
+        public void Must_retain_generic_parameters()
+        {
+            throw new NotImplementedException();
+        }
+
+        [Fact(Skip = "implement")]
         public void Must_add_constructor()
         {
             this.clazz.GetConstructors().Should().HaveCount(1);
         }
 
-        [Fact]
+        [Fact(Skip = "implement")]
         public void Must_add_dynamic_interceptor_manager_to_constructor()
         {
             this.clazz.GetConstructors().Single().GetParameters().Should()
                 .HaveCount(1)
                 .And.Contain(x => x.ParameterType == typeof(IDynamicInterceptorManager));
         }
-        
-        [Fact]
+
+        [Fact(Skip = "implement")]
         public void Ctor_WhenDynamicInterceptorManagerIsNull_MustThrowArgumentException()
         {
             this.Invoking(x => Activator.CreateInstance(this.clazz, (IDynamicInterceptorManager)null))
@@ -53,7 +60,7 @@
                 .Where(x => ((ArgumentNullException)x.InnerException).ParamName == typeof(IDynamicInterceptorManager).Name);
         }
 
-        [Fact]
+        [Fact(Skip = "implement")]
         public void Ctor_should_initialize_manager()
         {
             var interceptorManager = new Mock<IDynamicInterceptorManager>();
@@ -63,7 +70,7 @@
             interceptorManager.Verify(x => x.Initialize(instance));
         }
 
-        [Fact]
+        [Fact(Skip = "implement")]
         public void Instanciating_should_not_throw()
         {
             Activator.CreateInstance(this.clazz, Mock.Of<IDynamicInterceptorManager>());

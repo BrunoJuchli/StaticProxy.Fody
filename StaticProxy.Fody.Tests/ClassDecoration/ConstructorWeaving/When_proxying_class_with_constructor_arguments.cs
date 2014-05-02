@@ -16,7 +16,7 @@
 
         public When_proxying_class_with_constructor_arguments()
         {
-            this.clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.ConstructorWithArguments");
+            this.clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.ClassDecoration.ConstructorWithArguments");
         }
 
         [Fact]

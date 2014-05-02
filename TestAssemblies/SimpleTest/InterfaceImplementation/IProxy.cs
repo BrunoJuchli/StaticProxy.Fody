@@ -1,4 +1,4 @@
-﻿namespace SimpleTest
+﻿namespace SimpleTest.InterfaceImplementation
 {
     [StaticProxy]
     internal interface IProxy

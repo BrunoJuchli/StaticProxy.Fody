@@ -1,4 +1,4 @@
-﻿namespace StaticProxy.Fody.Tests.InterfaceProxy.ClassWeaving
+﻿namespace StaticProxy.Fody.Tests.InterfaceImplementation.ClassWeaving
 {
     using System;
     using System.Linq;
@@ -12,7 +12,7 @@
 
     public class When_proxying_interface : SimpleTestBase
     {
-        private const string InterfaceFullName = "SimpleTest.IProxy";
+        private const string InterfaceFullName = "SimpleTest.InterfaceImplementation.IProxy";
 
         private readonly Type clazz;
 

@@ -83,9 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyExtensions.cs" />
-    <Compile Include="InterfaceProxy\ClassWeaving\When_proxying_interface.cs" />
-    <Compile Include="InterfaceProxy\ClassWeaving\When_proxying_interface_with_generic_parameters.cs" />
-    <Compile Include="InterfaceProxy\ConstructorWeaving\When_proxying_interface.cs" />
+    <Compile Include="InterfaceImplementation\ClassWeaving\When_proxying_interface.cs" />
+    <Compile Include="InterfaceImplementation\ClassWeaving\When_proxying_interface_with_generic_parameters.cs" />
+    <Compile Include="InterfaceImplementation\ConstructorWeaving\When_proxying_interface.cs" />
     <Compile Include="ClassDecoration\MethodWeaving\DynamicInterceptorManagerMockExtensions.cs" />
     <Compile Include="ClassDecoration\MethodWeaving\MethodsTestBase.cs" />
     <Compile Include="ClassDecoration\MethodWeaving\ToStringObject.cs" />
@@ -127,8 +127,7 @@
     <Content Include="_ToDo.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="InterfaceImplementation\" />
-    <Folder Include="InterfaceProxy\MethodWeaving\" />
+    <Folder Include="InterfaceImplementation\MethodWeaving\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)Tools\Pepita\PepitaGet.targets" />

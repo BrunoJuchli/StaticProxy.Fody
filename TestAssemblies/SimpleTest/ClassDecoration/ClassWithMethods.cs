@@ -1,4 +1,4 @@
-﻿namespace SimpleTest
+﻿namespace SimpleTest.ClassDecoration
 {
     using System;
     using System.Globalization;
