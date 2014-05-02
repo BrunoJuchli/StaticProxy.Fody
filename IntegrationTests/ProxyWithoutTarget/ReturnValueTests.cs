@@ -45,7 +45,7 @@
         }
 
         [Fact]
-        public void WHenMethodReturnValueType_InterceptorValueIsNull_MustThrow()
+        public void WhenMethodReturnValueType_InterceptorValueIsNull_MustThrow()
         {
             this.SetupReturnValue(null);
 

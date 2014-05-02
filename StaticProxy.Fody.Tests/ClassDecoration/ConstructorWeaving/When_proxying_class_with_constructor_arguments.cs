@@ -60,7 +60,7 @@
 
             var instance = (object)this.CreateInstance(interceptorManager);
 
-            interceptorManager.Verify(x => x.Initialize(instance));
+            interceptorManager.Verify(x => x.Initialize(instance, false));
         }
 
         private dynamic CreateInstance(Mock<IDynamicInterceptorManager> interceptorManager)

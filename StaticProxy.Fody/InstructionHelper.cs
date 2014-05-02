@@ -28,12 +28,15 @@
                         };
         }
 
-        public static IEnumerable<Instruction> CallMethodAndPassThis(FieldDefinition instanceOfMethod, MethodReference method)
+        public static IEnumerable<Instruction> CallMethodAndPassThisAndBoolean(FieldDefinition instanceOfMethod, MethodReference method, bool boolean)
         {
+            OpCode loadBooleanValue = boolean ? OpCodes.Ldc_I4_1 : OpCodes.Ldc_I4_0;
+
             return new[]
                        {
                            Instruction.Create(OpCodes.Ldfld, instanceOfMethod), 
                            Instruction.Create(OpCodes.Ldarg_0),
+                           Instruction.Create(loadBooleanValue),
                            Instruction.Create(OpCodes.Callvirt, method),
                            Instruction.Create(OpCodes.Nop),
                        };

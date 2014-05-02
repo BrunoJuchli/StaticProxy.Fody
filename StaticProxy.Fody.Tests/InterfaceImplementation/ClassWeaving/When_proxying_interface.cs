@@ -62,7 +62,7 @@
 
             object instance = Activator.CreateInstance(this.clazz, interceptorManager.Object);
 
-            interceptorManager.Verify(x => x.Initialize(instance));
+            interceptorManager.Verify(x => x.Initialize(instance, true));
         }
 
         [Fact]

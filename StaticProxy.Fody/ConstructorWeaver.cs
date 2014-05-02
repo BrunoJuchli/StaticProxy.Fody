@@ -26,7 +26,7 @@
                 WeavingInformation.ModuleDefinition.Import(importedExceptionsTypeDefinition.GetMethods().Single(x => x.Name == "EnsureDynamicInterceptorManagerNotNull"));
         }
         
-        public FieldDefinition ExtendConstructorWithDynamicInterceptorManager(TypeDefinition typeToProxy)
+        public FieldDefinition ExtendConstructorWithDynamicInterceptorManager(TypeDefinition typeToProxy, bool requiresInterceptor)
         {
             FieldDefinition field = AddPrivateReadonlyField(typeToProxy, this.interceptorManagerReference);
 
@@ -41,7 +41,7 @@
 
             processor.InsertBefore(firstInstruction, InstructionHelper.CallMethodAndPassParameter(this.ensureDynamicInterceptorManagerNotNull, parameter));
             processor.InsertBefore(firstInstruction, InstructionHelper.SetInstanceFieldToMethodParameter(field, parameter));
-            processor.InsertBefore(firstInstruction, InstructionHelper.CallMethodAndPassThis(field, this.managerInitializeMethodReference));
+            processor.InsertBefore(firstInstruction, InstructionHelper.CallMethodAndPassThisAndBoolean(field, this.managerInitializeMethodReference, requiresInterceptor));
 
             return field;
         }

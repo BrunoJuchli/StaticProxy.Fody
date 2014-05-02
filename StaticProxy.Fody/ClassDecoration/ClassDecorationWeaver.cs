@@ -20,7 +20,7 @@
         public void DecorateClass(TypeDefinition classToDecorate)
         {
             FieldDefinition interceptorRetriever =
-                this.constructorWeaver.ExtendConstructorWithDynamicInterceptorManager(classToDecorate);
+                this.constructorWeaver.ExtendConstructorWithDynamicInterceptorManager(classToDecorate, false);
 
             this.DecorateClassProxyMethods(classToDecorate, interceptorRetriever);
         }

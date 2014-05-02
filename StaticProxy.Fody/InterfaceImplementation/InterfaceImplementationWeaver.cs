@@ -44,7 +44,7 @@
 
             AddEmptyConstructor(classType, this.objectConstructorReference);
 
-            FieldDefinition dynamicInterceptorManager = this.constructorWeaver.ExtendConstructorWithDynamicInterceptorManager(classType);
+            FieldDefinition dynamicInterceptorManager = this.constructorWeaver.ExtendConstructorWithDynamicInterceptorManager(classType, true);
 
             foreach (MethodDefinition interfaceMethod in interfaceToImplement.Methods)
             {

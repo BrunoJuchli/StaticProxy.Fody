@@ -12,7 +12,7 @@
 
     public class InstanciationTests : ProxyWithoutTargetIntegrationTestBase
     {
-        [Fact(Skip = "implement")]
+        [Fact]
         public void WhenThereIsNoInterceptor_InstanciationMustThrow()
         {
             this.BindInterceptorCollection();

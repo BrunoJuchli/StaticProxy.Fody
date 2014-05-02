@@ -43,8 +43,8 @@
 
             public FakeDynamicInterceptorManager()
             {
-                this.Setup(x => x.Initialize(It.IsAny<object>()))
-                    .Callback<object>(target => this.target = target);
+                this.Setup(x => x.Initialize(It.IsAny<object>(), It.IsAny<bool>()))
+                    .Callback<object, bool>((target, requiresInterceptor) => this.target = target);
 
                 this.Setup(x => x.Intercept(It.IsAny<MethodBase>(), It.IsAny<MethodBase>(), It.IsAny<object[]>()))
                     .Callback<MethodBase, MethodBase, object[]>((decoratedMethod, implementationMethod, arguments) => 
