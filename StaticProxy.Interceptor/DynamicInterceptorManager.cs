@@ -9,12 +9,12 @@ using StaticProxy.Interceptor.TargetInvocation;
 
 public class DynamicInterceptorManager : IDynamicInterceptorManager
 {
-    private readonly IDynamicInterceptor[] interceptors;
+    private readonly IDynamicInterceptorCollection interceptors;
     private readonly ITargetInvocationFactory targetInvocationFactory;
     private readonly IInvocationFactory invocationFactory;
     private readonly ITypeInformation typeInformation;
 
-    private object target;
+    private object implementationMethodTarget;
 
     public DynamicInterceptorManager(IDynamicInterceptorCollection interceptors)
         : this(interceptors, new TargetInvocationFactory(), new InvocationFactory(), new TypeInformation())
@@ -30,36 +30,46 @@ public class DynamicInterceptorManager : IDynamicInterceptorManager
         this.targetInvocationFactory = targetInvocationFactory;
         this.invocationFactory = invocationFactory;
         this.typeInformation = typeInformation;
-        this.interceptors = interceptors.ToArray();
+        this.interceptors = interceptors;
 
-        this.target = null;
+        this.implementationMethodTarget = null;
     }
 
-    public void Initialize(object target)
+    public void Initialize(object implementationMethodTarget, bool requireInterceptor)
     {
-        if (target == null)
+        if (implementationMethodTarget == null)
         {
-            throw new ArgumentNullException("target");
+            throw new ArgumentNullException("implementationMethodTarget");
         }
 
-        this.target = target;
+        this.implementationMethodTarget = implementationMethodTarget;
+
+        if (requireInterceptor && !this.interceptors.Any())
+        {
+            string message = string.Format(
+                CultureInfo.InvariantCulture,
+                "There is no interceptor for '{0}', but the proxy requires one to work.",
+                implementationMethodTarget.GetType().FullName);
+
+            throw new InvalidOperationException(message);
+        }
     }
 
     public object Intercept(MethodBase decoratedMethod, MethodBase implementationMethod, object[] arguments)
     {
-        if (this.target == null)
+        if (this.implementationMethodTarget == null)
         {
             throw new InvalidOperationException("Something has gone seriously wrong with StaticProxy.Fody." +
-                ".Initialize(target) must be called once before any .Intercept(..)");
+                ".Initialize(implementationMethodTarget) must be called once before any .Intercept(..)");
         }
 
         // since we only support methods, not constructors, this is actually a MethodInfo
         var decoratedMethodInfo = (MethodInfo)decoratedMethod;
         
-        ITargetInvocation targetInvocation = this.targetInvocationFactory.Create(this.target, implementationMethod);
+        ITargetInvocation targetInvocation = this.targetInvocationFactory.Create(this.implementationMethodTarget, implementationMethod);
         
         IInvocation invocation = this.invocationFactory
-            .Create(targetInvocation, decoratedMethodInfo, arguments, this.interceptors);
+            .Create(targetInvocation, decoratedMethodInfo, arguments, this.interceptors.ToArray());
 
         invocation.Proceed();
 
@@ -68,7 +78,7 @@ public class DynamicInterceptorManager : IDynamicInterceptorManager
             string message = string.Format(
                 CultureInfo.InvariantCulture,
                 "Method {0}.{1} has return type {2} which is a value type. After the invocation the invocation the return value was null. Please ensure that your interceptors call IInvocation.Proceed() or sets a valid IInvocation.ReturnValue.",
-                this.target.GetType().FullName,
+                this.implementationMethodTarget.GetType().FullName,
                 decoratedMethodInfo,
                 decoratedMethodInfo.ReturnType.FullName);
             throw new InvalidOperationException(message);

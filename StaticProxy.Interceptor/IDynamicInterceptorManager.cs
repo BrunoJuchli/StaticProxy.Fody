@@ -2,7 +2,7 @@
 
 public interface IDynamicInterceptorManager
 {
-    void Initialize(object target);
+    void Initialize(object target, bool requireInterceptor);
 
     object Intercept(MethodBase decoratedMethod, MethodBase implementationMethod, object[] arguments);
 }
