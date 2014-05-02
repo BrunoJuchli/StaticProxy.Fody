@@ -51,7 +51,7 @@
                 this.methodWeaver.ImplementMethod(interfaceMethod, dynamicInterceptorManager);
             }
 
-            //classType.Interfaces.Add(interfaceToImplement);
+            classType.Interfaces.Add(interfaceToImplement);
 
             WeavingInformation.ModuleDefinition.Types.Add(classType);
 

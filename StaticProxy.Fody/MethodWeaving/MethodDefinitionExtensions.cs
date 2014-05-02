@@ -32,7 +32,7 @@
                 MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.Virtual | MethodAttributes.Final,
                 interfaceMethod.ReturnType);
 
-            // newMethod.Overrides.Add(interfaceMethod);
+            newMethod.Overrides.Add(interfaceMethod);
 
             CopyMethodData(interfaceMethod, newMethod);
 
