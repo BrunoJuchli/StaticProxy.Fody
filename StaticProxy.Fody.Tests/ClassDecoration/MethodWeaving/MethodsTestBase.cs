@@ -1,4 +1,4 @@
-﻿namespace StaticProxy.Fody.Tests.MethodWeaving
+﻿namespace StaticProxy.Fody.Tests.ClassDecoration.MethodWeaving
 {
     using System;
     using System.Reflection;
@@ -17,7 +17,7 @@
 
         public MethodsTestBase()
         {
-            this.Clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.Methods");
+            this.Clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.ClassWithMethods");
 
             this.InterceptorManager = new FakeDynamicInterceptorManager();
             

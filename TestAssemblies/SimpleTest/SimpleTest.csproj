@@ -46,12 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConstructorWithArguments.cs" />
-    <Compile Include="DefaultConstructor.cs" />
-    <Compile Include="ConstructorWithoutArguments.cs" />
-    <Compile Include="IGenericProxy.cs" />
-    <Compile Include="IProxy.cs" />
-    <Compile Include="Methods.cs" />
+    <Compile Include="ClassDecoration\ConstructorWithArguments.cs" />
+    <Compile Include="ClassDecoration\DefaultConstructor.cs" />
+    <Compile Include="ClassDecoration\ConstructorWithoutArguments.cs" />
+    <Compile Include="InterfaceImplementation\IGenericProxy.cs" />
+    <Compile Include="InterfaceImplementation\IProxy.cs" />
+    <Compile Include="ClassDecoration\ClassWithMethods.cs" />
     <Compile Include="TestMessages.cs" />
   </ItemGroup>
   <ItemGroup>

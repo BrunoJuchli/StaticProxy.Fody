@@ -1,4 +1,4 @@
-﻿namespace StaticProxy.Fody.Tests.ConstructorWeaving
+﻿namespace StaticProxy.Fody.Tests.ClassDecoration.ConstructorWeaving
 {
     using System.Globalization;
 

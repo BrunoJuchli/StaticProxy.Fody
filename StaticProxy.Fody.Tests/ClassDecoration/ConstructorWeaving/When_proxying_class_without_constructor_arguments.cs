@@ -1,4 +1,4 @@
-﻿namespace StaticProxy.Fody.Tests.ConstructorWeaving
+﻿namespace StaticProxy.Fody.Tests.ClassDecoration.ConstructorWeaving
 {
     using System;
     using System.Linq;
@@ -10,13 +10,13 @@
 
     using Xunit;
 
-    public class When_proxying_class_with_constructor_arguments : SimpleTestBase
+    public class When_proxying_class_without_constructor_arguments : SimpleTestBase
     {
         private readonly Type clazz;
 
-        public When_proxying_class_with_constructor_arguments()
+        public When_proxying_class_without_constructor_arguments()
         {
-            this.clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.ConstructorWithArguments");
+            this.clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.ConstructorWithoutArguments");
         }
 
         [Fact]
@@ -33,39 +33,27 @@
                 .GetConstructors().Single().GetParameters();
 
             parameters.Should()
-                .HaveCount(3)
-                .And.Contain(x => x.ParameterType == typeof(int))
-                .And.Contain(x => x.ParameterType == typeof(object))
+                .HaveCount(1)
                 .And.Contain(x => x.ParameterType == typeof(IDynamicInterceptorManager));
         }
 
         [Fact]
         public void Ctor_WhenDynamicInterceptorManagerIsNull_MustThrowArgumentException()
         {
-            this.Invoking(x => 
-                Activator.CreateInstance(
-                    this.clazz,
-                    0,
-                    new object(),
-                    (IDynamicInterceptorManager)null))
+            this.Invoking(x => Activator.CreateInstance(this.clazz, (IDynamicInterceptorManager)null))
                 .ShouldThrow<TargetInvocationException>()
                 .WithInnerException<ArgumentNullException>()
                 .Where(x => ((ArgumentNullException)x.InnerException).ParamName == typeof(IDynamicInterceptorManager).Name);
         }
-        
+
         [Fact]
         public void Ctor_should_initialize_manager()
         {
             var interceptorManager = new Mock<IDynamicInterceptorManager>();
 
-            var instance = (object)this.CreateInstance(interceptorManager);
+            object instance = Activator.CreateInstance(this.clazz, interceptorManager.Object);
 
             interceptorManager.Verify(x => x.Initialize(instance));
-        }
-
-        private dynamic CreateInstance(Mock<IDynamicInterceptorManager> interceptorManager)
-        {
-            return Activator.CreateInstance(this.clazz, 0, new object(), interceptorManager.Object);
         }
     }
 }

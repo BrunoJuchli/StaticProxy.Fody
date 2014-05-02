@@ -5,7 +5,7 @@
     using System.Reflection;
 
     [StaticProxy]
-    public class Methods
+    public class ClassWithMethods
     {
         public void NoArguments()
         {
