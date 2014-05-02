@@ -27,44 +27,32 @@
 
         public void DecorateMethod(MethodDefinition method, FieldDefinition interceptorManager)
         {
-            MethodDefinition implementationMethod = CopyMethod(method, method.DeclaringType);
+            string newMethodName = string.Format(CultureInfo.InvariantCulture, "{0}<SP>", method.Name);
+            MethodDefinition implementationMethod = CopyMethod(method, newMethodName, method.DeclaringType);
             
-            ILProcessor processor = ReplaceOriginalMethod(method);
-            method.Body.InitLocals = true;
+            DeleteMethodImplementation(method);
 
-            var decoratedMethodVar = method.AddVariableDefinition("__fody$originalMethod", this.methodBaseTypeRef);
-            var implementationMethodVar = method.AddVariableDefinition("__fody$implementationMethod", this.methodBaseTypeRef);
-            var parametersVar = method.AddVariableDefinition("__fody$parameters", this.objectArrayTypeRef);
-
-            this.SaveMethodBaseToVariable(processor, method, decoratedMethodVar);
-            this.SaveMethodBaseToVariable(processor, implementationMethod, implementationMethodVar);
-            processor.SaveParametersToNewObjectArray(parametersVar, method.Parameters.ToArray());
-
-            this.CallInterceptMethod(interceptorManager, processor, decoratedMethodVar, implementationMethodVar, parametersVar);
-
-            HandleInterceptReturnValue(method, processor);
-
-            // write method end
-            processor.Emit(OpCodes.Ret);
-            method.Body.OptimizeMacros();
+            this.WeaveInterceptionCall(method, method, implementationMethod, interceptorManager);
         }
 
-        private static ILProcessor ReplaceOriginalMethod(MethodDefinition method)
+        public void ImplementMethod(MethodDefinition interfaceMethod, FieldDefinition interceptorManager)
+        {
+            MethodDefinition interceptingMethod = CopyMethod(interfaceMethod, interfaceMethod.Name, interceptorManager.DeclaringType);
+            
+            this.WeaveInterceptionCall(interceptingMethod, interfaceMethod, null, interceptorManager);
+        }
+
+        private static void DeleteMethodImplementation(MethodDefinition method)
         {
             method.Body.Instructions.Clear();
             method.Body.ExceptionHandlers.Clear();
             method.Body.Variables.Clear();
-            ILProcessor processor = method.Body.GetILProcessor();
-
-            processor.Emit(OpCodes.Nop);
-
-            return processor;
         }
 
-        private static MethodDefinition CopyMethod(MethodDefinition templateMethod, TypeDefinition targetType)
+        private static MethodDefinition CopyMethod(MethodDefinition templateMethod, string newMethodName, TypeDefinition targetType)
         {
             var newMethod = new MethodDefinition(
-                string.Format(CultureInfo.InvariantCulture, "{0}<SP>", templateMethod.Name), 
+                newMethodName, 
                 templateMethod.Attributes, 
                 templateMethod.ReturnType);
 
@@ -121,6 +109,37 @@
                 // cast to reference type
                 processor.Emit(OpCodes.Castclass, method.ReturnType);
             }
+        }
+
+        private void WeaveInterceptionCall(
+            MethodDefinition methodToExtend,
+            MethodDefinition decoratedMethodParameter,
+            MethodDefinition implementationMethodParameter,
+            FieldDefinition interceptorManager)
+        {
+            methodToExtend.Body.InitLocals = true;
+            ILProcessor processor = methodToExtend.Body.GetILProcessor();
+            processor.Emit(OpCodes.Nop);
+
+            var decoratedMethodVar = methodToExtend.AddVariableDefinition("__fody$originalMethod", this.methodBaseTypeRef);
+            var implementationMethodVar = methodToExtend.AddVariableDefinition("__fody$implementationMethod", this.methodBaseTypeRef);
+            var parametersVar = methodToExtend.AddVariableDefinition("__fody$parameters", this.objectArrayTypeRef);
+
+            this.SaveMethodBaseToVariable(processor, decoratedMethodParameter, decoratedMethodVar);
+            if (implementationMethodParameter != null)
+            {
+                this.SaveMethodBaseToVariable(processor, implementationMethodParameter, implementationMethodVar);
+            }
+            
+            processor.SaveParametersToNewObjectArray(parametersVar, methodToExtend.Parameters.ToArray());
+
+            this.CallInterceptMethod(interceptorManager, processor, decoratedMethodVar, implementationMethodVar, parametersVar);
+
+            HandleInterceptReturnValue(methodToExtend, processor);
+
+            // write method end
+            processor.Emit(OpCodes.Ret);
+            methodToExtend.Body.OptimizeMacros();
         }
 
         private void SaveMethodBaseToVariable(ILProcessor processor, MethodDefinition decoratedMethod, VariableDefinition methodBaseVar)

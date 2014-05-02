@@ -1,9 +1,7 @@
 ﻿namespace IntegrationTests.ProxyWithoutTarget
 {
     using Moq;
-
     using Ninject;
-
     using Xunit;
 
     public class InterceptionCallTests : ProxyWithoutTargetIntegrationTestBase
