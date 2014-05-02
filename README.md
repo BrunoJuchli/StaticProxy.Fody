@@ -27,7 +27,7 @@ To Install the static proxy weaver from the Nuget Package Manager Console
     
 ## Usage
  - Add the StaticProxy.Fody nuget package to any project where you wish to add static proxy weaving.
- - Put an `[StaticProxy]` attribute on any class you wish to be proxied.
+ - Put an `[StaticProxy]` attribute on any class or interface you wish to be proxied.
  - Write interceptors (`class SomeProxy : IDynamicInterceptor`)
  
 
@@ -38,8 +38,12 @@ or roll your own:
   - Configure your Inversion of Control (IoC) container to be able to resolve `IDynamicInterceptorManager`. The implementation is provided by the `StaticProxy.Interceptor` nuget package.
   - Configure your IoC container to be able to resolve `IDynamicInterceptorCollection`. It needs to contain the interceptor for the proxied type.
  
+### Class Proxy
+Is created by putting the `[StaticProxy]` attribute on a class.
+This is similar to castle dynamic proxy "class proxy" and "interface proxy with target".
+The class will be decorated, so that all method calls can be intercepted.
 
-### Your Code
+#### Your Code
 
     [StaticProxy]
     public class Foo
@@ -62,7 +66,7 @@ or roll your own:
         }
     }
 
-### What gets compiled
+#### What gets compiled
 	
     public class Foo
     {
@@ -73,7 +77,7 @@ or roll your own:
         {
             this.bar = bar;
             this.dynamicInterceptorManager = dynamicInterceptorManager;
-            this.dynamicInterceptorManager.Initialize(this);
+            this.dynamicInterceptorManager.Initialize(this, false);
         }
     
         public int Multiply(int multiplicand , int multiplier)
@@ -105,13 +109,68 @@ or roll your own:
         }
     }
     
-#### Explanation ####
+##### Explanation
 
  - `IDynamicInterceptorManager` argument is added to the constructor
- - the constructor passes a reference to the newly created object to the `IDynamicInterceptorManager` by way of `.Initialize(this);`
+ - the constructor passes a reference to the newly created object to the `IDynamicInterceptorManager` by way of `.Initialize(this, false);`
  - all public methods are renamed from `Orig(..)` to `(Orig<SP>(...)`. For each a decorating method with the original signature is created.
  - The decorating method is passing every call to the `IDynamicInterceptorManager` by `.Intercept(..)`.
  - The `IDynamicInterceptorManager` is calling the `IDynamicInterceptor`s in sequence and lastly the implementation.
+
+### Interface Proxy
+Is created by putting the `[StaticProxy]` attribute on an interface.
+This is similar to castle dynamic proxy "interface proxy without target".
+An implementation of the interface is created. This implementation will call the interceptor(s). The interceptors will need to provide the actual "business" implementation of the method. Subsequently, this type of proxy does only work if there are 1+ interceptors.
+
+#### Your Code
+
+    [StaticProxy]
+    public interface IBar
+    {
+        int Multiply(int multiplicand , int multiplier);
+        
+        void NoReturnValue(string value);
+    }
+
+#### What gets compiled
+	
+    public class IBarImplementation
+    {
+        private readonly IDynamicInterceptorManager dynamicInterceptorManager;
+    
+        public Foo(IDynamicInterceptorManager IDynamicInterceptorManager)
+        {
+            this.dynamicInterceptorManager = dynamicInterceptorManager;
+            this.dynamicInterceptorManager.Initialize(this, true);
+        }
+    
+        public int Multiply(int multiplicand , int multiplier)
+        {
+            object[] arguments = new object[] { multiplicand, multiplier };
+            MethodInfo decoratedMethod = methodOf(Multiply);
+            MethodInfo implementationMethod = null;
+        
+            return this.dynamicInterceptorManager.Intercept(decoratedMethod, implementationMethod, arguments);
+        }
+        
+        public void NoReturnValue(string value)
+        {
+            object[] arguments = new object[] { value };
+            MethodInfo decoratedMethod = methodOf(NoReturnValue);
+            MethodInfo implementationMethod = null;
+        
+            this.dynamicInterceptorManager.Intercept(decoratedMethod, implementationMethod, arguments);
+        }
+    }
+    
+##### Explanation
+
+ - a class is added to the assembly where the interface resided. The class is named "InterfaceName" + "Implementation". The class implements the interface.
+ - The class contains a constructor with `IDynamicInterceptorManager` argument
+ - the constructor passes a reference to the newly created object to the `IDynamicInterceptorManager` by way of `.Initialize(this, true);`
+ - all interface methods are implemented. They make a call to `IDynamicInterceptorManager.Intercept(..)`.
+ - The `IDynamicInterceptorManager` is calling the `IDynamicInterceptor`s in sequence.
+
 
 ## Icon
 
