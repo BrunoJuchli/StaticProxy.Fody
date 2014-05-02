@@ -1,9 +1,8 @@
 StaticProxy.Fody: [![Build status](https://ci.appveyor.com/api/projects/status/j6tubf9q9deyngu4)](https://ci.appveyor.com/project/BrunoJuchli/staticproxy-fody)
 StaticProxy.Interceptor: [![Build status](https://ci.appveyor.com/api/projects/status/bpji3ka4pmwd54wm)](https://ci.appveyor.com/project/BrunoJuchli/staticproxy-fody-951)
 
-## This is an add-in for [Fody](https://github.com/Fody/Fody/) 
+## ![Icon](https://raw.githubusercontent.com/BrunoJuchli/StaticProxy.Fody/master/Icons/package_icon.png) This is an add-in for [Fody](https://github.com/Fody/Fody/) 
 
-![Icon](https://raw.github.com/BrunoJuchli/StaticProxy/master/Icons/package_icon.png)
 
 Very cool utilities have been created by the help of proxying by dynamic code emitting:
 Moq, FakeItEasy, Castle Dynamic Proxy, LinFu Proxy,.. and many more.
