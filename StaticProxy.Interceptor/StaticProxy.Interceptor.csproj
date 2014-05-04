@@ -36,7 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="StaticProxy.Interceptor.nuspec" />
+    <None Include="StaticProxy.Interceptor.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DynamicInterceptorManager.cs" />
@@ -47,6 +49,7 @@
     <Compile Include="IDynamicInterceptorCollection.cs" />
     <Compile Include="IInvocation.cs" />
     <Compile Include="IInvocationFactory.cs" />
+    <Compile Include="InterfaceProxy\InterfaceProxyHelpers.cs" />
     <Compile Include="Reflection\ITypeInformation.cs" />
     <Compile Include="Reflection\TypeInformation.cs" />
     <Compile Include="Invocation.cs" />

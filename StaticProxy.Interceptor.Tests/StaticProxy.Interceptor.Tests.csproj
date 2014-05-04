@@ -61,6 +61,7 @@
     <Compile Include="DynamicInterceptorManagerTest.cs" />
     <Compile Include="ExceptionsTest.cs" />
     <Compile Include="FakeDynamicInterceptorCollection.cs" />
+    <Compile Include="InterfaceProxy\InterfaceProxyHelpersTest.cs" />
     <Compile Include="InvocationTest.cs" />
     <Compile Include="InvocationTest_FaultyInterceptorImplementation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
