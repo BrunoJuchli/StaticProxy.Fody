@@ -7,13 +7,13 @@ StaticProxy.Interceptor: [![Build status](https://ci.appveyor.com/api/projects/s
 Very cool utilities have been created by the help of proxying by dynamic code emitting:
 Moq, FakeItEasy, Castle Dynamic Proxy, LinFu Proxy,.. and many more.
 
-Sadly enough, some platforms do not support dynamic code emitting. These include Windows Store Applications, Windows Phone 7 and Xamarin.iOS.
+Sadly enough, some platforms do not support dynamic code emitting. These include Windows Store Applications (WinRT), Windows Phone 7 and Xamarin.iOS.
 
 Here comes StaticProxy.Fody to the rescue!
 Instead of dynamically creating proxies, it is weaving them at compile time by means of IL rewritting
 (see: [Introduction to Fody](http://github.com/Fody/Fody/wiki/SampleUsage)).
 
-It is meant to be used in conjunction with dependency injection (IoC), since it is adding arguments to the constructor - and thus breaks all `new Foo(...)` calls.
+It is meant to be used in conjunction with dependency injection (IoC), since it is adding arguments to the constructor - and thus breaks `new Foo(...)` calls of all proxied classes.
 
 
 ## Nuget
