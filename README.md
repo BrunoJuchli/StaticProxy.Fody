@@ -33,6 +33,7 @@ To Install the static proxy weaver from the Nuget Package Manager Console
 
 Then, use one of the existing StaticProxy IoC container integrations:
   - Ninject (PCL): [ninject.extensions.staticproxy](https://github.com/BrunoJuchli/ninject.extensions.staticproxy)
+  - Unity [Unity.StaticProxyExtension](https://github.com/BrunoJuchli/Unity.StaticProxyExtension)
  
 or roll your own:
   - Configure your Inversion of Control (IoC) container to be able to resolve `IDynamicInterceptorManager`. The implementation is provided by the `StaticProxy.Interceptor` nuget package.
