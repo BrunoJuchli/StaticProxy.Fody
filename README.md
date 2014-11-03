@@ -13,7 +13,7 @@ Here comes StaticProxy.Fody to the rescue!
 Instead of dynamically creating proxies, it is weaving them at compile time by means of IL rewritting
 (see: [Introduction to Fody](http://github.com/Fody/Fody/wiki/SampleUsage)).
 
-It is meant to be used in conjunction with dependency injection (IoC), since it is adding arguments to the constructor - and thus breaks `new Foo(...)` calls of all proxied classes.
+It is meant to be used in conjunction with dependency injection containers since it is adding arguments to the constructor - and thus breaks `new Foo(...)` calls of all proxied classes.
 
 
 ## Nuget
