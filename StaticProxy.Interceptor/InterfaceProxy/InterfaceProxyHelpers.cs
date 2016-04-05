@@ -1,4 +1,6 @@
-﻿namespace StaticProxy.Interceptor.InterfaceProxy
+﻿using System.Reflection;
+
+namespace StaticProxy.Interceptor.InterfaceProxy
 {
     using System;
     using System.Globalization;
@@ -16,7 +18,7 @@
 
         private static void EnsureTypeIsInterface(Type interfaceType)
         {
-            if (!interfaceType.IsInterface)
+            if (!interfaceType.GetTypeInfo().IsInterface)
             {
                 string message = string.Format(
                     CultureInfo.InvariantCulture,
@@ -30,7 +32,7 @@ For class proxies, use the appropriate binding. See your IoC extension documenta
         private static Type RetrieveProxyType(Type interfaceType)
         {
             string proxyTypeName = string.Concat(interfaceType.FullName, InterfaceImplementationSuffix);
-            Type proxyType = interfaceType.Assembly.GetType(proxyTypeName);
+            Type proxyType = interfaceType.GetTypeInfo().Assembly.GetType(proxyTypeName);
             if (proxyType == null)
             {
                 string message = string.Format(

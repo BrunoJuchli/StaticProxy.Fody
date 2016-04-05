@@ -1,4 +1,6 @@
-﻿namespace StaticProxy.Interceptor.Reflection
+﻿using System.Reflection;
+
+namespace StaticProxy.Interceptor.Reflection
 {
     using System;
 
@@ -6,7 +8,7 @@
     {
         public bool IsNullable(Type t)
         {
-            if (t.IsValueType)
+            if (t.GetTypeInfo().IsValueType)
             {
                 if (t == typeof(void))
                 {
