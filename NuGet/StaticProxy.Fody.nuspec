@@ -1,26 +1,16 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata minClientVersion="2.8">
-    <id>StaticProxy.Fody</id>
-    <version>0.2.0</version>
-    <title>StaticProxy.Fody</title>
-    <authors>Bruno Juchli</authors>
-    <owners>Bruno Juchli</owners>
+    <version>$version$</version>
     <developmentDependency>true</developmentDependency>
+	<title>StaticProxy.Fody</title>
     <projectUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</projectUrl>
 	<iconUrl>https://github.com/BrunoJuchli/StaticProxy.Fody/tree/master/Icons/package_icon.png</iconUrl> 
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Fody add-in to compile-time weave (hence static) proxies with an interception mechanism similar to Castle Dynamic Proxy. Is intended to work with mobile platforms! :)</description>
-    <copyright>Copyright Bruno Juchli 2014</copyright>
     <tags>Proxy ILWeaving Fody AOP</tags>
-	<dependencies>
-		<dependency id="Fody"/>
-	</dependencies>
+    <dependencies>
+      <dependency id="Fody" version="1.29.2"/>
+    </dependencies>
   </metadata>
-  <files>
-    <file src="StaticProxy.Fody\bin\$configuration$\StaticProxy.Fody.*" target="" />
-    <file src="install.ps1" target="Tools" />
-    <file src="uninstall.ps1" target="Tools" />
-    <file src="Fody_ToBeDeleted.txt" target="Content" />
-  </files>
 </package>
