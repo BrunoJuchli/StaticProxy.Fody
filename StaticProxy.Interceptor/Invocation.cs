@@ -83,7 +83,7 @@ namespace StaticProxy.Interceptor
             var expectedParameterType = this.parameterTypes.Value[index];
             if (value == null)
             {
-                if (expectedParameterType.IsValueType)
+                if (expectedParameterType.GetTypeInfo().IsValueType)
                 {
                     throw new ArgumentNullException(
                         index.ToString(),
@@ -93,7 +93,7 @@ namespace StaticProxy.Interceptor
             else
             {
                 var actualParameterType = value.GetType();
-                if (!expectedParameterType.IsAssignableFrom(actualParameterType))
+                if (!expectedParameterType.GetTypeInfo().IsAssignableFrom(actualParameterType.GetTypeInfo()))
                 {
                     throw new ArgumentOutOfRangeException(
                         index.ToString(),
