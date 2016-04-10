@@ -12,6 +12,7 @@
     <tags>Proxy ILWeaving Fody AOP</tags>
     <owners>Bruno Juchli</owners>
 	<authors>See GitHub contributors list</authors>
+	<releaseNotes>Updated to Fody 1.29.2.</releaseNotes>
     <dependencies>
       <dependency id="Fody" version="1.29.2"/>
     </dependencies>
