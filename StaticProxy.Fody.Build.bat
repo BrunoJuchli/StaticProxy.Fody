@@ -1,4 +1,4 @@
-
+SET Configuration=Release
 SET Action=Build
 SET UserTarget=Build
 

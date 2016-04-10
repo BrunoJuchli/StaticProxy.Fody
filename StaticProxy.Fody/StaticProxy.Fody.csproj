@@ -90,7 +90,7 @@
     </PropertyGroup>
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>IF Release==$(ConfigurationName) gitlink $(SolutionDir) -f StaticProxy.Fody.sln -ignore IntegrationTests,MultipleConstructors,SimpleTest,StaticProxy.Fody.Tests
+    <PostBuildEvent>IF Release==$(ConfigurationName) gitlink $(SolutionDir) -f StaticProxy.Fody.sln -ignore IntegrationTests,MultipleConstructors,SimpleTest,StaticProxy.Fody.Tests,Nuget
 </PostBuildEvent>
   </PropertyGroup>
 </Project>
