@@ -78,9 +78,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\StaticProxy.Interceptor\ExceptionExtensions.cs">
-      <Link>ExceptionExtensions.cs</Link>
-    </Compile>
     <Compile Include="ProxyWithoutTarget\DynamicInterceptorMockExtensions.cs" />
     <Compile Include="ProxyWithoutTarget\InstanciationTests.cs" />
     <Compile Include="ProxyWithoutTarget\InterceptionCallTests.cs" />
