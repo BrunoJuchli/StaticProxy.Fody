@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mono.Cecil;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
@@ -6,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Linq;
-using Mono.Cecil;
 
 namespace StaticProxy.Fody.Tests
 {
@@ -17,6 +17,9 @@ namespace StaticProxy.Fody.Tests
 
         public WeaverHelper(string projectPath)
         {
+            // todo remove after debug
+            Console.WriteLine("Current directory = {0}", Environment.CurrentDirectory);
+
             this.projectPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\TestAssemblies", projectPath));
         }
 
@@ -88,11 +91,11 @@ namespace StaticProxy.Fody.Tests
             xDocument.StripNamespace();
 
             var outputPathValue = (from propertyGroup in xDocument.Descendants("PropertyGroup")
-                let condition = ((string)propertyGroup.Attribute("Condition"))
-                where (condition != null) &&
-                      (condition.Trim() == "'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'")
-                from outputPath in propertyGroup.Descendants("OutputPath")
-                select outputPath.Value).First();
+                                   let condition = ((string)propertyGroup.Attribute("Condition"))
+                                   where (condition != null) &&
+                                         (condition.Trim() == "'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'")
+                                   from outputPath in propertyGroup.Descendants("OutputPath")
+                                   select outputPath.Value).First();
 #if (!DEBUG)
             outputPathValue = outputPathValue.Replace("Debug", "Release");
 #endif
