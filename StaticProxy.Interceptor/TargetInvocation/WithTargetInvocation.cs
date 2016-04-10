@@ -1,4 +1,6 @@
-﻿namespace StaticProxy.Interceptor.TargetInvocation
+﻿using System.Runtime.ExceptionServices;
+
+namespace StaticProxy.Interceptor.TargetInvocation
 {
     using System;
     using System.Reflection;
@@ -34,7 +36,7 @@
             {
                 if (ex.InnerException != null)
                 {
-                    throw ex.InnerException.PreserveStackTrace();
+                    ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
                 }
 
                 throw;
