@@ -16,6 +16,6 @@
 	<releaseNotes>Changed PCL to target Profile259 (.net 4.5, ASP.NET Core 1.0, Win 8, Win Phone 8.1, Win Phone Silverlight 8, Xamarin.Android, Xamarin.iOS, Xamarin.iOS (Classic)</releaseNotes>
   </metadata>
   <files>
-    <file src="bin\$configuration$\$id$.pdb" target="lib\portable-win+net40+sl50+wp80\" />
+    <file src="bin\$configuration$\$id$.pdb" target="lib\portable-net45+Bwin+Bwpa81+Bwp80+BMonoAndroid10+Bxamarinios10+BMonoTouch10\" />
   </files>
 </package>
