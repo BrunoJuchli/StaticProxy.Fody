@@ -12,7 +12,7 @@
     <tags>Proxy ILWeaving Fody AOP</tags>
     <owners>Bruno Juchli</owners>
 	<authors>See GitHub contributors list</authors>
-	<releaseNotes>Updated to Fody 1.29.2.</releaseNotes>
+	<releaseNotes>Updated to Fody 1.29.2. Processing pdb with gitlink so that with "Enable source server support" enabled this assembly is be source-steppable. Also see https://github.com/GitTools/GitLink/</releaseNotes>
     <dependencies>
       <dependency id="Fody" version="1.29.2"/>
     </dependencies>
