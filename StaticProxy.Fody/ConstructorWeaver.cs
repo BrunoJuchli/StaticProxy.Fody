@@ -1,9 +1,9 @@
 ﻿namespace StaticProxy.Fody
 {
-    using System.Linq;
     using Mono.Cecil;
     using Mono.Cecil.Cil;
     using Mono.Cecil.Rocks;
+    using System.Linq;
 
 
     public class ConstructorWeaver
@@ -16,16 +16,16 @@
         public ConstructorWeaver()
         {
             this.interceptorManagerReference = WeavingInformation.DynamicInterceptorManagerReference;
-            this.managerInitializeMethodReference = WeavingInformation.ModuleDefinition.Import(this.interceptorManagerReference.Resolve().GetMethods().Single(x => x.Name == "Initialize"));
+            this.managerInitializeMethodReference = WeavingInformation.ModuleDefinition.ImportReference(this.interceptorManagerReference.Resolve().GetMethods().Single(x => x.Name == "Initialize"));
 
-            TypeDefinition originalExceptionsTypeDefinition = 
+            TypeDefinition originalExceptionsTypeDefinition =
                 WeavingInformation.InterceptorModuleDefinition.GetTypeDefinition("StaticProxy.Interceptor.Exceptions");
-            TypeDefinition importedExceptionsTypeDefinition = WeavingInformation.ModuleDefinition.Import(originalExceptionsTypeDefinition).Resolve();
+            TypeDefinition importedExceptionsTypeDefinition = WeavingInformation.ModuleDefinition.ImportReference(originalExceptionsTypeDefinition).Resolve();
 
             this.ensureDynamicInterceptorManagerNotNull =
-                WeavingInformation.ModuleDefinition.Import(importedExceptionsTypeDefinition.GetMethods().Single(x => x.Name == "EnsureDynamicInterceptorManagerNotNull"));
+                WeavingInformation.ModuleDefinition.ImportReference(importedExceptionsTypeDefinition.GetMethods().Single(x => x.Name == "EnsureDynamicInterceptorManagerNotNull"));
         }
-        
+
         public FieldDefinition ExtendConstructorWithDynamicInterceptorManager(TypeDefinition typeToProxy, bool requiresInterceptor)
         {
             FieldDefinition field = AddPrivateReadonlyField(typeToProxy, this.interceptorManagerReference);
@@ -70,7 +70,7 @@
         private static ParameterDefinition AddParameter(MethodDefinition method, TypeReference typeOfParameter)
         {
             var parameter = new ParameterDefinition(
-                typeOfParameter.Name, 
+                typeOfParameter.Name,
                 ParameterAttributes.None,
                 typeOfParameter);
             method.Parameters.Add(parameter);

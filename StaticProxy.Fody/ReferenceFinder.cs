@@ -1,7 +1,6 @@
+using Mono.Cecil;
 using System;
 using System.Linq;
-
-using Mono.Cecil;
 
 namespace StaticProxy.Fody
 {
@@ -30,12 +29,12 @@ namespace StaticProxy.Fody
                 typeDefinition = typeDefinition.BaseType == null ? null : typeDefinition.BaseType.Resolve();
             } while (methodDefinition == null && typeDefinition != null);
 
-            return moduleDefinition.Import(methodDefinition);
+            return moduleDefinition.ImportReference(methodDefinition);
         }
 
         public TypeReference GetTypeReference(Type type)
         {
-            return moduleDefinition.Import(type);
+            return moduleDefinition.ImportReference(type);
         }
     }
 }

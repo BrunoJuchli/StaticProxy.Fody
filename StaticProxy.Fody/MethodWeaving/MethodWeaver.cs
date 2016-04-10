@@ -1,12 +1,11 @@
 ﻿namespace StaticProxy.Fody.MethodWeaving
 {
-    using System.Globalization;
-    using System.Linq;
-    using System.Reflection;
-
     using Mono.Cecil;
     using Mono.Cecil.Cil;
     using Mono.Cecil.Rocks;
+    using System.Globalization;
+    using System.Linq;
+    using System.Reflection;
 
     public class MethodWeaver
     {
@@ -31,7 +30,7 @@
             MethodDefinition implementationMethod = method.CreateCopy(newMethodName);
 
             method.DeclaringType.Methods.Add(implementationMethod);
-            
+
             DeleteMethodImplementation(method);
 
             this.WeaveInterceptionCall(method, method, implementationMethod, interceptorManager);
@@ -56,7 +55,7 @@
         private static MethodReference ImportInterceptMethod()
         {
             TypeDefinition interceptorManagerDefinition = WeavingInformation.DynamicInterceptorManagerReference.Resolve();
-            return WeavingInformation.ModuleDefinition.Import(
+            return WeavingInformation.ModuleDefinition.ImportReference(
                 interceptorManagerDefinition.Methods.Single(x1 => x1.Name == "Intercept"));
         }
 
@@ -67,7 +66,7 @@
                 // unbox
                 processor.Emit(OpCodes.Unbox_Any, method.ReturnType);
             }
-            else if (method.ReturnType == WeavingInformation.ModuleDefinition.TypeSystem.Void) 
+            else if (method.ReturnType == WeavingInformation.ModuleDefinition.TypeSystem.Void)
             {
                 // remove return value of intercept method from stack
                 processor.Emit(OpCodes.Pop);
@@ -98,7 +97,7 @@
             {
                 this.SaveMethodBaseToVariable(processor, implementationMethodParameter, implementationMethodVar);
             }
-            
+
             processor.SaveParametersToNewObjectArray(parametersVar, methodToExtend.Parameters.ToArray());
 
             this.CallInterceptMethod(interceptorManager, processor, decoratedMethodVar, implementationMethodVar, parametersVar);
@@ -119,10 +118,10 @@
         }
 
         private void CallInterceptMethod(
-            FieldDefinition interceptorManager, 
+            FieldDefinition interceptorManager,
             ILProcessor processor,
             VariableDefinition decoratedMethodVar,
-            VariableDefinition implementationMethodVar, 
+            VariableDefinition implementationMethodVar,
             VariableDefinition parametersVar)
         {
             processor.Emit(OpCodes.Ldarg_0);
