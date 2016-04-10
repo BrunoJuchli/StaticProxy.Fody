@@ -1,15 +1,18 @@
 <?xml version="1.0"?>
 <package >
   <metadata minClientVersion="2.8">
+    <id>StaticProxy.Interceptor</id>
     <version>$version$</version>
 	<title>StaticProxy.Interceptor</title>
-    <developmentDependency>false</developmentDependency>
+	<developmentDependency>false</developmentDependency>
 	<iconUrl>https://github.com/BrunoJuchli/StaticProxy.Fody/tree/master/Icons/package_icon.png</iconUrl> 
     <projectUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</projectUrl>
 	<description>Fody add-in to compile-time weave (hence static) proxies with an interception mechanism similar to Castle Dynamic Proxy. Is intended to work with mobile platforms! :)</description>
     <copyright>Copyright Bruno Juchli 2014</copyright>
     <tags>Proxy ILWeaving Fody AOP</tags>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+	<owners>Bruno Juchli</owners>
+	<authors>See GitHub contributors list</authors>
   </metadata>
   <files>
     <file src="bin\$configuration$\$id$.pdb" target="lib\portable-win+net40+sl50+wp80\" />

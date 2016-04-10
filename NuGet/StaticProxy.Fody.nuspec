@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata minClientVersion="2.8">
+    <id>StaticProxy.Interceptor</id>
     <version>$version$</version>
     <developmentDependency>true</developmentDependency>
 	<title>StaticProxy.Fody</title>
@@ -9,6 +10,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Fody add-in to compile-time weave (hence static) proxies with an interception mechanism similar to Castle Dynamic Proxy. Is intended to work with mobile platforms! :)</description>
     <tags>Proxy ILWeaving Fody AOP</tags>
+    <owners>Bruno Juchli</owners>
+	<authors>See GitHub contributors list</authors>
     <dependencies>
       <dependency id="Fody" version="1.29.2"/>
     </dependencies>
