@@ -1,17 +1,14 @@
 ﻿namespace StaticProxy.Fody.Tests.InterfaceImplementation.ClassWeaving
 {
+    using FluentAssertions;
+    using Moq;
+    using StaticProxy.Fody.InterfaceImplementation;
     using System;
     using System.Linq;
     using System.Reflection;
-
-    using FluentAssertions;
-
-    using Moq;
-
-    using StaticProxy.Fody.InterfaceImplementation;
-
     using Xunit;
 
+    // see https://github.com/BrunoJuchli/StaticProxy.Fody/issues/6
     public class When_proxying_interface_with_generic_parameters : SimpleTestBase
     {
         private const string InterfaceFullName = "SimpleTest.InterfaceImplementation.IGenericProxy";
@@ -36,7 +33,8 @@
         [Fact(Skip = "implement")]
         public void Must_retain_generic_parameters()
         {
-            throw new NotImplementedException();
+            this.clazz.GetInterfaces().Single()
+                .GenericTypeArguments.Should().BeEquivalentTo(this.clazz.GenericTypeArguments);
         }
 
         [Fact(Skip = "implement")]
