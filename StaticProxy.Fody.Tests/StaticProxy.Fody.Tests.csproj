@@ -107,6 +107,7 @@
     <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_with_mixed_arguments.cs" />
     <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_with_reference_arguments.cs" />
     <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_with_value_arguments.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToStringObject.cs" />
     <Compile Include="ClassDecoration\MethodWeaving\When_proxying_method_returning_nullable_value_type.cs" />
     <Compile Include="ClassDecoration\MethodWeaving\When_proxying_method_with_local_variables.cs" />
