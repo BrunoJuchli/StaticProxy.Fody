@@ -23,7 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleConstructors", "Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{C70FE99A-2A69-40A6-8A7B-0DBE65554605}"
 	ProjectSection(ProjectDependencies) = postProject
-		{EEEA4A67-8C9A-4BFA-A7D6-D7843647C2A1} = {EEEA4A67-8C9A-4BFA-A7D6-D7843647C2A1}
 		{3B17CFD4-10E7-42DB-88D6-A10680B0BFBE} = {3B17CFD4-10E7-42DB-88D6-A10680B0BFBE}
 	EndProjectSection
 EndProject
