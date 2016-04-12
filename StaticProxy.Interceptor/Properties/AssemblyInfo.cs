@@ -10,11 +10,10 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Bruno Juchli")]
 [assembly: AssemblyProduct("StaticProxy.Interceptor")]
-[assembly: AssemblyCopyright("Copyright © Bruno Juchli 2014")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyCopyright("Copyright © Bruno Juchli 2016")]
 [assembly: NeutralResourcesLanguage("en")]
 
+// these values are here to be patched by AppVeyor
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version
@@ -27,6 +26,7 @@ using System.Runtime.CompilerServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.1.0.0")]
 [assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyInformationalVersion("0.1.0.0")]
 
 [assembly: InternalsVisibleTo("StaticProxy.Interceptor.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

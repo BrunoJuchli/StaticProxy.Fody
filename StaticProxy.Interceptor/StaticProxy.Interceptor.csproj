@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DynamicInterceptorManager.cs" />
-    <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="IDynamicInterceptor.cs" />
     <Compile Include="IDynamicInterceptorManager.cs" />

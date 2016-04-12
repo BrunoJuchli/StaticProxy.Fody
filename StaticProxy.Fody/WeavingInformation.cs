@@ -1,8 +1,7 @@
 ﻿namespace StaticProxy.Fody
 {
-    using System.IO;
-
     using Mono.Cecil;
+    using System.IO;
 
     public static class WeavingInformation
     {
@@ -28,7 +27,7 @@
             InterceptorModuleDefinition = ResolveInterceptorModuleDefinition();
 
             TypeDefinition dynamicInterceptorManagerTypeDefinition = InterceptorModuleDefinition.GetTypeDefinition("IDynamicInterceptorManager");
-            DynamicInterceptorManagerReference = ModuleDefinition.Import(dynamicInterceptorManagerTypeDefinition);
+            DynamicInterceptorManagerReference = ModuleDefinition.ImportReference(dynamicInterceptorManagerTypeDefinition);
 
             ObjectTypeReference = ReferenceFinder.GetTypeReference(typeof(object));
         }

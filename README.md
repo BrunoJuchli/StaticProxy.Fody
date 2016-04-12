@@ -3,18 +3,9 @@ StaticProxy.Interceptor: [![Build status](https://ci.appveyor.com/api/projects/s
 
 ## ![Icon](https://raw.githubusercontent.com/BrunoJuchli/StaticProxy.Fody/master/Icons/package_icon.png) This is an add-in for [Fody](https://github.com/Fody/Fody/) 
 
-
-Very cool utilities have been created by the help of proxying by dynamic code emitting:
-Moq, FakeItEasy, Castle Dynamic Proxy, LinFu Proxy,.. and many more.
-
-Sadly enough, some platforms do not support dynamic code emitting. These include Windows Store Applications (WinRT), Windows Phone 7 and Xamarin.iOS.
-
-Here comes StaticProxy.Fody to the rescue!
-Instead of dynamically creating proxies, it is weaving them at compile time by means of IL rewritting
-(see: [Introduction to Fody](http://github.com/Fody/Fody/wiki/SampleUsage)).
+StaticProxy weaves proxies at compile time. This is similar to tools like Castle Dynamic Proxy and LinFu Proxy, but it works during compilation (also see: [Introduction to Fody](http://github.com/Fody/Fody/wiki/SampleUsage)). But why? Because some platforms, notably WinRT, Windows Phone and iOS do not support dynamic code emitting. So "dynamic proxy" cannot be used on these platforms. StaticProxy to the rescue!
 
 It is meant to be used in conjunction with dependency injection containers since it is adding arguments to the constructor - and thus breaks `new Foo(...)` calls of all proxied classes.
-
 
 ## Nuget
 
