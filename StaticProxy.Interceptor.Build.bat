@@ -20,6 +20,8 @@ IF ERRORLEVEL 1 GOTO Failed
 gitlink.exe . -f %BuildFile% -ignore StaticProxy.Interceptor.Tests
 IF ERRORLEVEL 1 GOTO Failed
 
+nuget pack ".\StaticProxy.Interceptor\StaticProxy.Interceptor.csproj" -Version "0.3.1.0"
+
 CALL %PrintSuccessful%
 GOTO End
 
