@@ -14,6 +14,7 @@ SET MSBuildErrorFileLogParameters=/fl2 /flp2:NoSummary;ErrorsOnly;LogFile=%Build
 SET MSBuildWarningFileLogParameters=/fl3 /flp3:NoSummary;WarningsOnly;LogFile=%BuildLogFile%.warnings.log
 
 nuget restore %BuildFile%
+IF ERRORLEVEL 1 GOTO Failed
 
 "%MSBuildPath%\MSBUILD.EXE" %BuildFile% /t:%UserTarget% %MSBuildParameters% %MSBuildFileLogParameters% %MSBuildErrorFileLogParameters% %MSBuildWarningFileLogParameters%
 IF ERRORLEVEL 1 GOTO Failed
@@ -22,6 +23,7 @@ gitlink.exe . -f %BuildFile% -ignore StaticProxy.Interceptor.Tests
 IF ERRORLEVEL 1 GOTO Failed
 
 nuget pack ".\StaticProxy.Interceptor\StaticProxy.Interceptor.csproj" -Version "0.3.1.0"
+IF ERRORLEVEL 1 GOTO Failed
 
 CALL %PrintSuccessful%
 GOTO End
