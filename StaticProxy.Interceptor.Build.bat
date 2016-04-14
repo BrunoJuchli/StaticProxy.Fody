@@ -13,6 +13,7 @@ SET MSBuildFileLogParameters=/fl1 /flp1:Summary;Verbosity=normal;LogFile=%BuildL
 SET MSBuildErrorFileLogParameters=/fl2 /flp2:NoSummary;ErrorsOnly;LogFile=%BuildLogFile%.errors.log
 SET MSBuildWarningFileLogParameters=/fl3 /flp3:NoSummary;WarningsOnly;LogFile=%BuildLogFile%.warnings.log
 
+nuget restore %BuildFile%
 
 "%MSBuildPath%\MSBUILD.EXE" %BuildFile% /t:%UserTarget% %MSBuildParameters% %MSBuildFileLogParameters% %MSBuildErrorFileLogParameters% %MSBuildWarningFileLogParameters%
 IF ERRORLEVEL 1 GOTO Failed
