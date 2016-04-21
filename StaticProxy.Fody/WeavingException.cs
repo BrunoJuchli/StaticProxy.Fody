@@ -11,6 +11,11 @@ namespace StaticProxy.Fody
         {
         }
 
+        public WeavingException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
+
         protected WeavingException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

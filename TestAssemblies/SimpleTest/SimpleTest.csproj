@@ -34,8 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="StaticProxy.Interceptor, Version=0.3.0.68, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\StaticProxy.Interceptor.0.3.0.68-pre\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\StaticProxy.Interceptor.dll</HintPath>
+    <Reference Include="StaticProxy.Interceptor, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\StaticProxy.Interceptor.0.3.1.0\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\StaticProxy.Interceptor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

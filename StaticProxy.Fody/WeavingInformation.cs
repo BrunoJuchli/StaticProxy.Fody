@@ -22,7 +22,7 @@
             ModuleDefinition = ModuleWeaver.Instance.ModuleDefinition;
             ReferenceFinder = new ReferenceFinder(ModuleDefinition);
 
-            StaticProxyAttribute = ModuleDefinition.GetTypeReference("StaticProxyAttribute");
+            StaticProxyAttribute = RetrieveStaticProxyAttributeReference();
 
             InterceptorModuleDefinition = ResolveInterceptorModuleDefinition();
 
@@ -30,6 +30,20 @@
             DynamicInterceptorManagerReference = ModuleDefinition.ImportReference(dynamicInterceptorManagerTypeDefinition);
 
             ObjectTypeReference = ReferenceFinder.GetTypeReference(typeof(object));
+        }
+
+        private static TypeReference RetrieveStaticProxyAttributeReference()
+        {
+            try
+            {
+                return ModuleDefinition.GetTypeReference("StaticProxyAttribute");
+            }
+            catch (WeavingException ex)
+            {
+                throw new WeavingException(
+                    "It seems there's no type decorated with [StaticProxyAttribute]. Decorate one or remove the StaticProxy.Fody nuget package from the project.",
+                    ex);
+            }
         }
 
         public static bool IsStaticProxyAttribute(CustomAttribute attribute)
