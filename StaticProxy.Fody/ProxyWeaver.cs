@@ -73,7 +73,7 @@
 
         private static bool HasMultipleConstructors(TypeDefinition typeDefinition)
         {
-            return typeDefinition.GetConstructors().Count() > 1;
+            return typeDefinition.GetNonStaticConstructors().Count() > 1;
         }
 
         private static string BuildMultipleConstructorsExceptionMessage(TypeDefinition typeDefinition)

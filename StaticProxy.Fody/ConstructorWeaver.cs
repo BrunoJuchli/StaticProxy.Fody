@@ -30,7 +30,7 @@
         {
             FieldDefinition field = AddPrivateReadonlyField(typeToProxy, this.interceptorManagerReference);
 
-            MethodDefinition constructor = typeToProxy.GetConstructors().Single();
+            MethodDefinition constructor = typeToProxy.GetNonStaticConstructors().Single();
             constructor.Body.InitLocals = true;
 
             ParameterDefinition parameter = AddParameter(constructor, this.interceptorManagerReference);
