@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassDecoration\ClassWithStaticConstructor.cs" />
     <Compile Include="ClassDecoration\ConstructorWithArguments.cs" />
     <Compile Include="ClassDecoration\DefaultConstructor.cs" />
     <Compile Include="ClassDecoration\ConstructorWithoutArguments.cs" />

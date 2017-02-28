@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyExtensions.cs" />
+    <Compile Include="ClassDecoration\ConstructorWeaving\When_proxying_class_with_static_constructor.cs" />
     <Compile Include="InterfaceImplementation\ClassWeaving\When_proxying_interface.cs" />
     <Compile Include="InterfaceImplementation\ClassWeaving\When_proxying_interface_with_generic_parameters.cs" />
     <Compile Include="InterfaceImplementation\ConstructorWeaving\When_proxying_interface.cs" />
