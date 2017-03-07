@@ -14,7 +14,7 @@
 	<authors>See GitHub contributors list</authors>
 	<releaseNotes>Fix Issue #9: Static Constructor leads to error "Static Proxy does not support proxying classes with multiple constructors". See https://github.com/BrunoJuchli/StaticProxy.Fody/issues/9</releaseNotes>
     <dependencies>
-      <dependency id="Fody" version="1.29.2"/>
+      <dependency id="Fody" version="1.29.4"/>
     </dependencies>
   </metadata>
 </package>
