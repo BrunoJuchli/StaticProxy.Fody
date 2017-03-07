@@ -77,3 +77,9 @@ Thumbs.db
 Desktop.ini
 
 #/.nuget
+/StaticProxy.Fody.sln.errors.log
+/StaticProxy.Fody.sln.log
+/StaticProxy.Fody.sln.warnings.log
+/StaticProxy.Interceptor.sln.errors.log
+/StaticProxy.Interceptor.sln.log
+/StaticProxy.Interceptor.sln.warnings.log
