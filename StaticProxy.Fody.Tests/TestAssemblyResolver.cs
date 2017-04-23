@@ -146,6 +146,8 @@ namespace StaticProxy.Fody.Tests
             throw new FileNotFoundException();
         }
 
+        public void Dispose() { }
+
         private string GetAssemblyInGac(AssemblyNameReference reference)
         {
             if ((reference.PublicKeyToken == null) || (reference.PublicKeyToken.Length == 0))

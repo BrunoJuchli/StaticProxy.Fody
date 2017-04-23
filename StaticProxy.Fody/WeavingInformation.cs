@@ -53,9 +53,11 @@
 
         private static ModuleDefinition ResolveInterceptorModuleDefinition()
         {
-            const string InterceptorAssemblyName = "StaticProxy.Interceptor";
+            var interceptorAssemblyReference = new AssemblyNameReference("StaticProxy.Interceptor", null);
 
-            AssemblyDefinition definition = ModuleWeaver.Instance.AssemblyResolver.Resolve(InterceptorAssemblyName);
+            AssemblyDefinition definition = ModuleWeaver.Instance.AssemblyResolver.Resolve(
+                interceptorAssemblyReference,
+                new ReaderParameters { InMemory = true } );
             if (definition == null)
             {
                 // todo use an integration test to test this!
@@ -68,7 +70,7 @@
                     assemblyResolver.AddSearchDirectory(packageDirectory.FullName);
                 }
 
-                definition = assemblyResolver.Resolve(InterceptorAssemblyName);
+                definition = assemblyResolver.Resolve(interceptorAssemblyReference);
                 if (definition == null)
                 {
                     throw new WeavingException("Can't find StaticProxy.Interceptor assembly. Make sure you've downloaded and installed the nuget package!");

@@ -8,8 +8,10 @@
     {
         public static VariableDefinition AddVariableDefinition(this MethodDefinition method, string variableName, TypeReference variableType)
         {
-            var variableDefinition = new VariableDefinition(variableName, variableType);
+            var variableDefinition = new VariableDefinition(variableType);
             method.Body.Variables.Add(variableDefinition);
+            // results in a null-reference exception, guess either Scope or Variables is not popuplated. TODO: check how to fix this.
+            // method.DebugInformation.Scope.Variables.Add(new VariableDebugInformation(variableDefinition, variableName));
             return variableDefinition;
         }
 

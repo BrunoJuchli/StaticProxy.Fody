@@ -48,7 +48,8 @@ namespace StaticProxy.Fody.Tests
             var moduleDefinition = ModuleDefinition.ReadModule(newAssembly, new ReaderParameters
             {
                 AssemblyResolver = assemblyResolver,
-                ReadSymbols = true
+                ReadSymbols = true,
+                InMemory = true
             });
             var weavingTask = new ModuleWeaver
             {
