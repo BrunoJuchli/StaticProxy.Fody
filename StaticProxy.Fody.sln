@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
-MinimumVisualStudioVersion = 14.0.22823.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticProxy.Fody", "StaticProxy.Fody\StaticProxy.Fody.csproj", "{3B17CFD4-10E7-42DB-88D6-A10680B0BFBE}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.26711.1
+MinimumVisualStudioVersion = 15.0.26430.13
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaticProxy.Fody", "StaticProxy.Fody\StaticProxy.Fody.csproj", "{3B17CFD4-10E7-42DB-88D6-A10680B0BFBE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuget", "Nuget\Nuget.csproj", "{EEEA4A67-8C9A-4BFA-A7D6-D7843647C2A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticProxy.Fody.Tests", "StaticProxy.Fody.Tests\StaticProxy.Fody.Tests.csproj", "{7EA79DF1-D3E1-4F06-9E1C-D86D14B6469F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaticProxy.Fody.Tests", "StaticProxy.Fody.Tests\StaticProxy.Fody.Tests.csproj", "{7EA79DF1-D3E1-4F06-9E1C-D86D14B6469F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{082D7B97-EF4E-439D-A10A-BFB5072AA728} = {082D7B97-EF4E-439D-A10A-BFB5072AA728}
 		{A47D69DD-74D6-466F-9A4E-DD0D09BB1E93} = {A47D69DD-74D6-466F-9A4E-DD0D09BB1E93}
@@ -15,13 +15,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticProxy.Fody.Tests", "S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestAssemblies", "TestAssemblies", "{274A2E6A-5B50-4D24-862E-86C05F8D89C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTest", "TestAssemblies\SimpleTest\SimpleTest.csproj", "{A47D69DD-74D6-466F-9A4E-DD0D09BB1E93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleTest", "TestAssemblies\SimpleTest\SimpleTest.csproj", "{A47D69DD-74D6-466F-9A4E-DD0D09BB1E93}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{40A4C9F0-C6C6-467D-B076-E9F0EBB4A7B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultipleConstructors", "TestAssemblies\MultipleConstructors\MultipleConstructors.csproj", "{082D7B97-EF4E-439D-A10A-BFB5072AA728}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultipleConstructors", "TestAssemblies\MultipleConstructors\MultipleConstructors.csproj", "{082D7B97-EF4E-439D-A10A-BFB5072AA728}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{C70FE99A-2A69-40A6-8A7B-0DBE65554605}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{C70FE99A-2A69-40A6-8A7B-0DBE65554605}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3B17CFD4-10E7-42DB-88D6-A10680B0BFBE} = {3B17CFD4-10E7-42DB-88D6-A10680B0BFBE}
 	EndProjectSection
@@ -63,6 +63,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A47D69DD-74D6-466F-9A4E-DD0D09BB1E93} = {274A2E6A-5B50-4D24-862E-86C05F8D89C4}
 		{082D7B97-EF4E-439D-A10A-BFB5072AA728} = {274A2E6A-5B50-4D24-862E-86C05F8D89C4}
-		{C70FE99A-2A69-40A6-8A7B-0DBE65554605} = {274A2E6A-5B50-4D24-862E-86C05F8D89C4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FDF28469-2C62-49BE-8CA4-8C377F3D92A0}
 	EndGlobalSection
 EndGlobal

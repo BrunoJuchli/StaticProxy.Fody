@@ -1,72 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{05C0CE7C-2D5F-4DDC-9D0A-E16210AA28C8}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StaticProxy.Interceptor</RootNamespace>
-    <AssemblyName>StaticProxy.Interceptor</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="StaticProxy.Interceptor.nuspec">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="DynamicInterceptorManager.cs" />
-    <Compile Include="Exceptions.cs" />
-    <Compile Include="IDynamicInterceptor.cs" />
-    <Compile Include="IDynamicInterceptorManager.cs" />
-    <Compile Include="IDynamicInterceptorCollection.cs" />
-    <Compile Include="IInvocation.cs" />
-    <Compile Include="IInvocationFactory.cs" />
-    <Compile Include="InterfaceProxy\InterfaceProxyHelpers.cs" />
-    <Compile Include="Reflection\ITypeInformation.cs" />
-    <Compile Include="Reflection\TypeInformation.cs" />
-    <Compile Include="Invocation.cs" />
-    <Compile Include="InvocationFactory.cs" />
-    <Compile Include="TargetInvocation\ITargetInvocation.cs" />
-    <Compile Include="TargetInvocation\ITargetInvocationFactory.cs" />
-    <Compile Include="TargetInvocation\TargetInvocationFactory.cs" />
-    <Compile Include="TargetInvocation\WithoutTargetInvocation.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StaticProxyAttribute.cs" />
-    <Compile Include="TargetInvocation\WithTargetInvocation.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>netstandard1.0</TargetFrameworks>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <DebugType>none</DebugType>
+        <DebugSymbols>false</DebugSymbols>
+        <Optimize>true</Optimize>
+        <RootNamespace>StaticProxy.Interceptor</RootNamespace>
+        <AssemblyName>StaticProxy.Interceptor</AssemblyName>
+        <PackageId>StaticProxy.Interceptor</PackageId>
+        <Authors>Bruno Juchli</Authors>
+        <Description>Fody add-in to compile-time weave (hence static) proxies with an interception mechanism similar to Castle Dynamic Proxy. Is intended to work with mobile platforms! :)</Description>
+        <Title>StaticProxy.Interceptor</Title>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageReleaseNotes>Now targeting .net Standard 1.0. Removed gitlink.</PackageReleaseNotes>
+        <Copyright>Copyright 2017 (c) Bruno Juchli.</Copyright>
+        <PackageTags>Proxy ILWeaving Fody AOP</PackageTags>
+        <PackageIconUrl>https://github.com/BrunoJuchli/StaticProxy.Fody/tree/master/Icons/package_icon.png</PackageIconUrl>
+        <PackageProjectUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</PackageProjectUrl>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="StaticProxy.Interceptor.nuspec">
+        <SubType>Designer</SubType>
+        </None>
+    </ItemGroup>
 </Project>

@@ -1,167 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7EA79DF1-D3E1-4F06-9E1C-D86D14B6469F}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+	<TargetFrameworks>net462</TargetFrameworks>
+	<WarningLevel>4</WarningLevel>
+	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	<DebugType>full</DebugType>
+	<DebugSymbols>true</DebugSymbols>
+	<Optimize>false</Optimize>
     <RootNamespace>StaticProxy.Fody.Tests</RootNamespace>
     <AssemblyName>StaticProxy.Fody.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FluentAssertions, Version=4.19.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.19.0\lib\net45\FluentAssertions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="FluentAssertions.Core, Version=4.19.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentAssertions.4.19.0\lib\net45\FluentAssertions.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Mono.Cecil, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks, Version=0.10.0.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
-      <HintPath>..\packages\FodyCecil.2.0.0\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Moq, Version=4.7.1.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\packages\Moq.4.7.1\lib\net45\Moq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="StaticProxy.Interceptor, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\StaticProxy.Interceptor.0.3.1.0\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\StaticProxy.Interceptor.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.abstractions.2.0.1\lib\net35\xunit.abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.assert, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.assert.2.2.0\lib\netstandard1.1\xunit.assert.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.core, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.core.2.2.0\lib\netstandard1.1\xunit.core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="xunit.execution.desktop, Version=2.2.0.3545, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
-      <HintPath>..\packages\xunit.extensibility.execution.2.2.0\lib\net452\xunit.execution.desktop.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+	<ProjectReference Include="..\StaticProxy.Fody\StaticProxy.Fody.csproj" />
+	<ProjectReference Include="..\TestAssemblies\SimpleTest\SimpleTest.csproj" />
+	<PackageReference Include="Castle.Core" Version="4.1.1" />
+	<PackageReference Include="FluentAssertions" Version="4.19.3" />
+    <PackageReference Include="FodyCecil" Version="2.1.1" />
+	<PackageReference Include="Moq" Version="4.7.99" />
+	<PackageReference Include="StaticProxy.Interceptor" Version="0.4.0-beta" />
+	<PackageReference Include="xunit" Version="2.2.0" />
+	<PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyExtensions.cs" />
-    <Compile Include="ClassDecoration\ConstructorWeaving\When_proxying_class_with_static_constructor.cs" />
-    <Compile Include="InterfaceImplementation\ClassWeaving\When_proxying_interface.cs" />
-    <Compile Include="InterfaceImplementation\ClassWeaving\When_proxying_interface_with_generic_parameters.cs" />
-    <Compile Include="InterfaceImplementation\ConstructorWeaving\When_proxying_interface.cs" />
-    <Compile Include="ClassDecoration\MethodWeaving\DynamicInterceptorManagerMockExtensions.cs" />
-    <Compile Include="ClassDecoration\MethodWeaving\ClassWithMethodsTestBase.cs" />
-    <Compile Include="InterfaceImplementation\MethodWeaving\DynamicInterceptorManagerMockExtensions.cs" />
-    <Compile Include="InterfaceImplementation\MethodWeaving\InterfaceWithMethodsTestBase.cs" />
-    <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_returning_nullable_value_type.cs" />
-    <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_returning_reference_type.cs" />
-    <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_returning_value_type.cs" />
-    <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_without_arguments.cs" />
-    <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_with_mixed_arguments.cs" />
-    <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_with_reference_arguments.cs" />
-    <Compile Include="InterfaceImplementation\MethodWeaving\When_implementing_method_with_value_arguments.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToStringObject.cs" />
-    <Compile Include="ClassDecoration\MethodWeaving\When_proxying_method_returning_nullable_value_type.cs" />
-    <Compile Include="ClassDecoration\MethodWeaving\When_proxying_method_with_local_variables.cs" />
-    <Compile Include="ClassDecoration\MethodWeaving\When_proxying_method_with_mixed_arguments.cs" />
-    <Compile Include="ClassDecoration\MethodWeaving\When_proxying_method_returning_reference_type.cs" />
-    <Compile Include="ClassDecoration\MethodWeaving\When_proxying_method_with_value_arguments.cs" />
-    <Compile Include="ClassDecoration\MethodWeaving\When_proxying_method_with_reference_arguments.cs" />
-    <Compile Include="ClassDecoration\MethodWeaving\When_proxying_method_without_arguments.cs" />
-    <Compile Include="ClassDecoration\MethodWeaving\When_proxying_method_returning_value_type.cs" />
-    <Compile Include="TypeExtensions.cs" />
-    <Compile Include="SimpleTestBase.cs" />
-    <Compile Include="StaticMembersDynamicWrapper.cs" />
-    <Compile Include="VersionReader.cs" />
-    <Compile Include="WeaverHelper.cs" />
-    <Compile Include="TestAssemblyResolver.cs" />
-    <Compile Include="ClassDecoration\ConstructorWeaving\When_proxying_class_with_constructor_arguments.cs" />
-    <Compile Include="ClassDecoration\ConstructorWeaving\When_proxying_class_with_default_constructor.cs" />
-    <Compile Include="ClassDecoration\ConstructorWeaving\When_proxying_class_without_constructor_arguments.cs" />
-    <Compile Include="ClassDecoration\ConstructorWeaving\When_proxying_class_with_multiple_constructors.cs" />
-    <Compile Include="XmlExtensions.cs" />
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\StaticProxy.Fody\StaticProxy.Fody.csproj">
-      <Project>{3B17CFD4-10E7-42DB-88D6-A10680B0BFBE}</Project>
-      <Name>StaticProxy.Fody</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TestAssemblies\SimpleTest\SimpleTest.csproj">
-      <Project>{A47D69DD-74D6-466F-9A4E-DD0D09BB1E93}</Project>
-      <Name>SimpleTest</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="_ToDo.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.visualstudio.2.2.0\build\net20\xunit.runner.visualstudio.props'))" />
-  </Target>
 </Project>

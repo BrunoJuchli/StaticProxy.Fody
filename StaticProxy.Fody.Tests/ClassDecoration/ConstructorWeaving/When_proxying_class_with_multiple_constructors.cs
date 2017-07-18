@@ -13,7 +13,7 @@
         {
             string expectedMessage = string.Format(CultureInfo.InvariantCulture, ExceptionMessages.MultipleConstructors, "FooNameSpace.MultipleConstructors");
 
-            new WeaverHelper(@"MultipleConstructors\MultipleConstructors.csproj")
+            new WeaverHelper("MultipleConstructors")
                .Invoking(x => x.Weave())
                .ShouldThrow<WeavingException>()
                 .Where(ex => ex.Message == expectedMessage);

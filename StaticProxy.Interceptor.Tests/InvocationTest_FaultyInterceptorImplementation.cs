@@ -1,14 +1,10 @@
 ﻿namespace StaticProxy.Interceptor.Tests
 {
     using System;
-
     using FluentAssertions;
-
     using Moq;
-
     using StaticProxy.Interceptor;
     using StaticProxy.Interceptor.TargetInvocation;
-
     using Xunit;
 
     public class InvocationTest_FaultyInterceptorImplementation

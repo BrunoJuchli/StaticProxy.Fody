@@ -12,21 +12,18 @@ namespace StaticProxy.Fody.Tests
 {
     public class WeaverHelper
     {
-        private readonly string projectPath;
         private string assemblyPath;
 
-        public WeaverHelper(string projectPath)
+        public WeaverHelper(string assemblyName)
         {
             // todo remove after debug
             Console.WriteLine("Current directory = {0}", Environment.CurrentDirectory);
 
-            this.projectPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\TestAssemblies", projectPath));
+            this.assemblyPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, assemblyName + ".dll"));
         }
 
         public Assembly Weave()
         {
-            this.GetAssemblyPath();
-
             var newAssembly = this.assemblyPath.Replace(".dll", "2.dll");
 
             var assemblyFileName = Path.GetFileName(newAssembly);
@@ -44,7 +41,7 @@ namespace StaticProxy.Fody.Tests
             File.Copy(this.assemblyPath.Replace(".dll", ".pdb"), newAssembly.Replace(".dll", ".pdb"), true);
 
 
-            var assemblyResolver = new TestAssemblyResolver(this.assemblyPath, this.projectPath);
+            var assemblyResolver = new TestAssemblyResolver(Path.GetDirectoryName(this.assemblyPath));
             var moduleDefinition = ModuleDefinition.ReadModule(newAssembly, new ReaderParameters
             {
                 AssemblyResolver = assemblyResolver,
@@ -69,38 +66,6 @@ namespace StaticProxy.Fody.Tests
             this.PEVerify(newAssembly);
 
             return Assembly.LoadFile(newAssembly);
-        }
-
-        private void GetAssemblyPath()
-        {
-            this.assemblyPath = Path.Combine(Path.GetDirectoryName(this.projectPath), this.GetOutputPathValue(), this.GetAssemblyName() + ".dll");
-        }
-
-        private string GetAssemblyName()
-        {
-            var xDocument = XDocument.Load(this.projectPath);
-            xDocument.StripNamespace();
-
-            return xDocument.Descendants("AssemblyName")
-                .Select(x => x.Value)
-                .First();
-        }
-
-        private string GetOutputPathValue()
-        {
-            var xDocument = XDocument.Load(this.projectPath);
-            xDocument.StripNamespace();
-
-            var outputPathValue = (from propertyGroup in xDocument.Descendants("PropertyGroup")
-                                   let condition = ((string)propertyGroup.Attribute("Condition"))
-                                   where (condition != null) &&
-                                         (condition.Trim() == "'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'")
-                                   from outputPath in propertyGroup.Descendants("OutputPath")
-                                   select outputPath.Value).First();
-#if (!DEBUG)
-            outputPathValue = outputPathValue.Replace("Debug", "Release");
-#endif
-            return outputPathValue;
         }
 
         private void PEVerify(string assemblyLocation)

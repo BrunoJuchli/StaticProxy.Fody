@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
+MinimumVisualStudioVersion = 15.0.26430.13
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticProxy.Interceptor", "StaticProxy.Interceptor\StaticProxy.Interceptor.csproj", "{05C0CE7C-2D5F-4DDC-9D0A-E16210AA28C8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticProxy.Interceptor.Tests", "StaticProxy.Interceptor.Tests\StaticProxy.Interceptor.Tests.csproj", "{3A971D79-0D5B-4F27-BD5E-FE9710A457C0}"

@@ -11,7 +11,7 @@
 
         protected SimpleTestBase()
         {
-            var weaverHelper = new WeaverHelper(@"SimpleTest\SimpleTest.csproj");
+            var weaverHelper = new WeaverHelper("SimpleTest");
             this.WovenSimpleTestAssembly = weaverHelper.Weave();
 
             dynamic staticInstance = this.WovenSimpleTestAssembly.GetStaticInstance("SimpleTest.TestMessages");

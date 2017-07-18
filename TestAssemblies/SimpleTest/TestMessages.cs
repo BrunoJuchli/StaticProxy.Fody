@@ -3,6 +3,7 @@ using System.Collections.Generic;
 namespace SimpleTest
 {
     using System.Reflection;
+    using System.Runtime.CompilerServices;
     using System.Text;
 
     public static class TestMessages
@@ -14,10 +15,10 @@ namespace SimpleTest
             messages.Clear();
         }
 
-        public static void RecordMethodBody(MethodBase method, params object[] arguments)
+        public static void RecordMethodBody(object[] arguments, [CallerMemberName]string caller = "")
         {
             string message = new StringBuilder()
-                .Append(method.Name)
+                .Append(caller)
                 .Append("(")
                     .Append(string.Join(", ", arguments))
                 .Append(")")
