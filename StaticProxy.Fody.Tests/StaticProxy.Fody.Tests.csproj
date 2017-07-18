@@ -18,6 +18,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
 	<ProjectReference Include="..\StaticProxy.Fody\StaticProxy.Fody.csproj" />
+	<ProjectReference Include="..\TestAssemblies\MultipleConstructors\MultipleConstructors.csproj" />
 	<ProjectReference Include="..\TestAssemblies\SimpleTest\SimpleTest.csproj" />
 	<PackageReference Include="Castle.Core" Version="4.1.1" />
 	<PackageReference Include="FluentAssertions" Version="4.19.3" />

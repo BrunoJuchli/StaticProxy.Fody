@@ -14,19 +14,16 @@
         public void ValueArguments(int arg1, float arg2)
         {
             TestMessages.RecordMethodBody(new object[] { arg1, arg2 });
-            Console.WriteLine("ValueParameters {0} {1}", arg1, arg2);
         }
 
         public void ReferenceArguments(object arg1, object arg2)
         {
             TestMessages.RecordMethodBody(new object[] { arg1, arg2 } );
-            Console.WriteLine("ObjectParameters", arg1, arg2);
         }
 
         public void MixedArguments(int arg1, object arg2, string arg3)
         {
             TestMessages.RecordMethodBody(new object[] { arg1, arg2, arg3 });
-            Console.WriteLine("WithParameters {0} {1} {2}", arg1, arg2, arg3);
         }
 
         public void WithLocalVariables()

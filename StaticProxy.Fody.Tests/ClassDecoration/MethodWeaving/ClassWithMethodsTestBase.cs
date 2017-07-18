@@ -28,7 +28,6 @@
         {
             string expectedMessage = new StringBuilder()
                 .Append(originalMethodName)
-                .Append("<SP>")
                 .Append("(")
                     .Append(string.Join(", ", arguments))
                 .Append(")")
