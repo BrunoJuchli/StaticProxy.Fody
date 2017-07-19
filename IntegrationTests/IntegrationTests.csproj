@@ -14,10 +14,9 @@
     <Reference Include="System.Numerics" />
 	<PackageReference Include="Castle.Core" Version="4.1.1" />
     <PackageReference Include="FluentAssertions" Version="4.19.3" />
-    <PackageReference Include="Fody" Version="2.1.1" />
+    <PackageReference Include="Fody" Version="2.1.2" />
     <PackageReference Include="Moq" Version="4.7.99" />
     <PackageReference Include="Ninject" Version="3.2.2.0" />
-    <PackageReference Include="StaticProxy.Fody" Version="0.1.0" />
     <PackageReference Include="StaticProxy.Interceptor" Version="0.4.0-beta" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
@@ -25,5 +24,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StaticProxy.Fody\StaticProxy.Fody.csproj" />
   </ItemGroup>
 </Project>
