@@ -5,16 +5,16 @@
 
     using StaticProxy.Fody.InterfaceImplementation;
 
-    public class InterfaceWithMethodsTestBase : SimpleTestBase
+    public class InterfaceWithGenericMethodsTestBase : SimpleTestBase
     {
         protected readonly Type Clazz;
         protected readonly Mock<IDynamicInterceptorManager> InterceptorManager;
 
         protected readonly dynamic Instance;
 
-        public InterfaceWithMethodsTestBase()
+        public InterfaceWithGenericMethodsTestBase()
         {
-            this.Clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.InterfaceImplementation.IWithMethods" + InterfaceImplementationWeaver.ClassNameSuffix);
+            this.Clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.InterfaceImplementation.IWithGenericMethods" + InterfaceImplementationWeaver.ClassNameSuffix);
 
             this.InterceptorManager = new Mock<IDynamicInterceptorManager>();
 

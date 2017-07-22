@@ -47,6 +47,12 @@
         }
 
         [Fact]
+        public void Ctor_MustSetGenericArgumentsToEmpty()
+        {
+            this.testee.GenericArguments.Should().BeEmpty();
+        }
+
+        [Fact]
         public void SetReturnValue_MustSetReturnValue()
         {
             var expectedValue = new object();
