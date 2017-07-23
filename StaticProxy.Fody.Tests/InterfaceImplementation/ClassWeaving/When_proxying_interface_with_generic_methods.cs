@@ -37,11 +37,11 @@
         [Fact]
         public void Must_implement_method_taking_T()
         {
-            var method = this.clazz.GetMethods().Single(x => x.Name == "TakingT");
+            var method = this.clazz.GetMethods().Single(x => x.Name == "TakesT");
 
             method.IsGenericMethodDefinition.Should().BeTrue();
             method.ContainsGenericParameters.Should().BeTrue();
-            method.ReturnType.Should().BeNull();
+            method.ReturnType.Should().Be(typeof(void));
         }
 
         [Fact]
@@ -51,7 +51,7 @@
 
             method.IsGenericMethodDefinition.Should().BeTrue();
             method.ContainsGenericParameters.Should().BeTrue();
-            method.ReturnType.Should().BeNull();
+            method.ReturnType.IsGenericParameter.Should().BeTrue();
         }
 
         [Fact]
