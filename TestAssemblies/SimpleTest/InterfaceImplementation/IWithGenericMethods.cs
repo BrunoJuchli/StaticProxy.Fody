@@ -1,5 +1,4 @@
 ﻿using StaticProxy.Interceptor;
-using System;
 using System.Reflection;
 
 namespace SimpleTest.InterfaceImplementation
@@ -9,7 +8,7 @@ namespace SimpleTest.InterfaceImplementation
     {
         T ReturnsT<T>();
 
-        //void TakesT<T>(T t);
+        void TakesT<T>(T t);
 
         //T WithConstraint<T>(T t)
         //    where T : class;
@@ -35,7 +34,17 @@ namespace SimpleTest.InterfaceImplementation
                 /*MethodBase.GetMethodFromHandle(methodof(IWithGenericMethods.ReturnsT()).MethodHandle, typeof(IWithGenericMethods).TypeHandle)*/;
             object[] arguments = new object[0];
             MethodBase implementationMethod = null;
-            return (T)((object)this.IDynamicInterceptorManager.Intercept(methodFromHandle, implementationMethod, arguments));
+            return (T)this.IDynamicInterceptorManager.Intercept(methodFromHandle, implementationMethod, arguments);
+        }
+
+        public void TakesT<T>(T t)
+        {
+            MethodBase methodFromHandle = typeof(IWithGenericMethods).GetMethod("TakesT");
+            /*MethodBase.GetMethodFromHandle(methodof(IWithGenericMethods.ReturnsT()).MethodHandle, typeof(IWithGenericMethods).TypeHandle)*/
+            MethodBase implementationMethod = null;
+            object[] arguments = new object[1];
+            arguments[1] = t;
+            this.IDynamicInterceptorManager.Intercept(methodFromHandle, implementationMethod, arguments);
         }
     }
 }

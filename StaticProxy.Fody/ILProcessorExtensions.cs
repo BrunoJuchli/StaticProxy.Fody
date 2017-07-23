@@ -60,7 +60,7 @@ namespace StaticProxy.Fody
             processor.Emit(OpCodes.Ldc_I4_S, index); // push the index to the stack
             processor.Emit(OpCodes.Ldarg_S, parameter); // push the parameter to the stack
             
-            if (parameter.ParameterType.IsValueType)
+            if (parameter.ParameterType.IsValueType || parameter.ParameterType.IsGenericParameter)
             {
                 // box value types
                 processor.Emit(OpCodes.Box, parameter.ParameterType);
