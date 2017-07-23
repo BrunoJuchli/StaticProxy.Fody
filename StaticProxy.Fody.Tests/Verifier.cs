@@ -43,7 +43,10 @@
             var after = Validate(afterAssemblyPath);
             var message = $"Failed processing {Path.GetFileName(afterAssemblyPath)}\r\n{after}";
 
-            TrimLineNumbers(after).Should().Be(TrimLineNumbers(before));
+            if(!TrimLineNumbers(after).Equals(TrimLineNumbers(before)))
+            {
+                throw new System.Exception(after);
+            }
         }
 
         public static string Validate(string assemblyPath2)

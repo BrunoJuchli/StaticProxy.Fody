@@ -1,4 +1,6 @@
-﻿using System;
+﻿using StaticProxy.Interceptor;
+using System;
+using System.Reflection;
 
 namespace SimpleTest.InterfaceImplementation
 {
@@ -7,35 +9,33 @@ namespace SimpleTest.InterfaceImplementation
     {
         T ReturnsT<T>();
 
-        void TakesT<T>(T t);
+        //void TakesT<T>(T t);
 
-       //T WithConstraint<T>(T t)
-       //    where T : class;
+        //T WithConstraint<T>(T t)
+        //    where T : class;
 
-       // T WithConstraints<T>(T t)
-       //     where T : class, IComparable, IDisposable;
+        // T WithConstraints<T>(T t)
+        //     where T : class, IComparable, IDisposable;
     }
 
-    public class WithGenericMethodsRemoveAfterILSpy : IWithGenericMethods
+    public sealed class WithGenericMethodsRemoveAfterILSpy : IWithGenericMethods
     {
+        private readonly IDynamicInterceptorManager IDynamicInterceptorManager;
+
+        public WithGenericMethodsRemoveAfterILSpy(IDynamicInterceptorManager IDynamicInterceptorManager)
+        {
+            Exceptions.EnsureDynamicInterceptorManagerNotNull(IDynamicInterceptorManager);
+            this.IDynamicInterceptorManager = IDynamicInterceptorManager;
+            this.IDynamicInterceptorManager.Initialize(this, true);
+        }
+
         public T ReturnsT<T>()
         {
-            throw new NotImplementedException();
-        }
-
-        public void TakesT<T>(T t)
-        {
-            throw new NotImplementedException();
-        }
-
-        public T WithConstraint<T>(T t) where T : class
-        {
-            throw new NotImplementedException();
-        }
-
-        public T WithConstraints<T>(T t)
-        {
-            throw new NotImplementedException();
+            MethodBase methodFromHandle = typeof(IWithGenericMethods).GetMethod("ReturnsT");
+                /*MethodBase.GetMethodFromHandle(methodof(IWithGenericMethods.ReturnsT()).MethodHandle, typeof(IWithGenericMethods).TypeHandle)*/;
+            object[] arguments = new object[0];
+            MethodBase implementationMethod = null;
+            return (T)((object)this.IDynamicInterceptorManager.Intercept(methodFromHandle, implementationMethod, arguments));
         }
     }
 }

@@ -61,7 +61,7 @@
 
         private static void HandleInterceptReturnValue(MethodDefinition method, ILProcessor processor)
         {
-            if (method.ReturnType.IsValueType)
+            if (method.ReturnType.IsValueType || method.ReturnType.IsGenericParameter)
             {
                 // unbox
                 processor.Emit(OpCodes.Unbox_Any, method.ReturnType);
@@ -91,6 +91,11 @@
             var decoratedMethodVar = methodToExtend.AddVariableDefinition("__fody$originalMethod", this.methodBaseTypeRef);
             var implementationMethodVar = methodToExtend.AddVariableDefinition("__fody$implementationMethod", this.methodBaseTypeRef);
             var parametersVar = methodToExtend.AddVariableDefinition("__fody$parameters", this.objectArrayTypeRef);
+
+            if (methodToExtend.ReturnType.IsGenericParameter)
+            {
+
+            }
 
             this.SaveMethodBaseToVariable(processor, decoratedMethodParameter, decoratedMethodVar);
             if (implementationMethodParameter != null)
