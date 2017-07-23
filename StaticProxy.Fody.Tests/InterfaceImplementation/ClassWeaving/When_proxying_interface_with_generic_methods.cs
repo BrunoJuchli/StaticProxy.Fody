@@ -61,7 +61,7 @@
 
             method.IsGenericMethodDefinition.Should().BeTrue();
             method.ContainsGenericParameters.Should().BeTrue();
-            method.ReturnType.Should().BeNull();
+            method.ReturnType.IsGenericParameter.Should().BeTrue();
         }
 
         [Fact]
@@ -71,7 +71,7 @@
 
             method.IsGenericMethodDefinition.Should().BeTrue();
             method.ContainsGenericParameters.Should().BeTrue();
-            method.ReturnType.Should().BeNull();
+            method.ReturnType.IsGenericParameter.Should().BeTrue();
         }
         
         [Fact]

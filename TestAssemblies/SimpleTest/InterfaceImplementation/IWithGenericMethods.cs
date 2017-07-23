@@ -1,4 +1,5 @@
 ﻿using StaticProxy.Interceptor;
+using System;
 using System.Reflection;
 
 namespace SimpleTest.InterfaceImplementation
@@ -10,11 +11,11 @@ namespace SimpleTest.InterfaceImplementation
 
         void TakesT<T>(T t);
 
-        //T WithConstraint<T>(T t)
-        //    where T : class;
+        T WithConstraint<T>(T t)
+            where T : class;
 
-        // T WithConstraints<T>(T t)
-        //     where T : class, IComparable, IDisposable;
+        T WithConstraints<T>(T t)
+            where T : class, IComparable, IDisposable;
     }
 
     public sealed class WithGenericMethodsRemoveAfterILSpy : IWithGenericMethods
@@ -45,6 +46,31 @@ namespace SimpleTest.InterfaceImplementation
             object[] arguments = new object[1];
             arguments[1] = t;
             this.IDynamicInterceptorManager.Intercept(methodFromHandle, implementationMethod, arguments);
+        }
+
+        public T WithConstraint<T>(T t) where T : class
+        {
+            MethodBase methodFromHandle = typeof(IWithGenericMethods).GetMethod("WithConstraint");
+            /*MethodBase.GetMethodFromHandle(methodof(IWithGenericMethods.ReturnsT()).MethodHandle, typeof(IWithGenericMethods).TypeHandle)*/
+            MethodBase implementationMethod = null;
+
+            object[] arguments = new object[1];
+            arguments[1] = t;
+            
+            return (T)this.IDynamicInterceptorManager.Intercept(methodFromHandle, implementationMethod, arguments);
+        }
+
+        public T WithConstraints<T>(T t)
+            where T : class, IComparable, IDisposable
+        {
+            MethodBase methodFromHandle = typeof(IWithGenericMethods).GetMethod("WithConstraints");
+            /*MethodBase.GetMethodFromHandle(methodof(IWithGenericMethods.ReturnsT()).MethodHandle, typeof(IWithGenericMethods).TypeHandle)*/
+            MethodBase implementationMethod = null;
+
+            object[] arguments = new object[1];
+            arguments[1] = t;
+
+            return (T)this.IDynamicInterceptorManager.Intercept(methodFromHandle, implementationMethod, arguments);
         }
     }
 }
