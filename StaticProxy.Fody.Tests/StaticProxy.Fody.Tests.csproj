@@ -11,6 +11,7 @@
     <AssemblyName>StaticProxy.Fody.Tests</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
