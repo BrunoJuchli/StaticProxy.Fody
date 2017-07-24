@@ -41,6 +41,9 @@
 
             method.IsGenericMethodDefinition.Should().BeTrue();
             method.ContainsGenericParameters.Should().BeTrue();
+            var parameters = method.GetParameters();
+            parameters.Should().HaveCount(1);
+            parameters[0].ParameterType.IsGenericParameter.Should().BeTrue();
             method.ReturnType.Should().Be(typeof(void));
         }
 
@@ -61,6 +64,9 @@
 
             method.IsGenericMethodDefinition.Should().BeTrue();
             method.ContainsGenericParameters.Should().BeTrue();
+            var parameters = method.GetParameters();
+            parameters.Should().HaveCount(1);
+            parameters[0].ParameterType.IsGenericParameter.Should().BeTrue();
             method.ReturnType.IsGenericParameter.Should().BeTrue();
         }
 
@@ -71,6 +77,9 @@
 
             method.IsGenericMethodDefinition.Should().BeTrue();
             method.ContainsGenericParameters.Should().BeTrue();
+            var parameters = method.GetParameters();
+            parameters.Should().HaveCount(1);
+            parameters[0].ParameterType.IsGenericParameter.Should().BeTrue();
             method.ReturnType.IsGenericParameter.Should().BeTrue();
         }
         
