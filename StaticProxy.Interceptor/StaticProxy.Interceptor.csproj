@@ -18,7 +18,7 @@
         <PackageReleaseNotes>Now targeting .net Standard 1.0. Removed gitlink.</PackageReleaseNotes>
         <Copyright>Copyright 2017 (c) Bruno Juchli.</Copyright>
         <PackageTags>Proxy ILWeaving Fody AOP</PackageTags>
-        <PackageIconUrl>https://github.com/BrunoJuchli/StaticProxy.Fody/tree/master/Icons/package_icon.png</PackageIconUrl>
+        <PackageIconUrl>https://github.com/BrunoJuchli/StaticProxy.Fody/tree/master/Icons/package_icon.png?raw=true</PackageIconUrl>
         <PackageProjectUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</PackageProjectUrl>
     </PropertyGroup>
 </Project>

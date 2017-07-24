@@ -6,7 +6,7 @@
     <developmentDependency>true</developmentDependency>
 	<title>StaticProxy.Fody</title>
     <projectUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</projectUrl>
-	<iconUrl>https://github.com/BrunoJuchli/StaticProxy.Fody/tree/master/Icons/package_icon.png</iconUrl> 
+	<iconUrl>https://github.com/BrunoJuchli/StaticProxy.Fody/tree/master/Icons/package_icon.png?raw=true</iconUrl> 
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Fody add-in to compile-time weave proxies with an interception mechanism similar to Castle Dynamic Proxy. Is intended to work with mobile platforms! :)</description>
     <tags>Proxy ILWeaving Fody AOP</tags>
