@@ -133,6 +133,50 @@ namespace IntegrationTests.ProxyWithTarget
         }
 
         [Fact]
+        public void WithGenericMethod_InterceptorCallingOriginalImplementation()
+        {
+            const int ExpectedArg2 = 38508;
+            const string ExpectedArg3 = "Hello world";
+            var expectedArg1 = new object();
+
+            var fakeInterceptor = new Mock<IDynamicInterceptor>();
+            fakeInterceptor
+                .Setup(x => x.Intercept(It.IsAny<IInvocation>()))
+                .Callback<IInvocation>(
+                    invocation =>
+                    {
+                        invocation.Proceed();
+                    });
+
+            using (IKernel kernel = new StandardKernel())
+            {
+                kernel.Bind<IDynamicInterceptorManager>().To<DynamicInterceptorManager>();
+                kernel.Bind<IDynamicInterceptorCollection>()
+                    .ToConstant(new FakeDynamicInterceptorCollection(fakeInterceptor.Object));
+
+                var instance = kernel.Get<IntegrationWithGenericMethod>();
+
+                string result = instance.ImplementedGenericMethod<object,int,string>(expectedArg1, ExpectedArg2, ExpectedArg3);
+
+                result.Should().Be(ExpectedArg3);
+            }
+
+            fakeInterceptor.Verify(x => x.Intercept(It.Is<IInvocation>(i => i.Arguments.Length == 3)));
+
+            fakeInterceptor.Verify(x => x.Intercept(It.Is<IInvocation>(i =>
+                                i.Arguments[0] == expectedArg1
+                                && (int)i.Arguments[1] == ExpectedArg2
+                                && (string)i.Arguments[2] == ExpectedArg3)));
+
+            fakeInterceptor.Verify(x => x.Intercept(It.Is<IInvocation>(i => i.GenericArguments.Length == 3)));
+
+            fakeInterceptor.Verify(x => x.Intercept(It.Is<IInvocation>(i =>
+                    i.GenericArguments[0] == typeof(object)
+                    && i.GenericArguments[1] == typeof(int)
+                    && i.GenericArguments[2] == typeof(string))));
+        }
+
+        [Fact]
         public void ProceedThrowsException_InterceptorMustBeAbleToHandleException()
         {
             var fakeInterceptor = new Mock<IDynamicInterceptor>();
@@ -176,7 +220,7 @@ namespace IntegrationTests.ProxyWithTarget
 
                 var instance = kernel.Get<IntegrationWithReturnValue>();
 
-                instance.CombineToStrings(argument1, argument2)
+                instance.CombineTwoStrings(argument1, argument2)
                     .Should().Be(ExpectedString);
             }
         }
@@ -206,7 +250,7 @@ namespace IntegrationTests.ProxyWithTarget
 
                 var instance = kernel.Get<IntegrationWithReturnValue>();
 
-                instance.CombineToStrings(argument1, argument2)
+                instance.CombineTwoStrings(argument1, argument2)
                     .Should().Be(ExpectedString);
             }
         }

@@ -3,7 +3,7 @@
     [StaticProxy]
     public class IntegrationWithReturnValue
     {
-        public string CombineToStrings(object obj1, object obj2)
+        public string CombineTwoStrings(object obj1, object obj2)
         {
             return string.Concat(obj1.ToString(), obj2.ToString());
         }

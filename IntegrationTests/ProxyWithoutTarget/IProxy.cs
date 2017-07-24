@@ -16,5 +16,7 @@
         object ReturnsObject();
 
         float? ReturnsNullableFloat();
+
+        Z GenericMethod<X, Y, Z>(X arg1, Y arg2, Z arg3);
     }
 }
