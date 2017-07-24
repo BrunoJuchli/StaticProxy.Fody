@@ -7,6 +7,15 @@ init:
 install:
 - dotnet restore StaticProxy.Fody.sln
 
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+
+configuration: Release
+
 build:
   parallel: false
   project: StaticProxy.Fody.sln  
