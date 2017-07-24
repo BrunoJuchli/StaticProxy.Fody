@@ -19,3 +19,10 @@ configuration: Release
 build:
   parallel: false
   project: StaticProxy.Interceptor.sln  
+  
+  
+  build_script:
+  
+  - dotnet restore StaticProxy.Interceptor.sln
+  - dotnet build StaticProxy.Interceptor.sln -c RELEASE
+  - ps: dotnet pack StaticProxy.Interceptor/StaticProxy.Interceptor.csproj --include-symbols -c RELEASE /p:Version="$env:customnugetversion"
