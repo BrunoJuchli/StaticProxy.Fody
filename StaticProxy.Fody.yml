@@ -2,6 +2,8 @@ version: 0.4.1.{build}
 
 image: Visual Studio 2017 Preview
 
+configuration: Release
+
 init:
 - ps: $env:customnugetversion = if ($env:APPVEYOR_REPO_TAG -eq $True) { "$env:APPVEYOR_BUILD_VERSION" } else { "$env:APPVEYOR_BUILD_VERSION-$env:APPVEYOR_REPO_BRANCH" }
 - ps: Update-AppveyorBuild -Version $env:customnugetversion
@@ -16,8 +18,16 @@ assembly_info:
   assembly_file_version: "{version}"
   assembly_informational_version: "{version}"
 
-configuration: Release
-
+before_build:
+- cmd: nuget restore StaticProxy.Fody.sln
+  
 build:
   parallel: false
-  project: StaticProxy.Fody.sln  
+  project: StaticProxy.Fody.sln
+  publish_nuget: true
+  
+artifacts:
+- path: NugetBuild\StaticProxy.Fody.*nupkg
+  name: weaver nuget package
+  
+
