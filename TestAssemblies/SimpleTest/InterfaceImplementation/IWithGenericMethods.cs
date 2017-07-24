@@ -1,9 +1,7 @@
-﻿using StaticProxy.Interceptor;
-using System;
-using System.Reflection;
-
-namespace SimpleTest.InterfaceImplementation
+﻿namespace SimpleTest.InterfaceImplementation
 {
+    using System;
+
     [StaticProxy]
     internal interface IWithGenericMethods
     {
