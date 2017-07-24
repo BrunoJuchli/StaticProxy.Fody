@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-	<TargetFrameworks>net452</TargetFrameworks>
+	<TargetFramework>net452</TargetFramework>
     <AssemblyName>StaticProxy.Fody</AssemblyName>
 	<RootNamespace>StaticProxy.Fody</RootNamespace>
 	<TreatWarningAsError>true</TreatWarningAsError>
@@ -11,4 +11,7 @@
 	<Reference Include="Microsoft.CSharp" />
 	<PackageReference Include="FodyCecil" Version="2.1.2" />
   </ItemGroup>
+  <Target Name="CopyToToolsDirectory" AfterTargets="PostBuildEvent">
+    <Copy SourceFiles="$(OutDir)\StaticProxy.Fody.dll" DestinationFolder="$(SolutionDir)\Tools" OverwriteReadOnlyFiles="True" />
+  </Target>
 </Project>
