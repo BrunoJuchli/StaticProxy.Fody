@@ -8,7 +8,8 @@
     <projectUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</projectUrl>
 	<iconUrl>https://raw.githubusercontent.com/BrunoJuchli/StaticProxy.Fody/master/Icons/package_icon.png</iconUrl> 
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Fody add-in to compile-time weave proxies with an interception mechanism similar to Castle Dynamic Proxy. Is intended to work with mobile platforms! :)</description>
+	<Summary>Fody add-in to weave proxies at compile time. With an interception mechanism similar to Castle Dynamic Proxy. Mobile support - netstandard1.0 compatible!</Summary>
+    <description>Get started by putting adding the StaticProxy.Fody nuget package to the projects where the interfaces/classes to be intercepted reside and att a [StaticProxy] attribute to these. Implement your interceptors by inheriting from the IDynamicInterceptor interface. Use one of the integration packages to configure interception and instanciate the proxies. See the project page for more information!</description>
     <tags>Proxy ILWeaving Fody AOP</tags>
     <owners>Bruno Juchli</owners>
 	<authors>See GitHub contributors list</authors>
