@@ -1,6 +1,7 @@
 ﻿namespace SimpleTest.InterfaceImplementation
 {
     using System;
+    using System.Reflection;
 
     [StaticProxy]
     internal interface IWithGenericMethods
@@ -47,9 +48,28 @@
             throw new NotImplementedException(genericMethod.Name);
         }
 
+        public void Demo2<X,Y,Z>()
+        {
+            var method = this.GetType().GetMethod("Demo");
+            Type[] genericArguments = new Type[3];
+            genericArguments[0] = typeof(X);
+            genericArguments[1] = typeof(Y);
+            genericArguments[2] = typeof(Z);
+            FooBar(method, genericArguments);
+
+            Type[] ldargS = new Type[128];
+
+            Type[] ldarg = new Type[12483];
+        }
+
         public void GenericMethod<X,Y,Z>()
         {
             throw new NotImplementedException();
+        }
+
+        public void FooBar(MethodInfo m, Type[] genericArguments)
+        {
+
         }
     }
 }

@@ -1,13 +1,8 @@
-﻿namespace StaticProxy.Interceptor.Tests
+﻿namespace StaticProxy.Interceptor
 {
     using System;
-
     using FluentAssertions;
-
     using Moq;
-
-    using StaticProxy.Interceptor;
-
     using Xunit;
 
     public class ExceptionsTest

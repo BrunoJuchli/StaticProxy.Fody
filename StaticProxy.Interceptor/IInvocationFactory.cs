@@ -1,11 +1,9 @@
 ﻿namespace StaticProxy.Interceptor
 {
-    using System.Reflection;
-
-    using StaticProxy.Interceptor.TargetInvocation;
+    using StaticProxy.Interceptor.InterceptedMethod;
 
     internal interface IInvocationFactory
     {
-        IInvocation Create(ITargetInvocation targetInvocation, MethodInfo decoratedMethod, object[] arguments, IDynamicInterceptor[] interceptors);
+        IInvocation Create(IInterceptedMethod interceptedMethod, object[] arguments, IDynamicInterceptor[] interceptors);
     }
 }

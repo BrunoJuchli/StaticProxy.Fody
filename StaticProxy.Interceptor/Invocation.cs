@@ -8,50 +8,38 @@ namespace StaticProxy.Interceptor
     using System.Reflection;
 
     using StaticProxy.Interceptor.TargetInvocation;
+    using StaticProxy.Interceptor.InterceptedMethod;
 
     internal class Invocation : IInvocation
     {
         private readonly ITargetInvocation targetInvocation;
-        private readonly MethodInfo decoratedMethod;
-        private readonly object[] arguments;
         private readonly IDynamicInterceptor[] interceptors;
         private readonly Lazy<Type[]> parameterTypes;
-        private readonly Lazy<Type[]> genericArguments;
 
         private int currentInterceptorIndex = -1;
 
-        public Invocation(ITargetInvocation targetInvocation, MethodInfo decoratedMethod, object[] arguments, IDynamicInterceptor[] interceptors)
+        public Invocation(IInterceptedMethod interceptedMethod, object[] arguments, IDynamicInterceptor[] interceptors)
         {
-            this.targetInvocation = targetInvocation;
-            this.decoratedMethod = decoratedMethod;
-            this.arguments = arguments;
+            this.targetInvocation = interceptedMethod.TargetInvocation;
+            this.Method = interceptedMethod.DecoratedMethod;
+            this.GenericArguments = interceptedMethod.GenericArguments;
+            this.Arguments = arguments;
             this.interceptors = interceptors;
 
-            this.parameterTypes = new Lazy<Type[]>(() => this.decoratedMethod.GetParameters().Select(x => x.ParameterType).ToArray());
-
-            this.genericArguments = new Lazy<Type[]>(() => this.decoratedMethod.GetGenericArguments());
+            this.parameterTypes = new Lazy<Type[]>(() => this.Method.GetParameters().Select(x => x.ParameterType).ToArray());
         }
 
-        public object[] Arguments
-        {
-            get { return this.arguments; }
-        }
+        public object[] Arguments { get; }
 
-        public Type[] GenericArguments
-        {
-            get { return this.genericArguments.Value; }
-        }
+        public Type[] GenericArguments { get; }
 
-        public MethodInfo Method
-        {
-            get { return this.decoratedMethod; }
-        }
+        public MethodInfo Method { get; }
 
         public object ReturnValue { get; set; }
 
         public object GetArgumentValue(int index)
         {
-            return this.arguments[index];
+            return this.Arguments[index];
         }
 
         public void Proceed()
@@ -61,7 +49,7 @@ namespace StaticProxy.Interceptor
             {
                 if (this.currentInterceptorIndex == this.interceptors.Length)
                 {
-                    this.ReturnValue = this.targetInvocation.InvokeMethodOnTarget(this.arguments);
+                    this.ReturnValue = this.targetInvocation.InvokeMethodOnTarget(this.Arguments);
                 }
                 else if (this.currentInterceptorIndex > this.interceptors.Length)
                 {
@@ -101,7 +89,7 @@ namespace StaticProxy.Interceptor
                 }
             }
             
-            this.arguments[index] = value;
+            this.Arguments[index] = value;
         }
 
         private InvalidOperationException CreateExceptionForInvalidCurrentInterceptorIndex()

@@ -5,8 +5,8 @@
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-        <DebugType>none</DebugType>
-        <DebugSymbols>false</DebugSymbols>
+        <DebugType>portable</DebugType>
+        <DebugSymbols>true</DebugSymbols>
         <Optimize>true</Optimize>
         <RootNamespace>StaticProxy.Interceptor</RootNamespace>
         <AssemblyName>StaticProxy.Interceptor</AssemblyName>
@@ -20,5 +20,7 @@
         <PackageTags>Proxy ILWeaving Fody AOP</PackageTags>
         <PackageIconUrl>https://raw.githubusercontent.com/BrunoJuchli/StaticProxy.Fody/master/Icons/package_icon.png</PackageIconUrl>
         <PackageProjectUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 </Project>

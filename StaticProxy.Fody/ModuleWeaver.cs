@@ -4,6 +4,8 @@ using Mono.Cecil;
 
 namespace StaticProxy.Fody
 {
+    // Logging/Log can be done like this: https://github.com/Fody/PropertyChanged/blob/8d7adc36a78f9f398e4725c45dc2207ff083111e/PropertyChanged.Fody/ModuleWeaver.cs#L8
+
     public class ModuleWeaver
     {
         public ModuleWeaver()

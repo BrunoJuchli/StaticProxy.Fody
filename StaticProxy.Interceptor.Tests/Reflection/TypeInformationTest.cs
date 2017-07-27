@@ -1,10 +1,6 @@
-﻿namespace StaticProxy.Interceptor.Tests.Reflection
+﻿namespace StaticProxy.Interceptor.Reflection
 {
-
     using FluentAssertions;
-
-    using StaticProxy.Interceptor.Reflection;
-
     using Xunit;
 
     public class TypeInformationTest
