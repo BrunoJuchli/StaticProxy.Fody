@@ -1,6 +1,7 @@
 ﻿namespace StaticProxy.Fody
 {
     using Mono.Cecil;
+    using System;
     using System.IO;
 
     public static class WeavingInformation
@@ -17,6 +18,10 @@
 
         public static TypeReference ObjectTypeReference { get; private set; }
 
+        public static TypeReference TypeTypeReference { get; private set; }
+
+        public static MethodReference GetTypeFromHandleMethodReference { get; private set; }
+
         public static void Initialize()
         {
             ModuleDefinition = ModuleWeaver.Instance.ModuleDefinition;
@@ -30,6 +35,9 @@
             DynamicInterceptorManagerReference = ModuleDefinition.ImportReference(dynamicInterceptorManagerTypeDefinition);
 
             ObjectTypeReference = ReferenceFinder.GetTypeReference(typeof(object));
+            TypeTypeReference = ReferenceFinder.GetTypeReference(typeof(Type));
+
+            GetTypeFromHandleMethodReference = ReferenceFinder.GetMethodReference(TypeTypeReference, md => md.Name == "GetTypeFromHandle");
         }
 
         private static TypeReference RetrieveStaticProxyAttributeReference()

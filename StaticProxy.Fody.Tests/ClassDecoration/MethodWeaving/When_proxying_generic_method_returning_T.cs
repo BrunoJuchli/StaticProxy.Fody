@@ -1,4 +1,4 @@
-﻿namespace StaticProxy.Fody.Tests.InterfaceImplementation.MethodWeaving
+﻿namespace StaticProxy.Fody.Tests.ClassDecoration.MethodWeaving
 {
     using System;
     using System.Reflection;
@@ -6,7 +6,7 @@
     using Moq;
     using Xunit;
 
-    public class When_implementing_generic_method_returning_T : InterfaceWithGenericMethodsTestBase
+    public class When_proxying_generic_method_returning_T : ClassWithGenericMethodsTestBase
     {
         [Fact]
         public void CallingMethod_MustUseInterceptorManager()

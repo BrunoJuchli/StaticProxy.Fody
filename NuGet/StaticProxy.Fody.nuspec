@@ -13,7 +13,7 @@
     <tags>Proxy ILWeaving Fody AOP</tags>
     <owners>Bruno Juchli</owners>
 	<authors>See GitHub contributors list</authors>
-	<releaseNotes>Added support for generic methods.</releaseNotes>
+	<releaseNotes>Added support for generic methods - this is a breaking change and requires StaticProxy.Interceptor 1.0+ to work.</releaseNotes>
     <dependencies>
       <dependency id="Fody" version="2.0.0"/>
     </dependencies>

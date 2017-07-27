@@ -3,6 +3,7 @@
     using Mono.Cecil;
     using Mono.Cecil.Cil;
     using Mono.Cecil.Rocks;
+    using System;
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
@@ -12,6 +13,7 @@
         private readonly MethodReference getMethodFromHandleRef;
         private readonly TypeReference methodBaseTypeRef;
         private readonly TypeReference objectArrayTypeRef;
+        private readonly TypeReference typeArrayTypeRef;
 
         private readonly MethodReference interceptMethod;
 
@@ -20,6 +22,7 @@
             this.getMethodFromHandleRef = WeavingInformation.ReferenceFinder.GetMethodReference(typeof(MethodBase), md => md.Name == "GetMethodFromHandle" && md.Parameters.Count == 2);
             this.methodBaseTypeRef = WeavingInformation.ReferenceFinder.GetTypeReference(typeof(MethodBase));
             this.objectArrayTypeRef = WeavingInformation.ReferenceFinder.GetTypeReference(typeof(object[]));
+            this.typeArrayTypeRef = WeavingInformation.ReferenceFinder.GetTypeReference(typeof(Type[]));
 
             this.interceptMethod = ImportInterceptMethod();
         }
@@ -90,12 +93,8 @@
 
             var decoratedMethodVar = methodToExtend.AddVariableDefinition("__fody$originalMethod", this.methodBaseTypeRef);
             var implementationMethodVar = methodToExtend.AddVariableDefinition("__fody$implementationMethod", this.methodBaseTypeRef);
+            var genericArgumentsVar = methodToExtend.AddVariableDefinition("__fody$genericParameters", this.typeArrayTypeRef);
             var parametersVar = methodToExtend.AddVariableDefinition("__fody$parameters", this.objectArrayTypeRef);
-
-            if (methodToExtend.ReturnType.IsGenericParameter)
-            {
-
-            }
 
             this.SaveMethodBaseToVariable(processor, decoratedMethodParameter, decoratedMethodVar);
             if (implementationMethodParameter != null)
@@ -103,9 +102,11 @@
                 this.SaveMethodBaseToVariable(processor, implementationMethodParameter, implementationMethodVar);
             }
 
+            processor.SaveGenericArgumentsToNewObjectArray(genericArgumentsVar, methodToExtend);
+
             processor.SaveParametersToNewObjectArray(parametersVar, methodToExtend.Parameters.ToArray());
 
-            this.CallInterceptMethod(interceptorManager, processor, decoratedMethodVar, implementationMethodVar, parametersVar);
+            this.CallInterceptMethod(interceptorManager, processor, decoratedMethodVar, implementationMethodVar, genericArgumentsVar, parametersVar);
 
             HandleInterceptReturnValue(methodToExtend, processor);
 
@@ -127,12 +128,14 @@
             ILProcessor processor,
             VariableDefinition decoratedMethodVar,
             VariableDefinition implementationMethodVar,
+            VariableDefinition genericArgumentsVar,
             VariableDefinition parametersVar)
         {
             processor.Emit(OpCodes.Ldarg_0);
             processor.Emit(OpCodes.Ldfld, interceptorManager);
             processor.Emit(OpCodes.Ldloc_S, decoratedMethodVar);
             processor.Emit(OpCodes.Ldloc_S, implementationMethodVar);
+            processor.Emit(OpCodes.Ldloc_S, genericArgumentsVar);
             processor.Emit(OpCodes.Ldloc_S, parametersVar);
             processor.Emit(OpCodes.Callvirt, this.interceptMethod);
         }

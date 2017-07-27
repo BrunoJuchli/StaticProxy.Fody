@@ -19,6 +19,7 @@
             where T : class, IComparable, IDisposable;
     }
 
+    // todo remove this, Only created to have a look at the generated IL
     class WithGenericMethods : IWithGenericMethods
     {
         public T ReturnsT<T>()

@@ -11,7 +11,7 @@
 
             this.Instance.TakesT<string>(expectedValue);
 
-            this.InterceptorManager.VerifyImplementedMethodCallIntercepted("TakesT", expectedValue);
+            this.InterceptorManager.VerifyImplementedGenericMethodCallIntercepted("TakesT", new[] { typeof(string) }, expectedValue);
         }
     }
 }
