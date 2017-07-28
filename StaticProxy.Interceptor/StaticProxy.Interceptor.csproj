@@ -12,7 +12,7 @@
         <AssemblyName>StaticProxy.Interceptor</AssemblyName>
         <PackageId>StaticProxy.Interceptor</PackageId>
         <Authors>See GitHub contributors list</Authors>
-		<Summary>Fody add-in to weave proxies at compile time. With an interception mechanism similar to Castle Dynamic Proxy. Mobile support - netstandard1.0 compatible!)</Summary>
+		<PackageSummary>Fody add-in to weave proxies at compile time. With an interception mechanism similar to Castle Dynamic Proxy. Mobile support - netstandard1.0 compatible!)</PackageSummary>
         <Description>Get started by putting adding the StaticProxy.Fody nuget package to the projects where the interfaces/classes to be intercepted reside and att a [StaticProxy] attribute to these. Implement your interceptors by inheriting from the IDynamicInterceptor interface. Use one of the integration packages to configure interception and instanciate the proxies. See the project page for more information!</Description>
         <Title>StaticProxy.Interceptor</Title>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -22,6 +22,5 @@
         <PackageProjectUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</PackageProjectUrl>
         <RepositoryUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-		<NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion> <!-- Workaround for tooling choosing a too new package 1.6.1 by default -->
     </PropertyGroup>
 </Project>
