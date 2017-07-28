@@ -22,5 +22,6 @@
         <PackageProjectUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</PackageProjectUrl>
         <RepositoryUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+		<NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion> <!-- Workaround for tooling choosing a too new package 1.6.1 by default -->
     </PropertyGroup>
 </Project>
