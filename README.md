@@ -11,24 +11,24 @@ It is meant to be used in conjunction with dependency injection containers since
 
 Nuget package http://nuget.org/packages/StaticProxy.Fody 
 
-To Install the static proxy weaver from the Nuget Package Manager Console 
+To Install the static proxy weaver and the interceptor infrastructure from the Nuget Package Manager Console 
     
     PM> Install-Package StaticProxy.Fody
+    PM> Install-Package StaticProxy.Interceptor
     
     
 ## Usage
- - Add the StaticProxy.Fody nuget package to any project where you wish to add static proxy weaving.
+ - Add the `StaticProxy.Fody` and `StaticProxy.Interceptor` nuget packages to any project where you wish to add static proxy weaving.
  - Put an `[StaticProxy]` attribute on any class or interface you wish to be proxied.
  - Write interceptors (`class SomeProxy : IDynamicInterceptor`)
  
-
 Then, use one of the existing StaticProxy IoC container integrations:
   - Ninject (PCL): [ninject.extensions.staticproxy](https://github.com/BrunoJuchli/ninject.extensions.staticproxy)
   - Unity [Unity.StaticProxyExtension](https://github.com/BrunoJuchli/Unity.StaticProxyExtension)
  
 or roll your own:
   - Configure your Inversion of Control (IoC) container to be able to resolve `IDynamicInterceptorManager`. The implementation is provided by the `StaticProxy.Interceptor` nuget package.
-  - Configure your IoC container to be able to resolve `IDynamicInterceptorCollection`. It needs to contain the interceptor for the proxied type.
+  - Configure your IoC container to be able to resolve `IDynamicInterceptorCollection`. It needs to contain the interceptor(s) for the proxied type.
  
 ### Class Proxy
 Is created by putting the `[StaticProxy]` attribute on a class.
