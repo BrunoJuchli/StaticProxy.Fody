@@ -75,7 +75,7 @@ namespace IntegrationTests.ProxyWithTarget
                                 invocation.Arguments[0] = 8;
                             }
 
-                            invocation.Proceed(); 
+                            invocation.Proceed();
                         });
 
             using (IKernel kernel = new StandardKernel())
@@ -92,7 +92,7 @@ namespace IntegrationTests.ProxyWithTarget
 
                 // interceptor overrides 3 with 8
                 instance.MultiplyInternalNumber(3);
-                
+
                 instance.AssertInternalNumberIs(40);
             }
         }
@@ -102,7 +102,7 @@ namespace IntegrationTests.ProxyWithTarget
         {
             const string ExpectedArg1 = "Hello world";
             var expectedArg2 = new object();
-            
+
             var fakeInterceptor = new Mock<IDynamicInterceptor>();
             fakeInterceptor
                 .Setup(x => x.Intercept(It.IsAny<IInvocation>()))
@@ -156,7 +156,7 @@ namespace IntegrationTests.ProxyWithTarget
 
                 var instance = kernel.Get<IntegrationWithGenericMethod>();
 
-                string result = instance.ImplementedGenericMethod<object,int,string>(expectedArg1, ExpectedArg2, ExpectedArg3);
+                string result = instance.ImplementedGenericMethod<object, int, string>(expectedArg1, ExpectedArg2, ExpectedArg3);
 
                 result.Should().Be(ExpectedArg3);
             }
@@ -190,7 +190,7 @@ namespace IntegrationTests.ProxyWithTarget
                             invocation.Proceed();
                         }
                         catch (InvalidOperationException)
-                        {   
+                        {
                         }
                     });
 
@@ -266,6 +266,25 @@ namespace IntegrationTests.ProxyWithTarget
                 var instance = kernel.Get<IntegrationWithReturnValue>();
 
                 instance.Multiply(3, 5).Should().Be(15);
+            }
+        }
+
+        [Fact]
+        public void IntegrationWithGenericClass_WithoutInterceptor_ShouldUseOriginalImplementation()
+        {
+            var expectedReturnValue = Mock.Of<IDisposable>();
+
+            using (IKernel kernel = new StandardKernel())
+            {
+                kernel.Bind<IDynamicInterceptorManager>().To<DynamicInterceptorManager>();
+                kernel.Bind<IDynamicInterceptorCollection>().ToConstant(new FakeDynamicInterceptorCollection());
+                kernel.Bind(typeof(IntegrationWithGenericClass<,,>)).ToSelf();
+
+                var instance = kernel.Get<IntegrationWithGenericClass<string, object, IDisposable>>();
+
+                var actualReturnValue = instance.ImplementedGenericMethod("foo", new object(), expectedReturnValue);
+
+                actualReturnValue.Should().Be(expectedReturnValue);
             }
         }
     }

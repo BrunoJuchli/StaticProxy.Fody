@@ -125,9 +125,12 @@
             {
                 processor.Emit(OpCodes.Ldarg_0); // load "this" onto the stack
                 processor.Emit(OpCodes.Call, WeavingInformation.GetTypeMethodReference); // call "GetType()" on "this"
-                processor.Emit(OpCodes.Callvirt, WeavingInformation.GetInterfacesMethodReference); // call "GetInterfaces()" on the Type
-                processor.Emit(OpCodes.Ldc_I4_0); // load index 0 to the stack
-                processor.Emit(OpCodes.Ldelem_Ref); // load the interface-Type with the index 0 from the stack
+                if(decoratedMethod.DeclaringType.IsInterface)
+                {
+                    processor.Emit(OpCodes.Callvirt, WeavingInformation.GetInterfacesMethodReference); // call "GetInterfaces()" on the Type
+                    processor.Emit(OpCodes.Ldc_I4_0); // load index 0 to the stack
+                    processor.Emit(OpCodes.Ldelem_Ref); // load the interface-Type with the index 0 from the stack
+                }
                 processor.Emit(OpCodes.Callvirt, WeavingInformation.TypeHandlePropertyGetMethodReference);  // call "get_TypeHandle" on the Type on the stack
             }
             else
