@@ -7,6 +7,8 @@ StaticProxy.Interceptor: [![Build status](https://ci.appveyor.com/api/projects/s
 
 StaticProxy weaves proxies at compile time. This is similar to tools like Castle Dynamic Proxy and LinFu Proxy, but it works during compilation (also see: [Introduction to Fody](http://github.com/Fody/Fody/wiki/SampleUsage)). But why? Because some platforms, notably WinRT, Windows Phone and iOS do not support dynamic code emitting. So "dynamic proxy" cannot be used on these platforms. StaticProxy to the rescue!
 
+(StaticProxy works with all .net standard 1.0+ compatible platforms, including .NET (full) Framework, .NET Core, Xamarin.IOS, Xamarin.Android, Universal Windows Platform and more)
+
 ## Nuget
 
 Nuget package http://nuget.org/packages/StaticProxy.Fody 
