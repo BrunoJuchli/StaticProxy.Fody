@@ -1,7 +1,5 @@
 ﻿namespace StaticProxy.Fody.InterfaceImplementation
 {
-    using System.Globalization;
-
     using Mono.Cecil;
     using Mono.Cecil.Cil;
 
@@ -27,20 +25,16 @@
 
         public TypeDefinition CreateImplementationOf(TypeDefinition interfaceToImplement)
         {
-            if (interfaceToImplement.HasGenericParameters)
-            {
-                string message = string.Format(
-                    CultureInfo.InvariantCulture,
-                    "interface '{0}' has generic parameters which is currently not supported.",
-                    interfaceToImplement.FullName);
-                throw new WeavingException(message);
-            }
-
             var classType = new TypeDefinition(
                 interfaceToImplement.Namespace,
                 GenerateImplementationName(interfaceToImplement),
-                TypeAttributes.Class | TypeAttributes.Public | TypeAttributes.Sealed,
+                TypeAttributes.Class | TypeAttributes.Public | TypeAttributes.Sealed | TypeAttributes.BeforeFieldInit,
                 this.objectTypeReference);
+
+            foreach(GenericParameter genericParameter in interfaceToImplement.GenericParameters)
+            {
+                classType.GenericParameters.Add(genericParameter.CreateCopy(classType));
+            }
 
             AddEmptyConstructor(classType, this.objectConstructorReference);
 
@@ -51,16 +45,41 @@
                 this.methodWeaver.ImplementMethod(interfaceMethod, dynamicInterceptorManager);
             }
 
-            classType.Interfaces.Add(new InterfaceImplementation(interfaceToImplement));
+            if (interfaceToImplement.HasGenericParameters)
+            {
+                var genericInterface = new GenericInstanceType(interfaceToImplement);
+                foreach (var argument in interfaceToImplement.GenericParameters)
+                {
+                    genericInterface.GenericArguments.Add(argument);
+                }
+
+                classType.Interfaces.Add(new InterfaceImplementation(genericInterface));
+            }
+            else
+            {
+                classType.Interfaces.Add(new InterfaceImplementation(interfaceToImplement));
+            }
 
             WeavingInformation.ModuleDefinition.Types.Add(classType);
 
             return classType;
         }
 
-        private static string GenerateImplementationName(TypeDefinition interfaceToImplement)
+        private static string GenerateImplementationName(TypeReference interfaceToImplement)
         {
-            return string.Concat(interfaceToImplement.Name, ClassNameSuffix);
+            var originalNameParts = interfaceToImplement.Name.Split('`');
+            if(originalNameParts.Length == 1)
+            {
+                return originalNameParts[0] + ClassNameSuffix;
+            }
+            else if(originalNameParts.Length == 2)
+            {
+                return originalNameParts[0] + ClassNameSuffix + "`" + originalNameParts[1];
+            }
+            else
+            {
+                throw new WeavingException($"Interface Name '{interfaceToImplement.Name}' unexpectedly contains more than one '`' character.");
+            }
         }
 
         private static void AddEmptyConstructor(TypeDefinition type, MethodReference baseEmptyConstructor)

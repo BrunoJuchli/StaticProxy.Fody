@@ -34,7 +34,14 @@
                 MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.Virtual | MethodAttributes.Final,
                 interfaceMethod.ReturnType);
 
-            newMethod.Overrides.Add(interfaceMethod);
+            if (interfaceMethod.DeclaringType.HasGenericParameters)
+            {
+                newMethod.Attributes = newMethod.Attributes | MethodAttributes.NewSlot;
+            }
+            else
+            {
+                newMethod.Overrides.Add(interfaceMethod);
+            }
 
             CopyMethodData(interfaceMethod, newMethod);
 

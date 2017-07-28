@@ -22,6 +22,14 @@
 
         public static MethodReference GetTypeFromHandleMethodReference { get; private set; }
 
+        public static MethodReference MakeGenericTypeMethodReference { get; private set; }
+
+        public static MethodReference GetTypeMethodReference { get; private set; }
+
+        public static MethodReference GetInterfacesMethodReference { get; private set; }
+
+        public static MethodReference TypeHandlePropertyGetMethodReference { get; private set; }
+
         public static void Initialize()
         {
             ModuleDefinition = ModuleWeaver.Instance.ModuleDefinition;
@@ -38,6 +46,10 @@
             TypeTypeReference = ReferenceFinder.GetTypeReference(typeof(Type));
 
             GetTypeFromHandleMethodReference = ReferenceFinder.GetMethodReference(TypeTypeReference, md => md.Name == "GetTypeFromHandle");
+            MakeGenericTypeMethodReference = ReferenceFinder.GetMethodReference(TypeTypeReference, md => md.Name == "MakeGenericType");
+            GetTypeMethodReference = ReferenceFinder.GetMethodReference(ObjectTypeReference, md => md.Name == "GetType");
+            GetInterfacesMethodReference = ReferenceFinder.GetMethodReference(TypeTypeReference, md => md.Name == "GetInterfaces");
+            TypeHandlePropertyGetMethodReference = ReferenceFinder.GetMethodReference(TypeTypeReference, md => md.Name == "get_TypeHandle");
         }
 
         private static TypeReference RetrieveStaticProxyAttributeReference()

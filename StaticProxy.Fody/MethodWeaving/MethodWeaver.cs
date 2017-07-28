@@ -102,9 +102,11 @@
                 this.SaveMethodBaseToVariable(processor, implementationMethodParameter, implementationMethodVar);
             }
 
-            processor.SaveGenericArgumentsToNewObjectArray(genericArgumentsVar, methodToExtend);
+            processor.SaveGenericParametersToNewTypeArray(methodToExtend.GenericParameters);
+            processor.SaveCurrentStackValueToVariable(genericArgumentsVar);
 
-            processor.SaveParametersToNewObjectArray(parametersVar, methodToExtend.Parameters.ToArray());
+            processor.SaveParametersToNewObjectArray(methodToExtend.Parameters.ToArray());
+            processor.SaveCurrentStackValueToVariable(parametersVar);
 
             this.CallInterceptMethod(interceptorManager, processor, decoratedMethodVar, implementationMethodVar, genericArgumentsVar, parametersVar);
 
@@ -118,7 +120,21 @@
         private void SaveMethodBaseToVariable(ILProcessor processor, MethodDefinition decoratedMethod, VariableDefinition methodBaseVar)
         {
             processor.Emit(OpCodes.Ldtoken, decoratedMethod);
-            processor.Emit(OpCodes.Ldtoken, decoratedMethod.DeclaringType);
+
+            if (decoratedMethod.DeclaringType.HasGenericParameters)
+            {
+                processor.Emit(OpCodes.Ldarg_0); // load "this" onto the stack
+                processor.Emit(OpCodes.Call, WeavingInformation.GetTypeMethodReference); // call "GetType()" on "this"
+                processor.Emit(OpCodes.Callvirt, WeavingInformation.GetInterfacesMethodReference); // call "GetInterfaces()" on the Type
+                processor.Emit(OpCodes.Ldc_I4_0); // load index 0 to the stack
+                processor.Emit(OpCodes.Ldelem_Ref); // load the interface-Type with the index 0 from the stack
+                processor.Emit(OpCodes.Callvirt, WeavingInformation.TypeHandlePropertyGetMethodReference);  // call "get_TypeHandle" on the Type on the stack
+            }
+            else
+            {
+                processor.Emit(OpCodes.Ldtoken, decoratedMethod.DeclaringType);
+            }
+
             processor.Emit(OpCodes.Call, this.getMethodFromHandleRef); // Push method onto the stack, GetMethodFromHandle, result on stack
             processor.Emit(OpCodes.Stloc_S, methodBaseVar); // Store method in __fody$method
         }
