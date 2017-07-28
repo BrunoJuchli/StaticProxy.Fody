@@ -12,7 +12,6 @@ namespace StaticProxy.Fody.Tests
 
         public WeaverHelper(string assemblyName)
         {
-            // todo remove after debug
             Console.WriteLine("Current directory = {0}", Environment.CurrentDirectory);
 
             this.assemblyPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, assemblyName + ".dll"));

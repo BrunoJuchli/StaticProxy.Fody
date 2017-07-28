@@ -7,7 +7,7 @@
     using System.Reflection;
     using Xunit;
 
-    public class When_implementing_method_of_generic_type : SimpleTestBase
+    public class When_implementing_method_of_generic_class : SimpleTestBase
     {
         private static readonly Type[] TypeGenericArguments = new[] { typeof(object), typeof(string), typeof(Uri) };
 
@@ -16,9 +16,9 @@
 
         protected readonly dynamic Instance;
 
-        public When_implementing_method_of_generic_type()
+        public When_implementing_method_of_generic_class()
         {
-            this.Clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.InterfaceImplementation.IGenericProxy" + InterfaceImplementationWeaver.ClassNameSuffix + "`3")
+            this.Clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.ClassDecoration.GenericClass`3")
                             .MakeGenericType(TypeGenericArguments);
 
             this.InterceptorManager = new Mock<IDynamicInterceptorManager>();
@@ -68,7 +68,7 @@
 
         [Fact]
 
-        public void CallingMethod_MustNotPassImplementedMethod()
+        public void CallingMethod_MustPassImplementedMethod()
         {
             MethodBase implementedMethod = null;
 
@@ -81,7 +81,9 @@
 
             this.Instance.DoSomething(new object());
 
-            implementedMethod.Should().BeNull();
+            implementedMethod.Should().NotBeNull();
+            implementedMethod.Name.Should().Be("DoSomething<SP>");
+            implementedMethod.DeclaringType.Should().Be(this.Clazz);
         }
 
         [Fact]

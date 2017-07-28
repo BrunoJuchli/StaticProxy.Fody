@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using Microsoft.Build.Utilities;
-    using FluentAssertions;
 
     public static class Verifier
     {
