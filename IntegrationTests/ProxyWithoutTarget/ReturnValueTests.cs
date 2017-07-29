@@ -29,7 +29,7 @@
         {
             var expectedResult = new object();
 
-            this.SetupReturnValue(expectedResult);
+            this.interceptor.SetupReturnValue(expectedResult);
 
             this.testee.ReturnsObject().Should().Be(expectedResult);
         }
@@ -39,7 +39,7 @@
         {
             const int ExpectedResult = 34820;
 
-            this.SetupReturnValue(ExpectedResult);
+            this.interceptor.SetupReturnValue(ExpectedResult);
 
             this.testee.ReturnsInteger().Should().Be(ExpectedResult);
         }
@@ -47,7 +47,7 @@
         [Fact]
         public void WhenMethodReturnValueType_InterceptorValueIsNull_MustThrow()
         {
-            this.SetupReturnValue(null);
+            this.interceptor.SetupReturnValue(null);
 
             this.testee.Invoking(x => x.ReturnsInteger())
                 .ShouldThrow<InvalidOperationException>();
@@ -58,7 +58,7 @@
         {
             const float ExpectedResult = 15.6f;
 
-            this.SetupReturnValue(ExpectedResult);
+            this.interceptor.SetupReturnValue(ExpectedResult);
 
             this.testee.ReturnsNullableFloat().Should().Be(ExpectedResult);
         }
@@ -66,15 +66,9 @@
         [Fact]
         public void WhenMethodReturnsNullableValueType_InterceptorValueIsNull_MustReturnReturnValueOfInterceptor()
         {
-            this.SetupReturnValue(null);
+            this.interceptor.SetupReturnValue(null);
 
             this.testee.ReturnsNullableFloat().Should().NotHaveValue();
-        }
-
-        private void SetupReturnValue(object returnValue)
-        {
-            this.interceptor.Setup(x => x.Intercept(It.IsAny<IInvocation>()))
-                .Callback<IInvocation>(invocation => invocation.ReturnValue = returnValue);
         }
     }
 }

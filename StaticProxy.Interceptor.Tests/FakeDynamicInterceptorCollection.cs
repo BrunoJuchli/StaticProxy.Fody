@@ -1,4 +1,4 @@
-﻿namespace StaticProxy.Interceptor.Tests
+﻿namespace StaticProxy.Interceptor
 {
     using System.Collections.ObjectModel;
 

@@ -7,6 +7,7 @@
     using Moq;
 
     using Xunit;
+    using System;
 
     public class When_implementing_method_returning_reference_type : InterfaceWithMethodsTestBase
     {
@@ -15,7 +16,7 @@
         {
             var expectedResult = new object();
             this.InterceptorManager.Setup(
-                x => x.Intercept(It.IsAny<MethodBase>(), It.IsAny<MethodBase>(), It.IsAny<object[]>()))
+                x => x.Intercept(It.IsAny<MethodBase>(), It.IsAny<MethodBase>(), It.IsAny<Type[]>(), It.IsAny<object[]>()))
                 .Returns(expectedResult);
 
             var actualResult = this.Instance.ReturnsObject();

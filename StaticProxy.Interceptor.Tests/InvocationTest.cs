@@ -1,25 +1,24 @@
-﻿namespace StaticProxy.Interceptor.Tests
+﻿namespace StaticProxy.Interceptor
 {
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-
     using FluentAssertions;
-
     using Moq;
-
-    using StaticProxy.Interceptor;
     using StaticProxy.Interceptor.TargetInvocation;
-
     using Xunit;
+    using StaticProxy.Interceptor.InterceptedMethod;
 
     public class InvocationTest
     {
         private const int OriginalArgument1 = 482;
         private static readonly object OriginalArgument2 = new object();
 
-        private readonly Mock<ITargetInvocation> targetInvocation;
-        private readonly MethodInfo decoratedMethod;
+        private static readonly MethodInfo DecoratedMethod = typeof(IFakeTarget).GetMethod("Foo");
+        private readonly Type[] GenericArguments = new[] { typeof(string), typeof(int) };
+
+        private readonly Mock<IInterceptedMethod> interceptedMethod;
+
         private readonly object[] arguments = new object[] { OriginalArgument1, OriginalArgument2 };
         private readonly Mock<IDynamicInterceptor> interceptor1;
         private readonly Mock<IDynamicInterceptor> interceptor2;
@@ -28,14 +27,15 @@
 
         public InvocationTest()
         {
-            this.targetInvocation = new Mock<ITargetInvocation>();
-            this.decoratedMethod = typeof(IFakeTarget).GetMethod("Foo");
+            this.interceptedMethod = new Mock<IInterceptedMethod> { DefaultValue = DefaultValue.Mock };
+            this.interceptedMethod.SetupGet(x => x.DecoratedMethod).Returns(DecoratedMethod);
+            this.interceptedMethod.SetupGet(x => x.GenericArguments).Returns(GenericArguments);
+
             this.interceptor1 = new Mock<IDynamicInterceptor>();
             this.interceptor2 = new Mock<IDynamicInterceptor>();
 
             this.testee = new Invocation(
-                this.targetInvocation.Object,
-                this.decoratedMethod,
+                this.interceptedMethod.Object,
                 this.arguments, 
                 new[] { this.interceptor1.Object, this.interceptor2.Object });
         }
@@ -44,6 +44,12 @@
         public void Ctor_MustSetReturnValueToNull()
         {
             this.testee.ReturnValue.Should().BeNull();
+        }
+
+        [Fact]
+        public void Ctor_MustSetGenericArguments()
+        {
+            this.testee.GenericArguments.Should().BeSameAs(GenericArguments);
         }
 
         [Fact]
@@ -59,7 +65,7 @@
         [Fact]
         public void Method_MustReturnDecoratedMethod()
         {
-            ((object)this.testee.Method).Should().Be(this.decoratedMethod);
+            ((object)this.testee.Method).Should().Be(DecoratedMethod);
         }
 
         [Fact]
@@ -132,25 +138,25 @@
                         x.Proceed();
                     });
 
-            this.targetInvocation.Setup(x => x.InvokeMethodOnTarget(It.IsAny<object[]>()))
-                .Callback(() => sequence.Add(this.targetInvocation));
+            this.interceptedMethod.Setup(x => x.TargetInvocation.InvokeMethodOnTarget(It.IsAny<object[]>()))
+                .Callback(() => sequence.Add(this.interceptedMethod.Object.TargetInvocation));
 
             this.testee.Proceed();
 
             this.interceptor1.Verify(x => x.Intercept(this.testee));
             this.interceptor2.Verify(x => x.Intercept(this.testee));
-            this.targetInvocation.Verify(x => x.InvokeMethodOnTarget(new[] { OriginalArgument1, OriginalArgument2 }));
+            this.interceptedMethod.Verify(x => x.TargetInvocation.InvokeMethodOnTarget(new[] { OriginalArgument1, OriginalArgument2 }));
 
             sequence.Should()
                 .HaveCount(3)
-                .And.ContainInOrder(this.interceptor1, this.interceptor2, this.targetInvocation);
+                .And.ContainInOrder(this.interceptor1, this.interceptor2, this.interceptedMethod.Object.TargetInvocation);
         }
 
         [Fact]
         public void Proceed_When_OriginalImplementationThrows_MustRethrowOriginalException()
         {
-            this.targetInvocation
-                .Setup(x => x.InvokeMethodOnTarget(It.IsAny<object[]>()))
+            this.interceptedMethod
+                .Setup(x => x.TargetInvocation.InvokeMethodOnTarget(It.IsAny<object[]>()))
                 .Throws<ArgumentOutOfRangeException>();
 
             this.interceptor1.Setup(x => x.Intercept(It.IsAny<IInvocation>())).Callback<IInvocation>(x => x.Proceed());
@@ -164,8 +170,8 @@
         public void Proceed_MustStoreReturnValueOfOriginalMethod()
         {
             var expectedReturnValue = new object();
-            this.targetInvocation
-                .Setup(x => x.InvokeMethodOnTarget(It.IsAny<object[]>()))
+            this.interceptedMethod
+                .Setup(x => x.TargetInvocation.InvokeMethodOnTarget(It.IsAny<object[]>()))
                 .Returns(expectedReturnValue);
 
             this.interceptor1.Setup(x => x.Intercept(It.IsAny<IInvocation>())).Callback<IInvocation>(x => x.Proceed());

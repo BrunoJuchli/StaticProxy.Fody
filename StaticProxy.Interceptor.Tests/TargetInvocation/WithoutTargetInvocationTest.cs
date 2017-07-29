@@ -1,9 +1,6 @@
-﻿namespace StaticProxy.Interceptor.Tests.TargetInvocation
+﻿namespace StaticProxy.Interceptor.TargetInvocation
 {
     using FluentAssertions;
-
-    using StaticProxy.Interceptor.TargetInvocation;
-
     using Xunit;
 
     public class WithoutTargetInvocationTest

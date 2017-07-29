@@ -7,7 +7,7 @@
 	<DebugType>full</DebugType>
 	<DebugSymbols>true</DebugSymbols>
 	<Optimize>false</Optimize>
-    <RootNamespace>StaticProxy.Interceptor.Tests</RootNamespace>
+    <RootNamespace>StaticProxy.Interceptor</RootNamespace>
     <AssemblyName>StaticProxy.Interceptor.Tests</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
@@ -20,9 +20,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-	<PackageReference Include="Castle.Core" Version="4.1.0" />
+	<PackageReference Include="Castle.Core" Version="4.1.1" />
+	<PackageReference Include="fasterflect" Version="2.1.3" />
 	<PackageReference Include="FluentAssertions" Version="4.19.3" />
-	<PackageReference Include="Moq" Version="4.7.63" />
+	<PackageReference Include="Moq" Version="4.7.99" />
 	<PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
 	<PackageReference Include="xunit" Version="2.2.0" />
 	<PackageReference Include="xunit.analyzers" Version="0.5.0" />

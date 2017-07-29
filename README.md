@@ -1,34 +1,36 @@
 StaticProxy.Fody: [![Build status](https://ci.appveyor.com/api/projects/status/j6tubf9q9deyngu4)](https://ci.appveyor.com/project/BrunoJuchli/staticproxy-fody)
 StaticProxy.Interceptor: [![Build status](https://ci.appveyor.com/api/projects/status/bpji3ka4pmwd54wm)](https://ci.appveyor.com/project/BrunoJuchli/staticproxy-fody-951)
 
+**.net standard 1.0+ compatible.**
+
 ## ![Icon](https://raw.githubusercontent.com/BrunoJuchli/StaticProxy.Fody/master/Icons/package_icon.png) This is an add-in for [Fody](https://github.com/Fody/Fody/) 
 
 StaticProxy weaves proxies at compile time. This is similar to tools like Castle Dynamic Proxy and LinFu Proxy, but it works during compilation (also see: [Introduction to Fody](http://github.com/Fody/Fody/wiki/SampleUsage)). But why? Because some platforms, notably WinRT, Windows Phone and iOS do not support dynamic code emitting. So "dynamic proxy" cannot be used on these platforms. StaticProxy to the rescue!
 
-It is meant to be used in conjunction with dependency injection containers since it is adding arguments to the constructor - and thus breaks `new Foo(...)` calls of all proxied classes.
+(StaticProxy works with all .net standard 1.0+ compatible platforms, including .NET (full) Framework, .NET Core, Xamarin.IOS, Xamarin.Android, Universal Windows Platform and more)
 
 ## Nuget
 
 Nuget package http://nuget.org/packages/StaticProxy.Fody 
 
-To Install the static proxy weaver from the Nuget Package Manager Console 
+To Install the static proxy weaver and the interceptor infrastructure from the Nuget Package Manager Console 
     
     PM> Install-Package StaticProxy.Fody
+    PM> Install-Package StaticProxy.Interceptor
     
     
 ## Usage
- - Add the StaticProxy.Fody nuget package to any project where you wish to add static proxy weaving.
+ - Add the `StaticProxy.Fody` and `StaticProxy.Interceptor` nuget packages to any project where you wish to add static proxy weaving.
  - Put an `[StaticProxy]` attribute on any class or interface you wish to be proxied.
  - Write interceptors (`class SomeProxy : IDynamicInterceptor`)
  
-
 Then, use one of the existing StaticProxy IoC container integrations:
   - Ninject (PCL): [ninject.extensions.staticproxy](https://github.com/BrunoJuchli/ninject.extensions.staticproxy)
   - Unity [Unity.StaticProxyExtension](https://github.com/BrunoJuchli/Unity.StaticProxyExtension)
  
 or roll your own:
   - Configure your Inversion of Control (IoC) container to be able to resolve `IDynamicInterceptorManager`. The implementation is provided by the `StaticProxy.Interceptor` nuget package.
-  - Configure your IoC container to be able to resolve `IDynamicInterceptorCollection`. It needs to contain the interceptor for the proxied type.
+  - Configure your IoC container to be able to resolve `IDynamicInterceptorCollection`. It needs to contain the interceptor(s) for the proxied type.
  
 ### Class Proxy
 Is created by putting the `[StaticProxy]` attribute on a class.

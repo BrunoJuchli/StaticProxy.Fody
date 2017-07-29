@@ -1,0 +1,27 @@
+version: 1.0.{build}
+
+image: Visual Studio 2017 Preview
+
+clone_folder: c:\StaticProxy.Interceptor\
+
+init:
+- ps: $env:customnugetversion = if ($env:APPVEYOR_REPO_TAG -eq $True) { "$env:APPVEYOR_BUILD_VERSION" } else { "$env:APPVEYOR_BUILD_VERSION-$env:APPVEYOR_REPO_BRANCH" }
+- ps: Update-AppveyorBuild -Version $env:customnugetversion
+
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+
+configuration: Release
+
+build_script:
+  - dotnet restore StaticProxy.Interceptor.sln
+  - dotnet build StaticProxy.Interceptor.sln -c RELEASE
+  - ps: dotnet pack StaticProxy.Interceptor/StaticProxy.Interceptor.csproj --include-symbols -c RELEASE /p:Version="$env:customnugetversion" -o "C:\StaticProxy.Interceptor\"
+  
+artifacts:
+- path: '*.nupkg'
+  name: Nuget Packages

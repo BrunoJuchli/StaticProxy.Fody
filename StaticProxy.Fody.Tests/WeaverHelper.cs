@@ -1,12 +1,8 @@
 ﻿using Mono.Cecil;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Xml.Linq;
 
 namespace StaticProxy.Fody.Tests
 {
@@ -16,7 +12,6 @@ namespace StaticProxy.Fody.Tests
 
         public WeaverHelper(string assemblyName)
         {
-            // todo remove after debug
             Console.WriteLine("Current directory = {0}", Environment.CurrentDirectory);
 
             this.assemblyPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, assemblyName + ".dll"));
@@ -63,72 +58,9 @@ namespace StaticProxy.Fody.Tests
                 WriteSymbols = true
             });
 
-            this.PEVerify(newAssembly);
+            Verifier.Verify(this.assemblyPath, newAssembly);
 
             return Assembly.LoadFile(newAssembly);
         }
-
-        private void PEVerify(string assemblyLocation)
-        {
-            var pathKeys = new[]
-            {
-                "sdk8dir",
-                "sdkDir",
-                "x86SdkDir",
-                "sdkDirUnderVista"
-            };
-
-            var process = new Process();
-            string peVerifyLocation = string.Empty;
-
-
-            peVerifyLocation = GetPEVerifyLocation(pathKeys, peVerifyLocation);
-
-            if (!File.Exists(peVerifyLocation))
-            {
-                Console.WriteLine("Warning: PEVerify.exe could not be found. Skipping test.");
-
-                return;
-            }
-
-            process.StartInfo.FileName = peVerifyLocation;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            process.StartInfo.Arguments = "\"" + assemblyLocation + "\" /VERBOSE /NOLOGO";
-            process.StartInfo.CreateNoWindow = true;
-            process.Start();
-
-            string processOutput = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-
-            string result = string.Format("PEVerify Exit Code: {0}", process.ExitCode);
-
-            Console.WriteLine(this.GetType().FullName + ": " + result);
-
-            if (process.ExitCode == 0)
-                return;
-
-            Console.WriteLine(processOutput);
-            throw new Exception(result + Environment.NewLine + "PEVerify output: " + Environment.NewLine + processOutput);
-        }
-
-        private static string GetPEVerifyLocation(IEnumerable<string> pathKeys, string peVerifyLocation)
-        {
-            foreach (string key in pathKeys)
-            {
-                string directory = ConfigurationManager.AppSettings[key];
-
-                if (string.IsNullOrEmpty(directory))
-                    continue;
-
-                peVerifyLocation = Path.Combine(directory, "peverify.exe");
-
-                if (File.Exists(peVerifyLocation))
-                    break;
-            }
-            return peVerifyLocation;
-        }
-
     }
 }

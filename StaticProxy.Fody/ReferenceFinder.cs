@@ -26,7 +26,7 @@ namespace StaticProxy.Fody
             do
             {
                 methodDefinition = typeDefinition.Methods.FirstOrDefault(predicate);
-                typeDefinition = typeDefinition.BaseType == null ? null : typeDefinition.BaseType.Resolve();
+                typeDefinition = typeDefinition.BaseType?.Resolve();
             } while (methodDefinition == null && typeDefinition != null);
 
             return moduleDefinition.ImportReference(methodDefinition);

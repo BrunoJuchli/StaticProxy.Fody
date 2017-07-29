@@ -1,10 +1,8 @@
-﻿namespace StaticProxy.Interceptor.Tests.InterfaceProxy
+﻿namespace StaticProxy.Interceptor.InterfaceProxy
 {
     using System;
 
     using FluentAssertions;
-
-    using StaticProxy.Interceptor.InterfaceProxy;
 
     using Xunit;
     using Xunit.Extensions;

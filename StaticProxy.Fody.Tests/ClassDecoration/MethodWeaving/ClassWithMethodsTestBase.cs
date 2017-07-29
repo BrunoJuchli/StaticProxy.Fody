@@ -45,9 +45,21 @@
                 this.Setup(x => x.Initialize(It.IsAny<object>(), It.IsAny<bool>()))
                     .Callback<object, bool>((target, requiresInterceptor) => this.target = target);
 
-                this.Setup(x => x.Intercept(It.IsAny<MethodBase>(), It.IsAny<MethodBase>(), It.IsAny<object[]>()))
-                    .Callback<MethodBase, MethodBase, object[]>((decoratedMethod, implementationMethod, arguments) => 
-                        implementationMethod.Invoke(this.target, arguments));
+                this.Setup(x => x.Intercept(It.IsAny<MethodBase>(), It.IsAny<MethodBase>(), It.IsAny<Type[]>(), It.IsAny<object[]>()))
+                    .Callback<MethodBase, MethodBase, Type[], object[]>((decoratedMethod, implementationMethod, genericArguments, arguments) =>
+                    {
+                        if(genericArguments.Length > 0)
+                        {
+                            ((MethodInfo)implementationMethod)
+                                .MakeGenericMethod(genericArguments)
+                                .Invoke(this.target, arguments);
+                        }
+                        else
+                        {
+                            implementationMethod.Invoke(this.target, arguments);
+                        }
+                    });
+                        
             }
         }
     }

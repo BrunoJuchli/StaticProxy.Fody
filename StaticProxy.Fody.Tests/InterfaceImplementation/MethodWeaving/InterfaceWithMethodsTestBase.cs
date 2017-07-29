@@ -17,7 +17,7 @@
             this.Clazz = this.WovenSimpleTestAssembly.GetType("SimpleTest.InterfaceImplementation.IWithMethods" + InterfaceImplementationWeaver.ClassNameSuffix);
 
             this.InterceptorManager = new Mock<IDynamicInterceptorManager>();
-            
+
             this.Instance = Activator.CreateInstance(this.Clazz, this.InterceptorManager.Object);
         }
     }

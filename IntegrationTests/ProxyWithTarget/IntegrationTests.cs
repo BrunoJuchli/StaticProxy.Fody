@@ -75,7 +75,7 @@ namespace IntegrationTests.ProxyWithTarget
                                 invocation.Arguments[0] = 8;
                             }
 
-                            invocation.Proceed(); 
+                            invocation.Proceed();
                         });
 
             using (IKernel kernel = new StandardKernel())
@@ -92,7 +92,7 @@ namespace IntegrationTests.ProxyWithTarget
 
                 // interceptor overrides 3 with 8
                 instance.MultiplyInternalNumber(3);
-                
+
                 instance.AssertInternalNumberIs(40);
             }
         }
@@ -102,7 +102,7 @@ namespace IntegrationTests.ProxyWithTarget
         {
             const string ExpectedArg1 = "Hello world";
             var expectedArg2 = new object();
-            
+
             var fakeInterceptor = new Mock<IDynamicInterceptor>();
             fakeInterceptor
                 .Setup(x => x.Intercept(It.IsAny<IInvocation>()))
@@ -133,6 +133,50 @@ namespace IntegrationTests.ProxyWithTarget
         }
 
         [Fact]
+        public void WithGenericMethod_InterceptorCallingOriginalImplementation()
+        {
+            const int ExpectedArg2 = 38508;
+            const string ExpectedArg3 = "Hello world";
+            var expectedArg1 = new object();
+
+            var fakeInterceptor = new Mock<IDynamicInterceptor>();
+            fakeInterceptor
+                .Setup(x => x.Intercept(It.IsAny<IInvocation>()))
+                .Callback<IInvocation>(
+                    invocation =>
+                    {
+                        invocation.Proceed();
+                    });
+
+            using (IKernel kernel = new StandardKernel())
+            {
+                kernel.Bind<IDynamicInterceptorManager>().To<DynamicInterceptorManager>();
+                kernel.Bind<IDynamicInterceptorCollection>()
+                    .ToConstant(new FakeDynamicInterceptorCollection(fakeInterceptor.Object));
+
+                var instance = kernel.Get<IntegrationWithGenericMethod>();
+
+                string result = instance.ImplementedGenericMethod<object, int, string>(expectedArg1, ExpectedArg2, ExpectedArg3);
+
+                result.Should().Be(ExpectedArg3);
+            }
+
+            fakeInterceptor.Verify(x => x.Intercept(It.Is<IInvocation>(i => i.Arguments.Length == 3)));
+
+            fakeInterceptor.Verify(x => x.Intercept(It.Is<IInvocation>(i =>
+                                i.Arguments[0] == expectedArg1
+                                && (int)i.Arguments[1] == ExpectedArg2
+                                && (string)i.Arguments[2] == ExpectedArg3)));
+
+            fakeInterceptor.Verify(x => x.Intercept(It.Is<IInvocation>(i => i.GenericArguments.Length == 3)));
+
+            fakeInterceptor.Verify(x => x.Intercept(It.Is<IInvocation>(i =>
+                    i.GenericArguments[0] == typeof(object)
+                    && i.GenericArguments[1] == typeof(int)
+                    && i.GenericArguments[2] == typeof(string))));
+        }
+
+        [Fact]
         public void ProceedThrowsException_InterceptorMustBeAbleToHandleException()
         {
             var fakeInterceptor = new Mock<IDynamicInterceptor>();
@@ -146,7 +190,7 @@ namespace IntegrationTests.ProxyWithTarget
                             invocation.Proceed();
                         }
                         catch (InvalidOperationException)
-                        {   
+                        {
                         }
                     });
 
@@ -176,7 +220,7 @@ namespace IntegrationTests.ProxyWithTarget
 
                 var instance = kernel.Get<IntegrationWithReturnValue>();
 
-                instance.CombineToStrings(argument1, argument2)
+                instance.CombineTwoStrings(argument1, argument2)
                     .Should().Be(ExpectedString);
             }
         }
@@ -206,7 +250,7 @@ namespace IntegrationTests.ProxyWithTarget
 
                 var instance = kernel.Get<IntegrationWithReturnValue>();
 
-                instance.CombineToStrings(argument1, argument2)
+                instance.CombineTwoStrings(argument1, argument2)
                     .Should().Be(ExpectedString);
             }
         }
@@ -222,6 +266,25 @@ namespace IntegrationTests.ProxyWithTarget
                 var instance = kernel.Get<IntegrationWithReturnValue>();
 
                 instance.Multiply(3, 5).Should().Be(15);
+            }
+        }
+
+        [Fact]
+        public void IntegrationWithGenericClass_WithoutInterceptor_ShouldUseOriginalImplementation()
+        {
+            var expectedReturnValue = Mock.Of<IDisposable>();
+
+            using (IKernel kernel = new StandardKernel())
+            {
+                kernel.Bind<IDynamicInterceptorManager>().To<DynamicInterceptorManager>();
+                kernel.Bind<IDynamicInterceptorCollection>().ToConstant(new FakeDynamicInterceptorCollection());
+                kernel.Bind(typeof(IntegrationWithGenericClass<,,>)).ToSelf();
+
+                var instance = kernel.Get<IntegrationWithGenericClass<string, object, IDisposable>>();
+
+                var actualReturnValue = instance.ImplementedGenericMethod("foo", new object(), expectedReturnValue);
+
+                actualReturnValue.Should().Be(expectedReturnValue);
             }
         }
     }

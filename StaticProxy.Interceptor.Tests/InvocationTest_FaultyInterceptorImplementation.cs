@@ -1,25 +1,24 @@
-﻿namespace StaticProxy.Interceptor.Tests
+﻿namespace StaticProxy.Interceptor
 {
     using System;
     using FluentAssertions;
     using Moq;
-    using StaticProxy.Interceptor;
     using StaticProxy.Interceptor.TargetInvocation;
     using Xunit;
+    using StaticProxy.Interceptor.InterceptedMethod;
 
     public class InvocationTest_FaultyInterceptorImplementation
     {
-        private readonly Mock<ITargetInvocation> targetInvocation;
+        private readonly Mock<IInterceptedMethod> interceptedMethod;
 
         private readonly Invocation testee;
 
         public InvocationTest_FaultyInterceptorImplementation()
         {
-            this.targetInvocation = new Mock<ITargetInvocation>();
+            this.interceptedMethod = new Mock<IInterceptedMethod>();
 
             this.testee = new Invocation(
-                this.targetInvocation.Object,
-                typeof(IFakeTarget).GetMethod("Foo"),
+                this.interceptedMethod.Object,
                 new object[0], 
                 new IDynamicInterceptor[] { new FaultyInterceptor() });
         }

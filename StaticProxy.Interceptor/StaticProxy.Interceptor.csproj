@@ -5,25 +5,22 @@
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-        <DebugType>none</DebugType>
-        <DebugSymbols>false</DebugSymbols>
+        <DebugType>portable</DebugType>
+        <DebugSymbols>true</DebugSymbols>
         <Optimize>true</Optimize>
         <RootNamespace>StaticProxy.Interceptor</RootNamespace>
         <AssemblyName>StaticProxy.Interceptor</AssemblyName>
         <PackageId>StaticProxy.Interceptor</PackageId>
-        <Authors>Bruno Juchli</Authors>
-        <Description>Fody add-in to compile-time weave (hence static) proxies with an interception mechanism similar to Castle Dynamic Proxy. Is intended to work with mobile platforms! :)</Description>
+        <Authors>See GitHub contributors list</Authors>
+		<PackageSummary>Fody add-in to weave proxies at compile time. With an interception mechanism similar to Castle Dynamic Proxy. Mobile support - netstandard1.0 compatible!)</PackageSummary>
+        <Description>Get started by putting adding the StaticProxy.Fody nuget package to the projects where the interfaces/classes to be intercepted reside and att a [StaticProxy] attribute to these. Implement your interceptors by inheriting from the IDynamicInterceptor interface. Use one of the integration packages to configure interception and instanciate the proxies. See the project page for more information!</Description>
         <Title>StaticProxy.Interceptor</Title>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-        <PackageReleaseNotes>Now targeting .net Standard 1.0. Removed gitlink.</PackageReleaseNotes>
         <Copyright>Copyright 2017 (c) Bruno Juchli.</Copyright>
         <PackageTags>Proxy ILWeaving Fody AOP</PackageTags>
-        <PackageIconUrl>https://github.com/BrunoJuchli/StaticProxy.Fody/tree/master/Icons/package_icon.png</PackageIconUrl>
+        <PackageIconUrl>https://raw.githubusercontent.com/BrunoJuchli/StaticProxy.Fody/master/Icons/package_icon.png</PackageIconUrl>
         <PackageProjectUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/BrunoJuchli/StaticProxy.Fody</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
-    <ItemGroup>
-        <None Include="StaticProxy.Interceptor.nuspec">
-        <SubType>Designer</SubType>
-        </None>
-    </ItemGroup>
 </Project>

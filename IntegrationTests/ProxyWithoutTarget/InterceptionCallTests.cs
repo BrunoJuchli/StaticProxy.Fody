@@ -69,5 +69,21 @@
                 argument2,
                 Argument3);
         }
+
+        [Fact]
+        public void WhenInterceptingGenericMethod_MustUseInterceptors()
+        {
+            const int Argument1 = 4830328;
+            const string Argument2 = "Hello Generic Method";
+            var argument3 = new object();
+
+            this.testee.GenericMethod<int, string,object>(Argument1, Argument2, argument3);
+
+            this.interceptor.VerifyGenericIntercepted(
+                Reflector<IProxy>.GetMethod(x => x.GenericMethod<int, string, object>(0, null, null)),
+                Argument1,
+                Argument2,
+                argument3);
+        }
     }
 }

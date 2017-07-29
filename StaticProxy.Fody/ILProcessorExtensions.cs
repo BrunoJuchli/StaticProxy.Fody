@@ -6,7 +6,8 @@ namespace StaticProxy.Fody
 
     using Mono.Cecil;
     using Mono.Cecil.Cil;
-    
+    using Mono.Collections.Generic;
+
     // ReSharper disable once InconsistentNaming
     public static class ILProcessorExtensions
     {
@@ -27,45 +28,87 @@ namespace StaticProxy.Fody
             }
         }
 
-        public static void SaveParametersToNewObjectArray(this ILProcessor processor, VariableDefinition array, IList<ParameterDefinition> parameters)
+        public static void SaveGenericParametersToNewTypeArray(this ILProcessor processor, Collection<GenericParameter> genericParameters)
+        {
+            processor.SaveCollectionToNewArray(
+                WeavingInformation.TypeTypeReference,
+                genericParameters,
+                (p, genericParameter) =>
+                {
+                    p.Emit(OpCodes.Ldtoken, genericParameter);
+                    p.Emit(OpCodes.Call, WeavingInformation.GetTypeFromHandleMethodReference);
+                });
+        }
+
+        public static void SaveParametersToNewObjectArray(this ILProcessor processor, IList<ParameterDefinition> parameters)
+        {
+            processor.SaveCollectionToNewArray(
+                WeavingInformation.ObjectTypeReference,
+                parameters,
+                (p, parameter) =>
+                {
+                    p.Emit(OpCodes.Ldarg_S, parameter); // push the parameter to the stack
+
+                    if (parameter.ParameterType.IsValueType || parameter.ParameterType.IsGenericParameter)
+                    {
+                        // box value types
+                        p.Emit(OpCodes.Box, parameter.ParameterType);
+                    }
+                });
+        }
+
+        public static void SaveCollectionToNewArray<T>(
+            this ILProcessor processor,
+            TypeReference arrayPayloadType,
+            IList<T> collection,
+            Action<ILProcessor, T> loadElementToStack)
         {
             const byte MaxArraySize = sbyte.MaxValue - 1;
-            if (parameters.Count > MaxArraySize)
+            if (collection.Count > MaxArraySize)
             {
                 throw new InvalidOperationException(
                     string.Format(
                         CultureInfo.InvariantCulture,
-                        "There are {0} method parameters, but the supported maximum is {1}",
-                        parameters.Count,
+                        "There are {0} items in {1}, but the supported maximum is {2}",
+                        collection.Count,
+                        collection,
                         MaxArraySize));
             }
 
-            processor.CreateArrayAndStoreToVariable(array, WeavingInformation.ObjectTypeReference, (sbyte)parameters.Count);
-            for (sbyte i = 0; i < parameters.Count; i++)
+            processor.CreateArray(arrayPayloadType, (sbyte)collection.Count);
+
+            for (sbyte index = 0; index < collection.Count; index++)
             {
-                processor.SaveParameterValueToObjectArray(array, parameters[i], i);
+                processor.Emit(OpCodes.Dup); // duplicate the array address onto the stack so we have it for the next call (and it's still on the stack when we return)
+                T item = collection[index];
+                processor.SaveValueToArray(index, p => loadElementToStack(p, item));
             }
         }
 
-        public static void CreateArrayAndStoreToVariable(this ILProcessor processor, VariableDefinition variable, TypeReference elementType, sbyte arraySize)
+        public static void SaveCurrentStackValueToVariable(this ILProcessor processor, VariableDefinition variable)
         {
-            processor.Emit(OpCodes.Ldc_I4_S, arraySize);
-            processor.Emit(OpCodes.Newarr, elementType);
             processor.Emit(OpCodes.Stloc_S, variable);
         }
 
-        public static void SaveParameterValueToObjectArray(this ILProcessor processor, VariableDefinition array, ParameterDefinition parameter, sbyte index)
+        public static void CreateArray(this ILProcessor processor, TypeReference elementType, sbyte arraySize)
         {
-            processor.Emit(OpCodes.Ldloc_S, array); // load the array variable
-            processor.Emit(OpCodes.Ldc_I4_S, index); // push the index to the stack
-            processor.Emit(OpCodes.Ldarg_S, parameter); // push the parameter to the stack
-            
-            if (parameter.ParameterType.IsValueType)
-            {
-                // box value types
-                processor.Emit(OpCodes.Box, parameter.ParameterType);
-            }
+            processor.Emit(OpCodes.Ldc_I4_S, arraySize);
+            processor.Emit(OpCodes.Newarr, elementType);
+        }
 
+        public static void SaveGenericArgumentToTypeArray(this ILProcessor processor, Collection<GenericParameter> genericParameters, sbyte index)
+        {
+            processor.SaveValueToArray(index, p =>
+            {
+                p.Emit(OpCodes.Ldtoken, genericParameters[index]);
+                p.Emit(OpCodes.Call, WeavingInformation.GetTypeFromHandleMethodReference);
+            });
+        }
+
+        public static void SaveValueToArray(this ILProcessor processor, sbyte index, Action<ILProcessor> loadElementToStack)
+        {
+            processor.Emit(OpCodes.Ldc_I4_S, index); // push the index to the stack
+            loadElementToStack(processor);
             processor.Emit(OpCodes.Stelem_Ref); // pop the parameter from the stack and store it in the array
         }
     }

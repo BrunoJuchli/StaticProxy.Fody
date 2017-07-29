@@ -1,13 +1,8 @@
-﻿namespace StaticProxy.Interceptor.Tests.TargetInvocation
+﻿namespace StaticProxy.Interceptor.TargetInvocation
 {
     using System;
-
     using FluentAssertions;
-
     using Moq;
-
-    using StaticProxy.Interceptor.TargetInvocation;
-
     using Xunit;
 
     public class WithTargetInvocationTest
