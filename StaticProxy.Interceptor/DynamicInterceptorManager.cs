@@ -5,7 +5,6 @@ using System.Reflection;
 
 using StaticProxy.Interceptor;
 using StaticProxy.Interceptor.Reflection;
-using StaticProxy.Interceptor.TargetInvocation;
 using StaticProxy.Interceptor.InterceptedMethod;
 
 public class DynamicInterceptorManager : IDynamicInterceptorManager

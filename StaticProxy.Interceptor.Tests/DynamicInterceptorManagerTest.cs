@@ -14,7 +14,7 @@
 
     public class DynamicInterceptorManagerTest
     {
-        private readonly FakeDynamicInterceptorCollection interceptorCollection;
+        private readonly DynamicInterceptorCollection interceptorCollection;
         private readonly Mock<IInterceptedMethodFactory> interceptedMethodFactory;
         private readonly Mock<IInvocationFactory> invocationFactory;
         private readonly Mock<ITypeInformation> typeInformation;
@@ -23,7 +23,7 @@
 
         public DynamicInterceptorManagerTest()
         {
-            this.interceptorCollection = new FakeDynamicInterceptorCollection();
+            this.interceptorCollection = new DynamicInterceptorCollection();
             this.interceptedMethodFactory = new Mock<IInterceptedMethodFactory> { DefaultValue = DefaultValue.Mock };
             this.invocationFactory = new Mock<IInvocationFactory> { DefaultValue = DefaultValue.Mock };
             this.typeInformation = new Mock<ITypeInformation>();

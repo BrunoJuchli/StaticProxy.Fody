@@ -18,7 +18,7 @@
 
             this.demoClassProxy = new DemoClassProxy();
 
-            this.testee = new DynamicInterceptorManager(new FakeDynamicInterceptorCollection { this.interceptor });
+            this.testee = new DynamicInterceptorManager(new DynamicInterceptorCollection { this.interceptor });
         }
 
         [Fact]
